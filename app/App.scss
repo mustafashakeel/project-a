@@ -1,0 +1,17 @@
+@import "./styles/reset";
+@import "./styles/fonts";
+@import "./styles/vars";
+
+*{
+  box-sizing: border-box;
+}
+
+body{
+  font-family: $sansSerif;
+  font-weight: 400;
+  background-color: darken(white, 10%);
+}
+
+a{
+  text-decoration: none;
+}
