@@ -1,0 +1,18 @@
+@import "../../styles/vars";
+
+.booking-button{
+  background-color: #F44336 !important;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  // border-radius: 50px !important;
+
+  button, button div{
+    // border-radius: 50px !important;
+  }
+
+  span{
+    color: #fff !important;
+
+  }
+}
