@@ -1,6 +1,11 @@
 @import "../../styles/vars";
 
 .booking-button{
+
+  &.hidden {
+    display:none !important;
+  }
+
   background-color: #F44336 !important;
   position: absolute;
   right: 10px;
@@ -15,4 +20,8 @@
     color: #fff !important;
 
   }
+}
+
+.hiddenoverlay {
+  z-index: -1 !important;
 }
