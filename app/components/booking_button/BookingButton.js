@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import widgetSettings from '../../widgetSettings';
+
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 import Iframe from 'react-iframe';
@@ -15,6 +17,12 @@ class BookingButton extends Component {
     open: false
   };
 
+  constructor(props) {
+    super(props);
+    
+    this.settings = widgetSettings.getValue();
+  }
+
   handleOpen = () => {
     this.setState({open: true});
   }
@@ -23,35 +31,40 @@ class BookingButton extends Component {
     this.setState({open: false});
   }
 
+  positionClass = () => {
+
+    const bookingClass = this.props.styles["booking-button"];
+    const posClass = this.props.styles[this.settings.position];
+    return bookingClass + " " + posClass;
+  }
+
   renderButton() {
+    // console.log(this.positionClass());
     if (!this.state.open) {
       return (
-        <RaisedButton  onClick={this.handleOpen} label="Book an appointment" backgroundColor="#F44336" styleName="booking-button"/>
+        <RaisedButton  onClick={this.handleOpen} label="Book an appointment" backgroundColor="#F44336" className={this.positionClass()}/>
       )
     }else {
       return (
-        <RaisedButton onClick={this.handleClose} label="Close" backgroundColor="#F44336" styleName="booking-button"/>
+        <RaisedButton onClick={this.handleClose} label="Close" backgroundColor="#F44336" className={this.positionClass()}/>
       )
     }
   }
 
   render() {
-    console.log(this.props.styles);
 
-    const style = {
-      // transform: 'translate(0px, 0px)'
-    }
     return (
       <div>
         { this.renderButton() }
         <Dialog
           className={ this.props.styles.hiddenoverlay }
-          contentStyle={style}
+          contentClassName={this.props.styles.bookingContainer}
+          bodyClassName={this.props.styles.bookingContainer}
           modal={false} 
           open={this.state.open}
           onRequestClose={this.handleClose}
         >
-          <Iframe url="http://localhost:3000/form" />
+          <Iframe styleName="booking-iframe" url="http://localhost:3000/form" height="500" width="325"/>
 
         </Dialog>
 

@@ -12,7 +12,11 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
-    filename: '[name]-[hash].min.js'
+    // filename: '[name]-[hash].min.js',
+    filename: '[name]-[hash].min.js',
+    library: 'YocaleBookingWidget',
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   plugins: [
     new ExtractTextPlugin('/app.min.css', {

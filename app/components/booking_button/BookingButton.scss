@@ -6,10 +6,23 @@
     display:none !important;
   }
 
+  &.left {
+    left: 10px;
+    bottom: 10px;
+  }
+
+  &.right{
+    right: 10px;
+    bottom: 10px;
+  }
+
+  &.top{
+    top: 10px;
+    right: 10px;
+  }
+
   background-color: #F44336 !important;
   position: absolute;
-  right: 10px;
-  bottom: 10px;
   // border-radius: 50px !important;
 
   button, button div{
@@ -22,8 +35,18 @@
   }
 }
 
-.testing{
-  color: #ff0000;
+.booking-iframe{
+  height: 500px;
+}
+
+
+
+.bookingContainer{
+  height: 500px;
+  // background-color: #ff0000;
+  width: 325px !important;
+  padding: 0 !important;
+
 }
 
 .hiddenoverlay {
