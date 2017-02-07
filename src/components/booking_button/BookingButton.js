@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
-
 import widgetSettings from '../../widgetSettings';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
+import Button from 'react-md/lib/Buttons/Button';
+import Dialog from 'react-md/lib/Dialogs';
 import Iframe from 'react-iframe';
+import './BookingButton.scss';
 
-import CSSModules from 'react-css-modules';
-import styles from './BookingButton.scss';
-
-@CSSModules(styles, {allowMultiple: true})
 
 class BookingButton extends Component {
 
@@ -32,21 +28,18 @@ class BookingButton extends Component {
   }
 
   positionClass = () => {
-
-    const bookingClass = this.props.styles["booking-button"];
-    const posClass = this.props.styles[this.settings.position];
-    return bookingClass + " " + posClass;
+    return "booking-button " + this.settings.position;
   }
 
   renderButton() {
     // console.log(this.positionClass());
     if (!this.state.open) {
       return (
-        <RaisedButton  onClick={this.handleOpen} label="Book an appointment" backgroundColor="#F44336" className={this.positionClass()}/>
+        <Button raised onClick={this.handleOpen} label="Book an appointment" className={this.positionClass()}/>
       )
     }else {
       return (
-        <RaisedButton onClick={this.handleClose} label="Close" backgroundColor="#F44336" className={this.positionClass()}/>
+        <Button raised onClick={this.handleClose} label="Close"  className={this.positionClass()}/>
       )
     }
   }
@@ -57,14 +50,13 @@ class BookingButton extends Component {
       <div>
         { this.renderButton() }
         <Dialog
-          className={ this.props.styles.hiddenoverlay }
-          contentClassName={this.props.styles.bookingContainer}
-          bodyClassName={this.props.styles.bookingContainer}
-          modal={false} 
-          open={this.state.open}
-          onRequestClose={this.handleClose}
+          id="widgetDialog"          
+          visible={this.state.open}
+          onHide={this.handleClose}
+          focusOnMount={false}
+          contentClassName="bookingContainer"
         >
-          <Iframe styleName="booking-iframe" url="http://localhost:3000/form" height="500" width="325"/>
+          <Iframe styleName="booking-iframe" url="http://localhost:3000/form" />
 
         </Dialog>
 

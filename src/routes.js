@@ -8,7 +8,7 @@ import BookingForm from './components/booking_form/BookingForm';
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={BookingButton}/>
-    <Route path="form" component={BookingForm} />
+    <Route path="/form" component={BookingForm} />
   </Route>
 )
 
