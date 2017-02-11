@@ -1,0 +1,30 @@
+@import "../../../styles/vars";
+
+.headerWidget{
+  background-color: $yocaleOrange;
+  text-align: center;
+  display: block;
+  height: 50px !important;
+
+  h2 {
+    width: 100%;
+    display: block;
+    line-height: 1em;
+    font-size: 13px;
+    padding-top: 10px;
+    margin: 0px 0 5px 0;
+    font-weight: 600;
+    font-family: $sourceSansPro;
+  }
+  h3 {
+    font-family: $sourceSansPro;
+    width: 100%;
+    display: block; 
+    font-size: 12px;
+    color: lighten($white, 10%);
+    line-height: 1em;
+    margin: 0px 0 0px 0;
+    font-weight: 400;
+    letter-spacing: -0.1px
+  }
+}

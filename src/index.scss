@@ -2,3 +2,14 @@
 
 // Include all components
 @include react-md-everything;
+$FontPathSourceSansPro: "../public/fonts";
+@import '../node_modules/npm-font-source-sans-pro/source-sans-pro';
+
+
+body{
+  // font-family: $sansSerif;
+  // font-weight: 400;
+  // background-color: darken(white, 10%);
+  margin: 0px ;
+  padding: 0px ;
+}
