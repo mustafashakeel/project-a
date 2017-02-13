@@ -9,12 +9,12 @@ export default class Step extends React.Component {
     super(props);
   }
 
-  getIndicatorClass = () => {
+  getIndicatorClass = (defaultClass) => {
     
     return classNames({
-      stepIndicator: true,
-      bullet: this.props.completed == false,
-      checkmark: this.props.completed == true,
+      [defaultClass]: true,
+      uncompleted: this.props.completed == false,
+      completed: this.props.completed == true,
       active: this.props.active == true
     });
   }
@@ -22,8 +22,11 @@ export default class Step extends React.Component {
   render() {
     return (
       <div style={this.props.style}  className="StepContainer">
-        <div className={this.getIndicatorClass()}></div>
-        <div className="stepLine"></div>
+        <div className={this.getIndicatorClass('stepIndicator')}></div>
+        {this.props.stepLine &&
+          <div className={this.getIndicatorClass('stepLine')}></div>
+        }
+
         {this.props.children}
       
       </div>

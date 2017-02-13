@@ -17,8 +17,8 @@
   .TabsProgressIndicator{
     display: block;
     width: 100%;
-    height: 2.5px;
-    background-color: lighten($yocaleOrange, 15%);
+    height: 3px;
+    background-color: lighten($yocaleOrange, 20%);
     position: absolute;
     bottom: 0;
     left:0;
@@ -30,6 +30,11 @@
     text-align: center;
     color: darken($white, 8%);
     font-size: 9px;
+    cursor: pointer;
+
+    // &:hover{
+    //   background-color: lighten($yocaleOrange, 3%);
+    // }
 
     .TabHeaderLabel {
       line-height: 1em;

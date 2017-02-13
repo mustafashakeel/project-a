@@ -33,20 +33,30 @@ $lightGrey: lighten($grey, 25%);
       position: absolute;
       width: 1px;
       height: calc(100% - 10px);
-      left:13px;
+      left:12px;
       top: 15px;
+
+      &.completed {
+        background-color: $yocaleOrange;
+      }
     }
 
     .stepIndicator {
+
+      display: block;
+      border-radius: 20px;
+      width: 6px;
+      height: 6px;
+      position: absolute;
+      left: 10px;
+      top: 7px;
+
+      &.completed{
+        background-color: green;
+      }
         
-      &.bullet{
-        display: block;
-        border-radius: 20px;
-        width: 6px;
-        height: 6px;
-        position: absolute;
-        left: 11px;
-        top: 7px;
+      &.uncompleted{
+        
         background-color: $yocaleBlue;
 
         &.active{

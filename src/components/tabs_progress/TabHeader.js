@@ -15,7 +15,7 @@ export default class TabHeader extends React.Component {
 
   render() {
     return (
-      <div className="TabHeader">
+      <div className="TabHeader" onClick={this.props.onClick}>
         <FontIcon className="TabHeaderIcon">{this.props.icon}</FontIcon>
         <div className="TabHeaderLabel">{this.props.label}</div>
       </div>
