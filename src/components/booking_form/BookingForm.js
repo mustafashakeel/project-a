@@ -71,7 +71,7 @@ export default class BookingForm extends React.Component {
         <HeaderWidget />    
         <TabsProgress progress={this.getProgress()}>
           <TabHeader label={steps.step1.label} icon={steps.step1.icon} onClick={this.changeTab.bind(this, 0)} />
-          <TabHeader label={steps.step2.label} icon={steps.step2.icon} onClick={this.changeTab.bind(this, 1)}  />
+          <TabHeader label={steps.step2.label} isCenter icon={steps.step2.icon} onClick={this.changeTab.bind(this, 1)}  />
           <TabHeader label={steps.step3.label} icon={steps.step3.icon} onClick={this.changeTab.bind(this, 2)}  />
         </TabsProgress>
 

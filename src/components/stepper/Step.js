@@ -22,7 +22,9 @@ export default class Step extends React.Component {
   render() {
     return (
       <div style={this.props.style}  className="StepContainer">
-        <div className={this.getIndicatorClass('stepIndicator')}></div>
+        {!this.props.noIndicator &&
+          <div className={this.getIndicatorClass('stepIndicator')}></div>
+        }
         {this.props.stepLine &&
           <div className={this.getIndicatorClass('stepLine')}></div>
         }

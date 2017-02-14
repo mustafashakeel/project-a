@@ -44,6 +44,7 @@
     "react-iframe": "0.0.4",
     "react-infinity-menu": "^3.0.2",
     "react-md": "^1.0.4",
+    "react-portal-tooltip": "^0.14.2",
     "react-swipeable-views": "^0.10.7",
     "recursive-readdir": "2.1.0",
     "sass-loader": "^4.1.1",
@@ -56,10 +57,13 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "immutable": "^3.8.1",
     "npm-font-source-sans-pro": "^1.0.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-router": "^3.0.2"
+    "react-router": "^3.0.2",
+    "redux": "^3.6.0",
+    "redux-promise": "^0.5.3"
   },
   "scripts": {
     "start": "node scripts/start.js",

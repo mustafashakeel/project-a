@@ -1,5 +1,5 @@
 import React from 'react';
-
+import classNames from 'classnames';
 import FontIcon from 'react-md/lib/FontIcons';
 
 // const icon = <FontIcon style={{display:"none"}}>{this.props.icon}</FontIcon>;
@@ -13,10 +13,19 @@ export default class TabHeader extends React.Component {
     super(props);
   }
 
+  getIconClass = () => {
+    return classNames({
+      "TabHeaderIcon": true,
+      "middle": this.props.isCenter
+    })
+  }
+
   render() {
     return (
       <div className="TabHeader" onClick={this.props.onClick}>
-        <FontIcon className="TabHeaderIcon">{this.props.icon}</FontIcon>
+        <FontIcon className={this.getIconClass()}>
+          {this.props.icon}
+        </FontIcon>
         <div className="TabHeaderLabel">{this.props.label}</div>
       </div>
     );
