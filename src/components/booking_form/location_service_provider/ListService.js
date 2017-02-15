@@ -36,6 +36,7 @@ export default class ListService extends React.Component {
       }
     }
 
+    // console.log(this.props)
     return (
       <div>
       <ToolTip active={this.state.isTooltipActive} position="top" arrow="right" parent={this.state.toolTipParent} style={style}>
@@ -44,12 +45,12 @@ export default class ListService extends React.Component {
               <img src="image.png"/>
           </div>
       </ToolTip>
-      <div className="ServiceMenuService">
+      <div className="ServiceMenuService" onClick={this.props.onClick} >
         <div className="SM_left">
           <span className="ServiceTitle">{this.props.name}</span>
           <FontIcon 
             id={this.getTooltipID()} 
-            onClick={()=>this.setState({isTooltipActive: !this.state.isTooltipActive})}
+            /*onClick={()=>this.setState({isTooltipActive: !this.state.isTooltipActive})}*/
           >info_outline</FontIcon>
           <FontIcon>label_outline</FontIcon>
         </div>

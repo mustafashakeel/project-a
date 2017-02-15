@@ -7,8 +7,10 @@ import widgetSettings from './widgetSettings';
 
 import './index.scss';
 
-import App from './App.js';
-import routes from './routes';
+// import App from './App.js';
+// import routes from './routes';
+import BookingForm from './components/booking_form/BookingForm';
+
 
 const settings = {
   position: 'right',
@@ -18,7 +20,7 @@ const settings = {
 widgetSettings.setValue(settings);
 
 ReactDOM.render(
-  <Router history={browserHistory} routes={routes} />
+  <BookingForm />
   , document.getElementById('yocale-booking-widget'));
 
 // export const init = (settings) => {

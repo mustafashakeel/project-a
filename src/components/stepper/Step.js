@@ -1,15 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
+import FontIcon from 'react-md/lib/FontIcons';
+
 export default class Step extends React.Component {
-  static propTypes = {
-    name: React.PropTypes.string,
-  };
 
-  constructor(props) {
-    super(props);
-  }
-
-  getIndicatorClass = (defaultClass) => {
+  getClassNames = (defaultClass) => {
     
     return classNames({
       [defaultClass]: true,
@@ -21,12 +16,16 @@ export default class Step extends React.Component {
 
   render() {
     return (
-      <div style={this.props.style}  className="StepContainer">
+      <div style={this.props.style}  className={this.getClassNames('StepContainer')}>
         {!this.props.noIndicator &&
-          <div className={this.getIndicatorClass('stepIndicator')}></div>
+          <div className={this.getClassNames('stepIndicator')}>
+            {this.props.completed &&
+              <FontIcon>check</FontIcon>
+            }
+          </div>
         }
         {this.props.stepLine &&
-          <div className={this.getIndicatorClass('stepLine')}></div>
+          <div className={this.getClassNames('stepLine')}></div>
         }
 
         {this.props.children}

@@ -9,6 +9,22 @@ $lightGrey: lighten($grey, 25%);
   .StepContainer {
     position: relative;
 
+    &:after{
+      content: '';
+      display: block;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 0px;
+    }
+
+    &.active, &.completed {
+      &:after{
+        display: none;
+      }
+    }
+
     h4 {
       text-transform: uppercase;;
       font-weight: bold;
@@ -38,6 +54,7 @@ $lightGrey: lighten($grey, 25%);
 
       &.completed {
         background-color: $yocaleOrange;
+        height: calc(100% - 15px);
       }
     }
 
@@ -52,18 +69,27 @@ $lightGrey: lighten($grey, 25%);
       top: 7px;
 
       &.completed{
-        background-color: green;
+        background-color: none;
+        
+        i {
+          color: $yocaleOrange;
+          font-size: 14px;
+          position: absolute;
+          left: -3px;
+          top: -8px;
+        }
       }
         
       &.uncompleted{
         
         background-color: $yocaleBlue;
-
-        &.active{
-          background-color: $yocaleOrange;
-        }
-
       }
+
+      &.active{
+        background-color: $yocaleOrange;
+      }
+
+      
 
     }
   }
