@@ -41,7 +41,7 @@ export default class ListService extends React.Component {
       <ToolTip active={this.state.isTooltipActive} position="top" arrow="right" parent={this.state.toolTipParent} style={style}>
           <div>
               <p>This is the content of the tooltip {this.getTooltipID()}</p>
-              <img src="image.png"/>
+              <img role="presentation" src="image.png"/>
           </div>
       </ToolTip>
       <div className="ServiceMenuService" onClick={this.props.onClick}>

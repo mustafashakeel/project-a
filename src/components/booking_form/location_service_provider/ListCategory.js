@@ -4,13 +4,6 @@ import FontIcon from 'react-md/lib/FontIcons';
 
 
 export default class ListCategory extends React.Component {
-  static propTypes = {
-    name: React.PropTypes.string,
-  };
-
-  constructor(props) {
-    super(props);
-  }
 
   getClasses = () => {
     return classNames({
@@ -27,7 +20,6 @@ export default class ListCategory extends React.Component {
     return (
       <div className={this.getClasses()} key={this.props.id} onClick={this.props.onClick}>
         <span>{this.props.name}</span>
-
         <FontIcon>{this.getIcon()}</FontIcon>
       </div>
     );

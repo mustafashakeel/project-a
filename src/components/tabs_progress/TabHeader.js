@@ -2,16 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import FontIcon from 'react-md/lib/FontIcons';
 
-// const icon = <FontIcon style={{display:"none"}}>{this.props.icon}</FontIcon>;
-
 export default class TabHeader extends React.Component {
-  static propTypes = {
-    name: React.PropTypes.string,
-  };
-
-  constructor(props) {
-    super(props);
-  }
 
   getIconClass = () => {
     return classNames({

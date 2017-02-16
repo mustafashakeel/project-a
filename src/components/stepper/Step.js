@@ -8,9 +8,9 @@ export default class Step extends React.Component {
     
     return classNames({
       [defaultClass]: true,
-      uncompleted: this.props.completed == false,
-      completed: this.props.completed == true,
-      active: this.props.active == true
+      uncompleted: this.props.completed === false,
+      completed: this.props.completed === true,
+      active: this.props.active === true
     });
   }
 

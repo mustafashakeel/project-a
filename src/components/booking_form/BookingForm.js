@@ -9,19 +9,6 @@ import SwipeableViews from 'react-swipeable-views';
 
 import './BookingForm.scss';
 import widgetSettings from '../../widgetSettings';
-import FontIcon from 'react-md/lib/FontIcons';
-
-const phone = <FontIcon>phone</FontIcon>;
-const favorites = <FontIcon style={{ width: 24 }}>favorites</FontIcon>; // it's 48 for some reason
-const nearby = <FontIcon>person</FontIcon>;
-
-// const listChildren = () => {
-//   return 
-//   <ListItem primaryText="Inbox" />
-//   <ListItem primaryText="Starred" />
-//   <ListItem primaryText="Sent Mail" />
-  
-// }
 
 export default class BookingForm extends React.Component {
 

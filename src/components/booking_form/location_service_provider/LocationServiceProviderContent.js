@@ -141,9 +141,6 @@ const treeInit = [
 
 
 export default class LocationServiceProviderContent extends React.Component {
-  static propTypes = {
-    name: React.PropTypes.string,
-  };
 
   state = {
     currentStep: 0,
@@ -152,10 +149,6 @@ export default class LocationServiceProviderContent extends React.Component {
     location:"",
     provider:"Any Provider",
     tree: treeInit
-  }
-  constructor(props) {
-    super(props);
-    
   }
 
   nextStep = () => {
