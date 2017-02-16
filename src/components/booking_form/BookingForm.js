@@ -68,23 +68,25 @@ export default class BookingForm extends React.Component {
 
     return (
       <div className="booking-form">
-        <HeaderWidget />    
-        <TabsProgress progress={this.getProgress()}>
-          <TabHeader label={steps.step1.label} icon={steps.step1.icon} onClick={this.changeTab.bind(this, 0)} />
-          <TabHeader label={steps.step2.label} isCenter icon={steps.step2.icon} onClick={this.changeTab.bind(this, 1)}  />
-          <TabHeader label={steps.step3.label} icon={steps.step3.icon} onClick={this.changeTab.bind(this, 2)}  />
-        </TabsProgress>
+        <div className="mainHeader">
+          <HeaderWidget />    
+          <TabsProgress progress={this.getProgress()}>
+            <TabHeader label={steps.step1.label} icon={steps.step1.icon} onClick={this.changeTab.bind(this, 0)} />
+            <TabHeader label={steps.step2.label} isCenter icon={steps.step2.icon} onClick={this.changeTab.bind(this, 1)}  />
+            <TabHeader label={steps.step3.label} icon={steps.step3.icon} onClick={this.changeTab.bind(this, 2)}  />
+          </TabsProgress>
+        </div>
 
         <SwipeableViews
           index={this.state.currentTab}          
         >
-          <div>
+          <div className="TabContainer">
             <LocationServiceProviderContent onFinish={this.changeTab.bind(this, 1)}/>
           </div>
-          <div>
+          <div className="TabContainer">
             Tab 2
           </div>
-          <div>
+          <div className="TabContainer">
             Tab 3
           </div>
 

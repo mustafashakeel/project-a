@@ -2,30 +2,30 @@
 
 .headerWidget{
   background-color: $yocaleOrange;
-  text-align: center;
   display: block;
   height: 50px !important;
+  text-align: center;
 
   h2 {
-    width: 100%;
     display: block;
-    line-height: 1em;
+    font-family: $sourceSansPro;
     font-size: 13px;
-    padding-top: 10px;
-    margin: 0px 0 5px 0;
     font-weight: 600;
     letter-spacing: 0.3px;
-    font-family: $sourceSansPro;
+    line-height: 1em;
+    margin: 0px 0 5px 0;
+    padding-top: 10px;
+    width: 100%;
   }
   h3 {
-    font-family: $sourceSansPro;
-    width: 100%;
-    display: block; 
-    font-size: 12px;
     color: lighten($white, 10%);
+    display: block; 
+    font-family: $sourceSansPro;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: -0.1px;
     line-height: 1em;
     margin: 0px 0 0px 0;
-    font-weight: 400;
-    letter-spacing: -0.1px
+    width: 100%;
   }
 }

@@ -9,48 +9,48 @@ $lightGrey: lighten($grey, 25%);
   .StepContainer {
     position: relative;
 
-    &:after{
-      content: '';
-      display: block;
-      height: 100%;
-      width: 100%;
-      position: absolute;
-      left: 0;
-      top: 0px;
-    }
+    // &:after{
+    //   content: '';
+    //   display: block;
+    //   height: 100%;
+    //   width: 100%;
+    //   position: absolute;
+    //   left: 0;
+    //   top: 0px;
+    // }
 
-    &.active, &.completed {
-      &:after{
-        display: none;
-      }
-    }
+    // &.active, &.completed {
+    //   &:after{
+    //     display: none;
+    //   }
+    // }
 
     h4 {
-      text-transform: uppercase;;
-      font-weight: bold;
-      padding-left: 28px;
+      font-family: $sourceSansPro;
       font-size: 8px;
+      font-weight: bold;
+      letter-spacing: 0.8px;
       line-height: 1em;
       margin:0;
+      padding-left: 28px;
       padding-top: 5px;
-      letter-spacing: 0.8px;
-      font-family: $sourceSansPro;
+      text-transform: uppercase;;
 
       span{
-        text-transform: none;
         color: $grey;
         font-size: 9px;
         letter-spacing: 0px;
+        text-transform: none;
       }
     }
     
     .stepLine {
       background-color: $lightGrey;
-      position: absolute;
-      width: 1px;
       height: calc(100% - 10px);
       left:12px;
+      position: absolute;
       top: 15px;
+      width: 1px;
 
       &.completed {
         background-color: $yocaleOrange;
@@ -60,13 +60,13 @@ $lightGrey: lighten($grey, 25%);
 
     .stepIndicator {
 
-      display: block;
       border-radius: 20px;
-      width: 6px;
+      display: block;
       height: 6px;
-      position: absolute;
       left: 10px;
+      position: absolute;
       top: 7px;
+      width: 6px;
 
       &.completed{
         background-color: none;
@@ -74,8 +74,8 @@ $lightGrey: lighten($grey, 25%);
         i {
           color: $yocaleOrange;
           font-size: 14px;
-          position: absolute;
           left: -3px;
+          position: absolute;
           top: -8px;
         }
       }
@@ -88,8 +88,6 @@ $lightGrey: lighten($grey, 25%);
       &.active{
         background-color: $yocaleOrange;
       }
-
-      
 
     }
   }

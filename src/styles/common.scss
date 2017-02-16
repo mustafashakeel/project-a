@@ -1,0 +1,51 @@
+.DropdownSelect{
+  background-color: $white;
+  border: 1px solid lighten($grey, 25%);
+  border-radius: 40px;
+  width: 80%;
+  height: 30px;
+  margin-left: 25px;
+  margin-top: -5px;
+  margin-right: 8%;
+
+  &:focus{
+      box-shadow: none;
+    }
+  
+  .md-list{
+    background: lighten($grey, 30%);
+  }
+  .md-list-item{
+    border-bottom: 1px solid lighten($grey, 20%);
+    // background: lighten($grey, 30%);
+    
+  }
+  .md-select-field{
+    height: 30px;
+
+    &:focus{
+      box-shadow: none;
+    }
+  }
+  .md-tile-content .md-text {
+    font-weight: normal;
+    padding: 3px 0;
+    font-size: 12px !important;
+    color:  darken($grey, 20%);
+  }
+  .md-icon {
+    font-size: 18px;
+  }
+  .md-ink-container{
+    display: none;
+  }
+  .md-text-field{
+    padding: 5px 10px 5px 15px;
+    height: 30px;
+    font-size: 10px;
+  }
+
+  button{
+    height: 30px;
+  }
+}

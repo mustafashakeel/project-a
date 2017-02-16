@@ -1,79 +1,13 @@
 @import "../../../styles/vars";
+@import "../../../styles/common";
+
 .LocationContainer{
   margin: 25px 0;
 }
-.SelectLocation, .SelectProvider{
-  background-color: $white;
-  border: 1px solid lighten($grey, 25%);
-  border-radius: 40px;
-  width: 80%;
-  height: 30px;
-  margin-left: 25px;
-  margin-top: -5px;
-  margin-right: 8%;
-
-  &:focus{
-      box-shadow: none;
-    }
-  
-  .md-list{
-    background: lighten($grey, 30%);
-  }
-  .md-list-item{
-    border-bottom: 1px solid lighten($grey, 20%);
-    // background: lighten($grey, 30%);
-    
-  }
-  .md-select-field{
-    height: 30px;
-
-    &:focus{
-      box-shadow: none;
-    }
-  }
-  .md-tile-content .md-text {
-    font-weight: normal;
-    padding: 3px 0;
-    font-size: 12px !important;
-    color:  darken($grey, 20%);
-  }
-  .md-icon {
-    font-size: 18px;
-  }
-  .md-ink-container{
-    display: none;
-  }
-  .md-text-field{
-    padding: 5px 10px 5px 15px;
-    height: 30px;
-    font-size: 10px;
-  }
-
-  button{
-    height: 30px;
-  }
-}
-
-// .SelectProvider{
-//   text-align: center;
-//   margin: auto;
-
-//   .md-select-field{
-//   height: 30px;
-
-//     &:focus{
-//       box-shadow: none;
-//     }
-//   }
-
-//   .md-ink-container{
-//     display: none;
-//   }
-// }
 
 .infinity-menu-container{
-  margin-top: 10px;
   margin-bottom: 10px;
+  margin-top: 10px;
 
   ul{
     margin: 0;
@@ -87,22 +21,22 @@
 
   i {
     float: right;
-    margin: 8px 5px;
     font-size: 18px;
+    margin: 8px 5px;
   }
 
   span {
-    margin:10px 12px;
     display: inline-block;
+    margin:10px 12px;
   }
   
   &:first-child{
    border-top:1px solid lighten($grey, 25%);
   }
 
+  // padding: 10px 12px;
   border-bottom:1px solid lighten($grey, 25%);
   color:$grey;
-  // padding: 10px 12px;
   font-size: 10px;
 
   &.isActive{
@@ -118,22 +52,22 @@
 
 .ServiceMenuService{
   background-color: $white;
-  padding: 10px 12px;
-  color: darken($grey, 30%);
-  font-size: 10px;
   border-bottom:1px solid lighten($grey, 25%);
+  color: darken($grey, 30%);
   cursor: pointer;
+  font-size: 10px;
+  padding: 10px 12px;
 
   .SM_left{
     display: inline-block;
 
     i {
 
-      display: inline-block;
-      vertical-align:middle;
       color: lighten($grey, 10%);
+      display: inline-block;
       font-size: 14px;
       margin-left: 5px;
+      vertical-align:middle;
 
       &:hover{
         color: darken($grey, 10%);

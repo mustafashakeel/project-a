@@ -168,7 +168,6 @@ export default class LocationServiceProviderContent extends React.Component {
   }
   
   onNodeMouseClick(event, tree, node, level, keyPath) {
-      console.log(level);
       this.setState({
           tree: tree
       });
@@ -215,7 +214,7 @@ export default class LocationServiceProviderContent extends React.Component {
               menuItems={['430 Seymour street', '480 Robson street', '300 Granville street']}
               value={this.state.location}
               onChange={this.onChangeLocation}
-              className="SelectLocation"
+              className="DropdownSelect"
               iconChildren="keyboard_arrow_down"
             />
           </Step>          
@@ -232,7 +231,7 @@ export default class LocationServiceProviderContent extends React.Component {
               menuItems={['Any Provider', 'Kate Hudson', 'Jennifer Smith', 'Brian Roberts']}
               value={this.state.provider}
               onChange={this.onChangeProvider}
-              className="SelectProvider"
+              className="DropdownSelect"
               iconChildren="keyboard_arrow_down"
             />
           </Step>
