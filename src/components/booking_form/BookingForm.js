@@ -1,19 +1,30 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+import { updateTab } from '../../actions/index';
+
 import HeaderWidget from './partials/HeaderWidget';
 import TabsProgress from '../tabs_progress/TabsProgress';
 import TabHeader from '../tabs_progress/TabHeader';
+
 import LocationServiceProviderContent from './location_service_provider/LocationServiceProviderContent';
+import PersonalInfoContent from './personal_info/PersonalInfoContent'
 
 import SwipeableViews from 'react-swipeable-views';
 
 import './BookingForm.scss';
 import widgetSettings from '../../widgetSettings';
 
-export default class BookingForm extends React.Component {
+function mapStateToProps(state) {
+  return {
+    currentTab: state.ui.currentTab
+  };
+}
+
+class BookingForm extends React.Component {
 
   state = {
-    currentTab : 0,
+    currentTab : 2,
     steps: {
       step1: {
         label: "Pick a location, service & provider",
@@ -38,15 +49,11 @@ export default class BookingForm extends React.Component {
   }
 
   changeTab = (tabIndex) => {
-    // console.log(tabIndex);
-    this.setState({
-      currentTab: tabIndex
-    });
+    this.props.updateTab(tabIndex);
   }
 
   getProgress = () => {
-    let progress = ((this.state.currentTab + 1) / 3) * 100;
-    // console.log('progress', progress );
+    let progress = ((this.props.currentTab + 1) / 3) * 100;
     return progress;
   }
 
@@ -65,7 +72,7 @@ export default class BookingForm extends React.Component {
         </div>
 
         <SwipeableViews
-          index={this.state.currentTab}          
+          index={this.props.currentTab}          
         >
           <div className="TabContainer">
             <LocationServiceProviderContent onFinish={this.changeTab.bind(this, 1)}/>
@@ -74,7 +81,7 @@ export default class BookingForm extends React.Component {
             Tab 2
           </div>
           <div className="TabContainer">
-            Tab 3
+            <PersonalInfoContent />
           </div>
 
         </SwipeableViews>
@@ -84,3 +91,8 @@ export default class BookingForm extends React.Component {
     );
   }
 }
+
+export default connect(
+  mapStateToProps,
+  { updateTab }
+)(BookingForm)

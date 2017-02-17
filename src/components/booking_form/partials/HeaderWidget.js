@@ -8,8 +8,8 @@ export default class HeaderWidget extends React.Component {
   render() {
     return (
       <Toolbar
-        className="headerWidget"
         colored
+        className="headerWidget"        
         title="Appointment Booking"            
       >
         <h3>In 3 easy steps</h3>

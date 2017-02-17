@@ -207,7 +207,7 @@ export default class LocationServiceProviderContent extends React.Component {
               menuItems={['430 Seymour street', '480 Robson street', '300 Granville street']}
               value={this.state.location}
               onChange={this.onChangeLocation}
-              className="DropdownSelect"
+              className="dropdownSelect"
               iconChildren="keyboard_arrow_down"
             />
           </Step>          
@@ -224,7 +224,7 @@ export default class LocationServiceProviderContent extends React.Component {
               menuItems={['Any Provider', 'Kate Hudson', 'Jennifer Smith', 'Brian Roberts']}
               value={this.state.provider}
               onChange={this.onChangeProvider}
-              className="DropdownSelect"
+              className="dropdownSelect"
               iconChildren="keyboard_arrow_down"
             />
           </Step>

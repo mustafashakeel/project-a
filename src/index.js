@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { Router, browserHistory} from 'react-router';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 
+import promise from 'redux-promise'
 
-import widgetSettings from './widgetSettings';
+import reducers from './reducers';
 
-import './index.scss';
+const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
-// import App from './App.js';
-// import routes from './routes';
 import BookingForm from './components/booking_form/BookingForm';
+import widgetSettings from './widgetSettings';
+import './index.scss';
 
 
 const settings = {
@@ -20,13 +22,7 @@ const settings = {
 widgetSettings.setValue(settings);
 
 ReactDOM.render(
-  <BookingForm />
+  <Provider store={createStoreWithMiddleware(reducers)}>
+      <BookingForm />
+  </Provider>
   , document.getElementById('yocale-booking-widget'));
-
-// export const init = (settings) => {
-//   console.log(settings);
-// ReactDOM.render(
-//   <Router history={browserHistory} routes={routes}/>
-//   , document.getElementById('yocale-booking-widget'));
-// }
-

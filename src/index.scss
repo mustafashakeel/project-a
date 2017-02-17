@@ -1,4 +1,8 @@
+@import './styles/vars';
+@import './styles/common';
+@import './styles/animations';
 @import '../node_modules/react-md/src/scss/react-md';
+
 
 // Include all components
 @include react-md-everything;
@@ -7,7 +11,7 @@
 
 
 body{
-  // font-family: $sansSerif;
+  font-family: $sourceSansPro;
   // font-weight: 400;
   // background-color: darken(white, 10%);
   overflow: hidden;
