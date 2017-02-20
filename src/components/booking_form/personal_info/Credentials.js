@@ -42,6 +42,7 @@ class Credentials extends React.Component {
     return (this.props.user.isUser)? 'Continue' : 'Continue as Guest'
   }
 
+
   render() {
     return (
       <div className="credentials">
@@ -55,6 +56,8 @@ class Credentials extends React.Component {
 
             <ReactCSSTransitionGroup
               transitionName="fade"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={300}
               component='div'>
               {this.showPasswordField() &&
                 <div>
@@ -64,10 +67,16 @@ class Credentials extends React.Component {
                     placeholder={this.getPasswordLabel()} />
 
                   {!this.props.user.isUser &&
-                    <button className="yocaleButton">Create Account</button>
+                    <button 
+                      className="yocaleButton"
+                      onClick={this.props.hideCredentials}
+                    >Create Account</button>
                   }
 
-                  <button className="yocaleButton">{this.showLabelContinueBtn()}</button>
+                  <button 
+                    className="yocaleButton"
+                    onClick={this.props.hideCredentials}
+                  >{this.showLabelContinueBtn()}</button>
                 </div>
               }
             </ReactCSSTransitionGroup>

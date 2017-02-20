@@ -1,6 +1,7 @@
 @import "../../styles/vars";
 
 $lightGrey: lighten($grey, 25%);
+$darkGrey : darken($grey, 30%);
 
 .StepperContainer{
   clear:both;
@@ -9,32 +10,43 @@ $lightGrey: lighten($grey, 25%);
   .StepContainer {
     position: relative;
 
-    // &:after{
-    //   content: '';
-    //   display: block;
-    //   height: 100%;
-    //   width: 100%;
-    //   position: absolute;
-    //   left: 0;
-    //   top: 0px;
-    // }
+    strong {
+      font-weight: bold;
+    }
 
-    // &.active, &.completed {
-    //   &:after{
-    //     display: none;
-    //   }
-    // }
+    .stepContentBorder{
+      border: 1px solid $lightGrey;
+      margin: 10px 12px;
+
+      p {
+        color: $darkGrey;
+        font-family: $lato;
+        line-height: 1em;
+        font-size: 11px;
+        margin-bottom: 5px;
+
+        .centered{
+          text-align: center;
+        }
+      }
+    }
+
+    .stepContent {
+      padding: 10px 10px 0px 28px;
+
+      p {
+        font-family: $lato;
+        font-size: 11px;
+        color: $darkGrey;
+        padding: 0px 0 14px;
+        margin-bottom: 0;
+      }
+    }
 
     h4 {
-      font-family: $sourceSansPro;
-      font-size: 8px;
-      font-weight: bold;
-      letter-spacing: 0.8px;
-      line-height: 1em;
-      margin:0;
+      @include uppercaseTitle;
       padding-left: 28px;
       padding-top: 5px;
-      text-transform: uppercase;;
 
       span{
         color: $grey;
@@ -46,15 +58,16 @@ $lightGrey: lighten($grey, 25%);
     
     .stepLine {
       background-color: $lightGrey;
-      height: calc(100% - 10px);
+      height: calc(100% - 15px);
       left:12px;
       position: absolute;
       top: 15px;
       width: 1px;
 
       &.completed {
+        top: 20px;
         background-color: $yocaleOrange;
-        height: calc(100% - 15px);
+        height: calc(100% - 20px);
       }
     }
 
@@ -65,7 +78,7 @@ $lightGrey: lighten($grey, 25%);
       height: 6px;
       left: 10px;
       position: absolute;
-      top: 7px;
+      top: 5px;
       width: 6px;
 
       &.completed{
@@ -76,7 +89,7 @@ $lightGrey: lighten($grey, 25%);
           font-size: 14px;
           left: -3px;
           position: absolute;
-          top: -8px;
+          top: -5px;
         }
       }
         

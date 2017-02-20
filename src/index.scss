@@ -3,19 +3,24 @@
 @import './styles/animations';
 @import '../node_modules/react-md/src/scss/react-md';
 
+$md-primary-color: $yocaleOrange;
 
 // Include all components
 @include react-md-everything;
 // $FontPathSourceSansPro: "../public/fonts";
 // @import '../node_modules/npm-font-source-sans-pro/source-sans-pro';
 
+#yocale-booking-widget{
+  width: 100vw;
+}
 
 body{
-  font-family: $sourceSansPro;
-  // font-weight: 400;
-  // background-color: darken(white, 10%);
-  overflow: hidden;
-  margin: 0px ;
-  padding: 0px ;
+  font-family: $lato ;
   height: 100%;
+  margin: 0px ;
+  overflow: hidden;
+  padding: 0px ;
+}
+h1, h2, h3, h4{
+  font-family: $sourceSansPro !important;
 }

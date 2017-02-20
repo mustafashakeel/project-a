@@ -1,7 +1,22 @@
-.dialogCredentials {
-  .md-dialog{
-    width: 96vw;
-    height: 96vh;
-    margin: 2vh 2vw;
+@import '../../../styles/vars';
+
+.PersonalInfoContent{
+  h4 {
+    @include uppercaseTitle;
+  }
+
+  .bookAppointmentBtn {
+    background-color: $yocaleBlue;
+    border:none;
+    color:$white;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 30px;
+    padding: 10px;
+    width: 100%;
+
+    &:focus{
+      display: none;
+    }
   }
 }

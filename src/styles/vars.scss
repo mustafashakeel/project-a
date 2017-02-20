@@ -4,8 +4,11 @@ $yocaleBlue: #5686db;
 $white: #fff; 
 $dark: #1b1e1f;
 $grey: #9e9e9e;
+$lightGrey: lighten($grey, 25%);
+$darkGrey : darken($grey, 30%);
 
 $sourceSansPro : 'Open Sans', sans-serif;
+$lato : 'Lato', sans-serif;
 
 // Breakpoints
 // ------------------------- Source: http://blog.scur.pl/2012/06/variable-media-queries-less-css/
@@ -24,4 +27,17 @@ $desktop-xl:  		"only screen and (min-width: 1201px)";
   .dark_background{
     background-color: $dark; 
   }
+}
+
+
+// YOCALE MIXINGS
+
+@mixin uppercaseTitle {
+  font-family: $sourceSansPro;
+  font-size: 8px;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+  line-height: 1em;
+  margin:0;  
+  text-transform: uppercase;
 }

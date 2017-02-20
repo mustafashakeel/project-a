@@ -1,0 +1,13 @@
+@import '../../../styles/vars';
+
+.infoStepper{
+  padding: 15px 0 0;
+  margin-bottom: 0px;
+  
+  .linkIntakeForm {
+    color: $yocaleBlue;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

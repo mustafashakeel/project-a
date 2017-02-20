@@ -193,7 +193,7 @@ export default class LocationServiceProviderContent extends React.Component {
       <div className="LocationContainer">
         <button style={{display:"none"}} onClick={this.nextStep.bind(this)}>Next step</button>      
 
-        <Stepper activeStep={0}>
+        <Stepper>
           <Step 
             style={{height: "55px"}}
             stepLine 

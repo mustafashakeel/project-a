@@ -1,3 +1,5 @@
+// REACT-MD OVERWRITES
+
 .dropdownSelect{
   background-color: $white;
   border: 1px solid lighten($grey, 25%);
@@ -48,6 +50,33 @@
   button{
     height: 30px;
   }
+}
+
+.md-no-scroll {
+  position: absolute !important;
+}
+
+.md-dialog {
+  // width: 
+}
+
+// YOCALE ONLY 
+
+.align-center{
+  text-align: center;
+}
+.align-left{
+  text-align: left;
+}
+.align-right{
+  text-align: right;
+}
+
+.underline{
+  text-decoration: underline;
+}
+.pointer{
+  cursor: pointer;
 }
 
 .yocaleButton {

@@ -7,6 +7,7 @@ export default class Step extends React.Component {
   getClassNames = (defaultClass) => {
     
     return classNames({
+      [this.props.className]: this.props.className && true,
       [defaultClass]: true,
       uncompleted: this.props.completed === false,
       completed: this.props.completed === true,
