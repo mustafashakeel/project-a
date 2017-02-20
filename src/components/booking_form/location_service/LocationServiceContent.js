@@ -212,23 +212,6 @@ export default class LocationServiceContent extends React.Component {
             />
           </Step>          
           <Step
-            style={{height: "55px"}}
-            stepLine
-            active={this.state.currentStep == 1}            
-            completed={this.state.currentStep > 1}
-            >
-            <SelectField
-              id="selectProvider"
-              placeholder="Select a provider"
-              position={SelectField.Positions.BELOW}
-              menuItems={['Any Provider', 'Kate Hudson', 'Jennifer Smith', 'Brian Roberts']}
-              value={this.state.provider}
-              onChange={this.onChangeProvider}
-              className="dropdownSelect"
-              iconChildren="keyboard_arrow_down"
-            />
-          </Step>
-          <Step
             completed={this.state.currentStep > 2} 
             active={this.state.currentStep == 2}
             >
