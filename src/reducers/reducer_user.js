@@ -2,7 +2,7 @@ import { FETCH_USER, GET_CURRENT_USER } from '../actions/index';
 
 const INITIAL_STATE = { 
   credentials: {
-    email: 'fernando@hotmail.com',
+    email: '',
     password: ''
   },
   isUser: false,

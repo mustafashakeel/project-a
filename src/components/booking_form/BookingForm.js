@@ -7,8 +7,9 @@ import HeaderWidget from './partials/HeaderWidget';
 import TabsProgress from '../tabs_progress/TabsProgress';
 import TabHeader from '../tabs_progress/TabHeader';
 
-import LocationServiceProviderContent from './location_service_provider/LocationServiceProviderContent';
-import PersonalInfoContent from './personal_info/PersonalInfoContent'
+import LocationServiceContent from './location_service/LocationServiceContent';
+import PersonalInfoContent from './personal_info/PersonalInfoContent';
+import ProviderTimeContent from './provider_time/ProviderTimeContent';
 
 import SwipeableViews from 'react-swipeable-views';
 
@@ -27,11 +28,11 @@ class BookingForm extends React.Component {
     currentTab : 2,
     steps: {
       step1: {
-        label: "Pick a location, service & provider",
+        label: "Pick a location, service",
         icon : "home"
       },
       step2: {
-        label: "Find a date & time",
+        label: "Find a provider & time",
         icon: "date_range"
       },
       step3: {
@@ -75,10 +76,10 @@ class BookingForm extends React.Component {
           index={this.props.currentTab}          
         >
           <div className="TabContainer">
-            <LocationServiceProviderContent onFinish={this.changeTab.bind(this, 1)}/>
+            <LocationServiceContent onFinish={this.changeTab.bind(this, 1)}/>
           </div>
           <div className="TabContainer">
-            Tab 2
+            <ProviderTimeContent onFinish={this.changeTab.bind(this, 2)}/>
           </div>
           <div className="TabContainer">
             <PersonalInfoContent />

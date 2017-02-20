@@ -9,7 +9,7 @@ import ListService from "./ListService";
 
 
 
-import './LocationServiceProviderContent.scss';
+import './LocationServiceContent.scss';
 
 const treeInit = [
     {
@@ -140,7 +140,7 @@ const treeInit = [
 
 
 
-export default class LocationServiceProviderContent extends React.Component {
+export default class LocationServiceContent extends React.Component {
 
   state = {
     currentStep: 0,

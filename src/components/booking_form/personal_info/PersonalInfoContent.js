@@ -10,7 +10,7 @@ import './PersonalInfoContent.scss';
 
 export default class PersonalInfoContent extends React.Component {
   state = {
-    showLogin: false
+    showLogin: true
   }
 
   hideCredentials = () => {
