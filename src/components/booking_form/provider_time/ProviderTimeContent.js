@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Calendar from './Calendar'
+
 import SelectField from 'react-md/lib/SelectFields';
 
 import './ProviderTimeContent.scss';
@@ -21,7 +23,7 @@ export class ProviderTimeContent extends React.Component {
     this.setState({
       provider: newValue
     });
-    this.props.onFinish();
+    // this.props.onFinish();
   }
   render() {
     return (
@@ -36,7 +38,10 @@ export class ProviderTimeContent extends React.Component {
           className="dropdownSelect"
           iconChildren="keyboard_arrow_down"
         />
+
+        <Calendar onSlotSelected={this.props.onFinish}/>
       </div>
+
     );
   }
 }

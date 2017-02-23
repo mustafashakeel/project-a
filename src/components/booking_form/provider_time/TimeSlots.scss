@@ -1,0 +1,31 @@
+@import '../../../styles/vars';
+
+.TimeSlots{
+  text-align: center;
+
+  ul {
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items:center;
+      justify-content: center;
+
+      li {
+        background: $lightGrey;
+        color: darken($lightGrey, 50%);
+        padding: 5px;
+        border-radius: 20px;
+        list-style: none;
+        display: inline-block;
+        flex-basis: calc(33.3% - 4vw);
+        margin: 1vh 2vw;
+        cursor: pointer;
+
+        &:hover, &.active{
+          background: $yocaleOrange;
+          color: $white;
+        }
+      }
+  }
+}

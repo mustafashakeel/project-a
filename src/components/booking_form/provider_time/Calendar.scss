@@ -1,0 +1,75 @@
+@import '../../../styles/vars';
+
+
+
+
+// react-datetime style
+.rdtPicker {
+  width: 100% !important;
+  background: $white !important;
+
+  .rdtDay{     
+    .circleAvailability {
+      width: 3px;
+      content: " ";
+      height: 3px;
+      display: inline-block;
+      background: #ff0000;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 2px;
+      right: 0;
+      left: 0;
+      margin: auto;
+    }
+  }
+
+  .rdtDisabled{
+    .circleAvailability{
+      display: none !important;
+    }
+  }
+
+
+  .rdtActive {
+    color: #000 !important;
+    background-color: lighten($yocaleOrange, 20%) !important;
+  }
+
+  .dow {
+    color: $yocaleBlue;
+  }
+
+  table{
+    border-collapse: collapse;
+
+
+    & * {
+      font-family: $lato !important;
+    }
+
+
+    thead {
+      background: #fff;
+      color: $yocaleOrange;
+      // font-weight: 600 !important;
+
+      th{
+         margin: 0;
+         padding: 0;
+         border: 0;
+         // font-weight: 600;
+      }
+    }
+
+    tbody{
+      border-top: 1px solid $yocaleOrange;
+    }
+
+
+    td{
+      position: relative;
+    }
+  }
+
+}

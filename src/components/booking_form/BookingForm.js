@@ -28,7 +28,7 @@ class BookingForm extends React.Component {
     currentTab : 2,
     steps: {
       step1: {
-        label: "Pick a location, service",
+        label: "Pick a location & service",
         icon : "home"
       },
       step2: {
@@ -74,6 +74,7 @@ class BookingForm extends React.Component {
 
         <SwipeableViews
           index={this.props.currentTab}          
+          disabled={false}
         >
           <div className="TabContainer">
             <LocationServiceContent onFinish={this.changeTab.bind(this, 1)}/>

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { connect } from 'react-redux';
 import { fetchUser } from '../../../actions/index';
 
@@ -7,6 +6,7 @@ import isEmail from 'validator/lib/isEmail';
 
 import Button from 'react-md/lib/Buttons/Button';
 import TextField from 'react-md/lib/TextFields';
+import FadeInOut from '../../common/FadeInOut';
 
 import './Credentials.scss'; 
 
@@ -34,10 +34,6 @@ class Credentials extends React.Component {
     })
   }
 
-  showPasswordField = () => {
-    return this.state.isValidEmail || this.props.user.isUser;
-  }
-
   showLabelContinueBtn = () => {
     return (this.props.user.isUser)? 'Continue' : 'Continue as Guest'
   }
@@ -54,12 +50,7 @@ class Credentials extends React.Component {
             onChange={this.onChangeEmail.bind(this)} 
             value={this.props.user.credentials.email}/>
 
-            <ReactCSSTransitionGroup
-              transitionName="fade"
-              transitionEnterTimeout={500}
-              transitionLeaveTimeout={300}
-              component='div'>
-              {this.showPasswordField() &&
+            <FadeInOut className="timeAvailability" show={this.state.isValidEmail || this.props.user.isUser}>
                 <div>
                   <TextField 
                     id="credentialsPassword" 
@@ -78,8 +69,7 @@ class Credentials extends React.Component {
                     onClick={this.props.hideCredentials}
                   >{this.showLabelContinueBtn()}</button>
                 </div>
-              }
-            </ReactCSSTransitionGroup>
+            </FadeInOut>
 
 
         </div>
