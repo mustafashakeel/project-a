@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import { fetchUser } from '../../../actions/index';
 
 import isEmail from 'validator/lib/isEmail';
@@ -23,7 +24,8 @@ class Credentials extends React.Component {
   }
 
   getPasswordLabel = () => {
-    return (this.props.user.isUser)? "Enter your password *" : "Create a password *";
+    const { t } = this.props;
+    return (this.props.user.isUser)? t('application.user_info.enter_password') : t('application.user_info.create_password');
 
   }  
 
@@ -35,14 +37,16 @@ class Credentials extends React.Component {
   }
 
   showLabelContinueBtn = () => {
-    return (this.props.user.isUser)? 'Continue' : 'Continue as Guest'
+    const {t} = this.props;
+    return (this.props.user.isUser)? t('application.user_info.continue') : t('application.user_info.continue_as_guest')
   }
 
 
   render() {
+    const {t} = this.props;
     return (
       <div className="credentials">
-        <h2>Complete your contact info to confirm your booking!</h2>
+        <h2>{t('application.user_info.complete_info')}</h2>
         <div className="innerCredentials">
           <TextField 
             id="credentialsEmail" 
@@ -61,7 +65,7 @@ class Credentials extends React.Component {
                     <button 
                       className="yocaleButton"
                       onClick={this.props.hideCredentials}
-                    >Create Account</button>
+                    >{t('application.user_info.create_account')}</button>
                   }
 
                   <button 
@@ -81,4 +85,4 @@ class Credentials extends React.Component {
 export default connect(
   mapStateToProps,
   { fetchUser }
-)(Credentials)
+)(translate()(Credentials))

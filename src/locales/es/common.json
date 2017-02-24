@@ -1,0 +1,38 @@
+{
+  "application" :{
+    "header_title": "Reservar Cita",
+    "steps": {
+      "step1": "Elige ubicación y servicio",
+      "step2": "Elige proovedor y hora",
+      "step3": "Ingresa tu info y contacto"
+    },
+    "location_service": {
+      "select_location": "Selecciona una ubicación",
+      "choose_service": "Selecciona un servicio",
+      "categories_count": "{{count}} categoria",
+      "categories_count_plural": "{{count}} categorias"
+    },
+    "provider_time": {
+      "select_provider": "Selecciona un proovedor"
+    },
+    "user_info": {
+      "add_note": "Agregar nota",
+      "book_my_appointment": "Reservar mi cita",
+      "complete_info": "Completa tu información de contacto para confirmar la cita!",
+      "continue": "Continuar",
+      "continue_as_guest": "Continuar como Invitado",
+      "create_account": "Crear Cuenta",
+      "create_password": "Crea tu password *",
+      "edit": "Editar",
+      "enter_password": "Ingresa tu password *",
+      "enter_payment_info": "Ingresar informacion de pago",
+      "fill_out_intake": "Llenar forma",
+      "intake_form": "Intake Form",
+      "intake_form_copy": "Este servicio requiere de llenar una forma que será enviada a tu email.",
+      "notification": "Notificación",
+      "payment": "Pago",
+      "save": "Guardar",
+      "logged_in": "Has ingresado!"
+    }
+  }
+}

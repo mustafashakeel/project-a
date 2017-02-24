@@ -8,7 +8,7 @@ var url = require('url');
 var paths = require('./paths');
 var getClientEnvironment = require('./env');
 
-
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 function ensureSlash(path, needsSlash) {
   var hasSlash = path.endsWith('/');
@@ -185,6 +185,9 @@ module.exports = {
     ];
   },
   plugins: [
+    new CopyWebpackPlugin([
+      { from: 'src/locales', to: 'locales', force: true },
+    ]),
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In production, it will be an empty string unless you specify "homepage"

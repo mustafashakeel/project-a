@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 
 import TextField from 'react-md/lib/TextFields';
 import SelectField from 'react-md/lib/SelectFields';
@@ -15,24 +16,24 @@ function mapStateToProps(state) {
 export class BookingMemo extends React.Component {
 
   render() {
+    const {t} = this.props;
     return (
       <div className="BookingMemo">
-        <h4>Add note</h4>
+        <h4>{t('application.user_info.add_note')}</h4>
         <TextField
           id="bookingNote"
-          rows={1}
+          rows={2}
           block
           paddedBlock
           className="SelectSimpleBorder"
           maxRows={4}
         />
         <div className="BookingNotification">
-          <h4>Notification</h4>
+          <h4>{t('application.user_info.notification')}</h4>
           <div className="selectGroup">
           
               <SelectField
                 id="emailNote"
-                block
                 className="SelectSimpleBorder md-cell--2-phone"
                 menuItems={['Email', 'Call']}
                 position={SelectField.Positions.BELOW}
@@ -57,4 +58,4 @@ export class BookingMemo extends React.Component {
 export default connect(
   mapStateToProps,
 // Implement map dispatch to props
-)(BookingMemo)
+)(translate()(BookingMemo))

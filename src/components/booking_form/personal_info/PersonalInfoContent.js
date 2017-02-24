@@ -1,5 +1,5 @@
 import React from 'react';
-import Dialog from 'react-md/lib/Dialogs';
+import {translate} from 'react-i18next';
 
 import Credentials from './Credentials';
 import InfoStepper from './InfoStepper';
@@ -8,9 +8,9 @@ import BookingMemo from './BookingMemo';
 
 import './PersonalInfoContent.scss';
 
-export default class PersonalInfoContent extends React.Component {
+class PersonalInfoContent extends React.Component {
   state = {
-    showLogin: true
+    showLogin: false
   }
 
   hideCredentials = () => {
@@ -18,6 +18,7 @@ export default class PersonalInfoContent extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     return (
       <div className="PersonalInfoContent">
       {this.state.showLogin ?
@@ -26,10 +27,12 @@ export default class PersonalInfoContent extends React.Component {
         <div>
           <InfoStepper />
           <BookingMemo />
-          <button className="bookAppointmentBtn">Book my appointment</button>
+          <button className="bookAppointmentBtn">{t('application.user_info.book_my_appointment')}</button>
         </div>
       }
       </div>
     );
   }
 }
+
+export default translate()(PersonalInfoContent)

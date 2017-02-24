@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 import { getCurrentUser } from '../../../actions/index';
 
 import Dialog from 'react-md/lib/Dialogs';
@@ -36,6 +37,7 @@ export class InfoStepper extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     return (
         <Stepper className="infoStepper">
           <Step
@@ -43,7 +45,7 @@ export class InfoStepper extends React.Component {
             stepLine
             >
 
-            <h4>You've been logged in!</h4>
+            <h4>{t('application.user_info.logged_in')}</h4>
             <div className="stepContent">
               <p>{this.props.user.credentials.email}</p>
             </div>
@@ -53,20 +55,20 @@ export class InfoStepper extends React.Component {
             stepLine
             >
 
-            <h4>Intake Form</h4>
+            <h4>{t('application.user_info.intake_form')}</h4>
             <div className="stepContent">
-              <p>This service requires that a form be filled out and will be emailed to you. <span className="linkIntakeForm" onClick={this.toggleIntakeForm.bind(this)}>Fill out now.</span></p>
+              <p>{t('application.user_info.intake_form_copy')} <span className="linkIntakeForm" onClick={this.toggleIntakeForm.bind(this)}>{t('application.user_info.fill_out_intake')}.</span></p>
               <Dialog
                 id="intakeForm"
                 visible={this.state.intakeFormOpen}
-                title="Intake Form"
+                title={t('application.user_info.intake_form')}
                 focusOnMount={false}
                 modal              
                 onHide={this.intakeFormHide}
                 actions={[{
                   onClick: this.intakeFormSave.bind(this),
                   primary: true,
-                  label: 'Save',
+                  label: t('application.user_info.save')
                 }]}
               >
                 <IntakeForm />
@@ -76,7 +78,7 @@ export class InfoStepper extends React.Component {
           <Step
             completed={false}         
             >
-            <h4>Payment</h4>
+            <h4>{t('application.user_info.payment')}</h4>
             <div className="stepContentBorder">
               <PaymentCC />            
             </div>
@@ -89,4 +91,4 @@ export class InfoStepper extends React.Component {
 export default connect(
   mapStateToProps,
   { getCurrentUser }
-)(InfoStepper)
+)(translate()(InfoStepper))

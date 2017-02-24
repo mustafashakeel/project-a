@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 
 import Stepper from '../../stepper/Stepper';
 import Step from '../../stepper/Step';
@@ -140,7 +141,7 @@ const treeInit = [
 
 
 
-export default class LocationServiceContent extends React.Component {
+class LocationServiceContent extends React.Component {
 
   state = {
     currentStep: 0,
@@ -189,6 +190,7 @@ export default class LocationServiceContent extends React.Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className="LocationContainer">
         <button style={{display:"none"}} onClick={this.nextStep.bind(this)}>Next step</button>      
@@ -202,7 +204,7 @@ export default class LocationServiceContent extends React.Component {
 
             <SelectField
               id="selectSelection"
-              placeholder="Select a location"
+              placeholder={t('application.location_service.select_location')}
               position={SelectField.Positions.BELOW}
               menuItems={['430 Seymour street', '480 Robson street', '300 Granville street']}
               value={this.state.location}
@@ -216,7 +218,7 @@ export default class LocationServiceContent extends React.Component {
             active={this.state.currentStep == 2}
             >
 
-            <h4>Choose a service <span>(4 categories)</span></h4>
+            <h4>{t('application.location_service.choose_service')} <span>({t('application.location_service.categories_count', {count: 4})})</span></h4>
             
 
             <InfinityMenu
@@ -232,3 +234,4 @@ export default class LocationServiceContent extends React.Component {
     );
   }
 }
+export default translate()(LocationServiceContent)

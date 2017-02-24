@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 
 import { connect } from 'react-redux';
 import { updateTab } from '../../actions/index';
@@ -24,29 +25,44 @@ function mapStateToProps(state) {
 
 class BookingForm extends React.Component {
 
-  state = {
-    currentTab : 2,
-    steps: {
-      step1: {
-        label: "Pick a location & service",
-        icon : "home"
-      },
-      step2: {
-        label: "Find a provider & time",
-        icon: "date_range"
-      },
-      step3: {
-        label: "Enter your info & contact",
-        icon: "perm_identity"
+  
+
+  constructor(props) {
+    super(props);
+    const { t } = this.props;
+    this.settings = widgetSettings.getValue();
+    this.state = {
+      steps: {
+        step1: {
+          label: "",
+        },
+        step2: {
+          label: "",
+        },
+        step3: {
+          label: "",
+        }
       }
     }
   }
 
-  constructor(props) {
-    super(props);
-    
-    this.settings = widgetSettings.getValue();
-    // this.changeTab = this.changeTab.bind(this);
+  shouldComponentUpdate =() => {
+    const { t } = this.props;
+    const steps = {
+        step1: {
+          label: t('application.steps.step1'),
+        },
+        step2: {
+          label: t('application.steps.step2'),
+        },
+        step3: {
+          label: t('application.steps.step3'),
+        }
+    }
+    this.setState({steps})
+
+
+    return true;
   }
 
   changeTab = (tabIndex) => {
@@ -60,15 +76,15 @@ class BookingForm extends React.Component {
 
   render() {
     var { steps } = this.state;
-
+    const { t } = this.props;
     return (
       <div className="booking-form">
         <div className="mainHeader">
           <HeaderWidget />    
           <TabsProgress progress={this.getProgress()}>
-            <TabHeader label={steps.step1.label} icon={steps.step1.icon} onClick={this.changeTab.bind(this, 0)} />
-            <TabHeader label={steps.step2.label} isCenter icon={steps.step2.icon} onClick={this.changeTab.bind(this, 1)}  />
-            <TabHeader label={steps.step3.label} icon={steps.step3.icon} onClick={this.changeTab.bind(this, 2)}  />
+            <TabHeader label={steps.step1.label} icon="home" onClick={this.changeTab.bind(this, 0)} />
+            <TabHeader label={steps.step2.label} isCenter icon="date_range" onClick={this.changeTab.bind(this, 1)}  />
+            <TabHeader label={steps.step3.label} icon="perm_identity" onClick={this.changeTab.bind(this, 2)}  />
           </TabsProgress>
         </div>
 
@@ -94,7 +110,8 @@ class BookingForm extends React.Component {
   }
 }
 
-export default connect(
+export default 
+connect(
   mapStateToProps,
   { updateTab }
-)(BookingForm)
+)(translate()(BookingForm))

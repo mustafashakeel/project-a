@@ -7,6 +7,8 @@ var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeMod
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+
 
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -177,6 +179,10 @@ module.exports = {
     ];
   },
   plugins: [
+
+    new CopyWebpackPlugin([
+      { from: 'src/locales', to: 'locales', force: true },
+    ]),
     // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     // In development, this will be an empty string.

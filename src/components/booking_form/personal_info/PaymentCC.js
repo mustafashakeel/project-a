@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 
 import './PaymentCC.scss';
 
@@ -14,6 +15,7 @@ export class PaymentCC extends React.Component {
     paymentDetails : false
   }
   render() {
+    const {t} = this.props;
     return (
       <div className="Payment">
         {!this.state.paymentDetails ?
@@ -36,7 +38,7 @@ export class PaymentCC extends React.Component {
               <p 
                 className="underline"
                 onClick={()=>this.setState({paymentDetails: !this.state.paymentDetails})}
-              >Enter your payment info</p>
+              >{t('application.user_info.enter_payment_info')}</p>
             </div>
           </div>
         :
@@ -50,7 +52,7 @@ export class PaymentCC extends React.Component {
             <div 
               className="pointer editPayment align-right" 
               onClick={()=>this.setState({paymentDetails: !this.state.paymentDetails})}
-            >Edit</div>
+            >{t('application.user_info.edit')}</div>
           </div>
         </div>
       }
@@ -62,4 +64,4 @@ export class PaymentCC extends React.Component {
 export default connect(
   mapStateToProps,
 // Implement map dispatch to props
-)(PaymentCC)
+)(translate()(PaymentCC))

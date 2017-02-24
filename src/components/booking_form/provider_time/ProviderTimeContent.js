@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
 
 import Calendar from './Calendar'
 
@@ -26,11 +27,12 @@ export class ProviderTimeContent extends React.Component {
     // this.props.onFinish();
   }
   render() {
+    const { t } = this.props;
     return (
       <div className="ProviderTimeContent">
         <SelectField
           id="selectProvider"
-          placeholder="Select a provider"
+          placeholder={t('application.provider_time.select_provider')}
           position={SelectField.Positions.BELOW}
           menuItems={['Any Provider', 'Kate Hudson', 'Jennifer Smith', 'Brian Roberts']}
           value={this.state.provider}
@@ -49,4 +51,4 @@ export class ProviderTimeContent extends React.Component {
 export default connect(
   mapStateToProps,
 // Implement map dispatch to props
-)(ProviderTimeContent)
+)(translate()(ProviderTimeContent))

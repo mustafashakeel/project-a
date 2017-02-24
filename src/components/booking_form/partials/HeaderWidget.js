@@ -1,19 +1,23 @@
 import React from 'react';
+import { translate } from 'react-i18next';
 
 import Toolbar from 'react-md/lib/Toolbars';
 import './HeaderWidget.scss';
 
-export default class HeaderWidget extends React.Component {
+
+class HeaderWidget extends React.Component {
 
   render() {
+    const { t } = this.props;
     return (
       <Toolbar
         colored
         className="headerWidget"        
-        title="Appointment Booking"            
+        title={t('application.header_title')}            
       >
-        <h3>In 3 easy steps</h3>
       </Toolbar>
     );
   }
 }
+
+export default translate()(HeaderWidget);
