@@ -1,12 +1,19 @@
 @import "../../styles/vars";
 
+$heightHeader: 90px;
+
 .mainHeader{
-  height: 100px;
+  height: $heightHeader;
+  box-shadow: 0 4px 8px rgba(0,0,0,.28);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 2;
 }
 
 .react-swipeable-view-container{
   position: fixed;
   width: 100%;
-  top: 100px;
-  height: calc(100% - 100px);
+  top: $heightHeader;
+  height: calc(100% - #{$heightHeader});
 }

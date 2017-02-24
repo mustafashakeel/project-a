@@ -5,8 +5,8 @@ import { getCurrentUser } from '../../../actions/index';
 
 import Dialog from 'react-md/lib/Dialogs';
 
-import Stepper from '../../stepper/Stepper';
-import Step from '../../stepper/Step';
+import Stepper from '../../common/stepper/Stepper';
+import Step from '../../common/stepper/Step';
 
 import IntakeForm from './IntakeForm';
 import PaymentCC from './PaymentCC';

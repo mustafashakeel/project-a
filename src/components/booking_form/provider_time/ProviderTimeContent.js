@@ -25,7 +25,6 @@ export class ProviderTimeContent extends React.Component {
     this.setState({
       provider: newValue
     });
-    // this.props.onFinish();
   }
 
   providerList = () => {

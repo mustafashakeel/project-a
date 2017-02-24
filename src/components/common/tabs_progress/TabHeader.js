@@ -4,6 +4,13 @@ import FontIcon from 'react-md/lib/FontIcons';
 
 export default class TabHeader extends React.Component {
 
+  getTabHeaderClass = () => {
+    return classNames({
+      "TabHeader": true,
+      "active": this.props.active
+    })
+  }
+
   getIconClass = () => {
     return classNames({
       "TabHeaderIcon": true,
@@ -13,7 +20,7 @@ export default class TabHeader extends React.Component {
 
   render() {
     return (
-      <div className="TabHeader" onClick={this.props.onClick}>
+      <div className={this.getTabHeaderClass()} onClick={this.props.onClick}>
         <FontIcon className={this.getIconClass()}>
           {this.props.icon}
         </FontIcon>

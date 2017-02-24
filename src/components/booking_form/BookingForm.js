@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { updateTab } from '../../actions/index';
 
 import HeaderWidget from './partials/HeaderWidget';
-import TabsProgress from '../tabs_progress/TabsProgress';
-import TabHeader from '../tabs_progress/TabHeader';
+import TabsProgress from '../common/tabs_progress/TabsProgress';
+import TabHeader from '../common/tabs_progress/TabHeader';
 
 import LocationServiceContent from './location_service/LocationServiceContent';
 import PersonalInfoContent from './personal_info/PersonalInfoContent';
@@ -69,11 +69,6 @@ class BookingForm extends React.Component {
     this.props.updateTab(tabIndex);
   }
 
-  getProgress = () => {
-    let progress = ((this.props.currentTab + 1) / 3) * 100;
-    return progress;
-  }
-
   render() {
     var { steps } = this.state;
     const { t } = this.props;
@@ -81,16 +76,29 @@ class BookingForm extends React.Component {
       <div className="booking-form">
         <div className="mainHeader">
           <HeaderWidget />    
-          <TabsProgress progress={this.getProgress()}>
-            <TabHeader label={steps.step1.label} icon="home" onClick={this.changeTab.bind(this, 0)} />
-            <TabHeader label={steps.step2.label} isCenter icon="date_range" onClick={this.changeTab.bind(this, 1)}  />
-            <TabHeader label={steps.step3.label} icon="perm_identity" onClick={this.changeTab.bind(this, 2)}  />
+          <TabsProgress currentTab={this.props.currentTab} onTabClick={this.changeTab}>
+            <TabHeader 
+              label={steps.step1.label} 
+              index={0}
+              icon="home" 
+            />
+            <TabHeader 
+              label={steps.step2.label} 
+              index={1} 
+              isCenter 
+              icon="date_range" 
+            />
+            <TabHeader 
+              label={steps.step3.label} 
+              index={2} 
+              icon="perm_identity" 
+            />
           </TabsProgress>
         </div>
 
         <SwipeableViews
           index={this.props.currentTab}          
-          disabled={false}
+          onChangeIndex={this.changeTab}
         >
           <div className="TabContainer">
             <LocationServiceContent onFinish={this.changeTab.bind(this, 1)}/>
@@ -101,10 +109,7 @@ class BookingForm extends React.Component {
           <div className="TabContainer">
             <PersonalInfoContent />
           </div>
-
         </SwipeableViews>
-        <div style={{display:"none"}}><button onClick={this.changeTab}>Test</button>
-        <p>Business ID: <strong>{this.settings.businessID}</strong></p></div>
       </div>          
     );
   }

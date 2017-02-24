@@ -1,10 +1,10 @@
 {
   "application" :{
-    "header_title": "Booking Appointment",
+    "header_title": "Appointment Booking",
     "steps": {
-      "step1": "Pick a location & service",
-      "step2":  "Find a provider & time",
-      "step3": "Enter your info & contact"
+      "step1": "Location & Service",
+      "step2":  "Provider & Time",
+      "step3": "Contact Info"
     },
     "location_service": {
       "categories_count": "{{count}} category",
@@ -23,7 +23,7 @@
       "continue_as_guest": "Continue as Guest",
       "create_account": "Create Account",
       "create_password": "Create a password *",
-      "edit": "Editar",
+      "edit": "Edit",
       "enter_password": "Enter your password *",
       "enter_payment_info": "Enter your payment information",
       "fill_out_intake": "Fill out now",

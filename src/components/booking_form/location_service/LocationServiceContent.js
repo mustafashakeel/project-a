@@ -1,8 +1,8 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 
-import Stepper from '../../stepper/Stepper';
-import Step from '../../stepper/Step';
+import Stepper from '../../common/stepper/Stepper';
+import Step from '../../common/stepper/Step';
 import SelectField from 'react-md/lib/SelectFields';
 import InfinityMenu from "react-infinity-menu";
 import ListCategory from "./ListCategory";

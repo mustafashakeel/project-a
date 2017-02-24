@@ -2,9 +2,9 @@
   "application" :{
     "header_title": "Reservar Cita",
     "steps": {
-      "step1": "Elige ubicación y servicio",
-      "step2": "Elige proovedor y hora",
-      "step3": "Ingresa tu info y contacto"
+      "step1": "Ubicación y Servicio",
+      "step2": "Proovedor y Fecha",
+      "step3": "información de contacto"
     },
     "location_service": {
       "select_location": "Selecciona una ubicación",
