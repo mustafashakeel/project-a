@@ -156,7 +156,7 @@ class LocationServiceContent extends React.Component {
     this.setState({
       currentStep: this.state.currentStep + 1
     });
-    if (this.state.currentStep == 2){
+    if (this.state.currentStep === 2){
       this.props.onFinish();
     }
   }
@@ -200,7 +200,7 @@ class LocationServiceContent extends React.Component {
             style={{height: "55px"}}
             stepLine 
             completed={this.state.currentStep > 0 } 
-            active={this.state.currentStep == 0}>
+            active={this.state.currentStep === 0}>
 
             <SelectField
               id="selectSelection"
@@ -215,7 +215,7 @@ class LocationServiceContent extends React.Component {
           </Step>          
           <Step
             completed={this.state.currentStep > 2} 
-            active={this.state.currentStep == 2}
+            active={this.state.currentStep === 2}
             >
 
             <h4>{t('application.location_service.choose_service')} <span>({t('application.location_service.categories_count', {count: 4})})</span></h4>

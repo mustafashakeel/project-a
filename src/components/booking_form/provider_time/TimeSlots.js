@@ -39,7 +39,7 @@ export class TimeSlots extends React.Component {
 
   getActiveClassName = (slot) => {
     return classNames({
-      active : this.props.selectedDate.hour() == slot.hour() && this.props.selectedDate.minutes() == slot.minutes()
+      active : this.props.selectedDate.hour() === slot.hour() && this.props.selectedDate.minutes() === slot.minutes()
     })
   }
 

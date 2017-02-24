@@ -14,10 +14,6 @@ export class IntakeForm extends React.Component {
     value: ''
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   _handleChange(value) {
     this.setState({ value });
   }

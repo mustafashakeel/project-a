@@ -25,10 +25,6 @@ export class Calendar extends React.Component {
     selectedDate: ""
   }
 
-  constructor(props) {
-    super(props);
-  }
-
   isValidDate = (current) => {
     return availability._days.some((availabilityDate) => {
       return current.isSame( moment(availabilityDate._date), 'day' )

@@ -11,7 +11,7 @@ export default class TabsProgress extends React.Component {
     var self = this;
     return React.Children.map(this.props.children, function(child) {
       return React.cloneElement(child, { 
-        active: self.props.currentTab == child.props.index,
+        active: self.props.currentTab === child.props.index,
         onClick: self.props.onTabClick.bind(self, child.props.index)
       })
     });

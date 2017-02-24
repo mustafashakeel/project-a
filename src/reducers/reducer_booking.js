@@ -11,10 +11,8 @@ export default function (state = INITIAL_STATE , action){
 
     case SET_BOOKING_TIME:
       return { ...state, timestamp: action.payload.timestamp };
-    break;
     default:
       return state;
-    break;
 
   }
 }

@@ -29,7 +29,6 @@ class BookingForm extends React.Component {
 
   constructor(props) {
     super(props);
-    const { t } = this.props;
     this.settings = widgetSettings.getValue();
     this.state = {
       steps: {
@@ -71,7 +70,6 @@ class BookingForm extends React.Component {
 
   render() {
     var { steps } = this.state;
-    const { t } = this.props;
     return (
       <div className="booking-form">
         <div className="mainHeader">

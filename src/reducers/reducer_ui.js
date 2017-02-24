@@ -9,10 +9,8 @@ export default function (state = INITIAL_STATE , action){
       return { 
         currentTab: action.payload.tabIndex
       };
-    break;
     default:
-      return state;
-    break;
+    return state;
 
   }
 }

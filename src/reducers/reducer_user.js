@@ -18,12 +18,10 @@ export default function (state = INITIAL_STATE , action){
       }
       return { ...state, credentials: credentials, isUser: action.payload.isUser }
      ;
-    break;
     case GET_CURRENT_USER:
-      return state;      
-    break;
+    return state;      
     default:
-      return state;
+    return state;
 
   }
 }

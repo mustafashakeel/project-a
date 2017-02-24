@@ -5,7 +5,6 @@ import { fetchUser } from '../../../actions/index';
 
 import isEmail from 'validator/lib/isEmail';
 
-import Button from 'react-md/lib/Buttons/Button';
 import TextField from 'react-md/lib/TextFields';
 import FadeInOut from '../../common/fade_in_out/FadeInOut';
 
