@@ -1,0 +1,18 @@
+@import "../../../styles/vars";
+
+.ServiceDetails{
+  img {
+    width: 100%;
+  }
+  h2{
+    font-size: $mainHeaderSize;
+    color: darken($grey, 30%);
+    margin: 0 10px;
+
+  }
+  p{
+    font-size: $contentSize;
+    margin: 10px;
+    color: darken($grey, 30%);
+  }
+}

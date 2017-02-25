@@ -4,9 +4,10 @@ import { translate } from 'react-i18next';
 import Stepper from '../../common/stepper/Stepper';
 import Step from '../../common/stepper/Step';
 import SelectField from 'react-md/lib/SelectFields';
-import InfinityMenu from "react-infinity-menu";
+// import InfinityMenu from "react-infinity-menu";
 import ListCategory from "./ListCategory";
 import ListService from "./ListService";
+import MenuServices from './MenuServices';
 
 
 
@@ -20,7 +21,7 @@ const treeInit = [
         customComponent: ListCategory,
         children: [
             {
-                name: "Service Name",
+                name: "Service Name Service Name Service Name",
                 id: 1535,
                 isOpen: false,
                 customComponent: ListService,
@@ -219,15 +220,20 @@ class LocationServiceContent extends React.Component {
             >
 
             <h4>{t('application.location_service.choose_service')} <span>({t('application.location_service.categories_count', {count: 4})})</span></h4>
-            
+            <MenuServices
+                className="ServiceMenu" 
+                parentComponent={ListCategory} 
+                childComponent={ListService}
+                list={this.state.tree}
+            />
 
-            <InfinityMenu
+            {/* <InfinityMenu
                 className="ServiceMenu"
                 disableDefaultHeaderContent={true}
                 onNodeMouseClick={this.onNodeMouseClick.bind(this)}
                 onLeafMouseClick={this.onLeafMouseClick.bind(this)}
                 tree={this.state.tree}
-            />
+            /> */}
           </Step>
         </Stepper>
       </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import './MenuServices.scss';
+
 function mapStateToProps(state) {
   return {
 
@@ -8,9 +10,27 @@ function mapStateToProps(state) {
 }
 
 export class MenuServices extends React.Component {
+  renderParent = () => {
+    return this.props.list.map((parent)=>{
+      var children = parent.children.map((child) => {
+        return React.createElement(this.props.childComponent, {
+          ...child,
+          key: child.id 
+        });
+      });
+      return React.createElement(this.props.parentComponent, {
+        ...parent,
+        key: parent.id,
+        children
+      });
+    })
+  }
+
   render() {
     return (
-      <div></div>
+      <div className={this.props.className}>
+        {this.renderParent()}
+      </div>
     );
   }
 }

@@ -1,0 +1,86 @@
+@import "../../../styles/vars";
+
+.ServiceMenu{
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.ServiceMenuCategory{
+  &:first-child{
+   border-top:1px solid lighten($grey, 25%);
+  }
+
+  .categoryParent{
+    cursor: pointer;
+    
+    i {
+      float: right;
+      font-size: 18px;
+      margin: 8px 5px;
+    }
+
+    span {
+      display: inline-block;
+      margin:10px 12px;
+    }
+    border-bottom:1px solid lighten($grey, 25%);
+    color:$grey;
+    font-size: 10px;
+  }
+
+  .categoryChildren{
+    display: none;
+  }
+
+  &.isActive{
+
+    background-color: $white;
+
+    .categoryParent{
+      color: $yocaleOrange;
+      span{
+        font-weight: 600 !important;
+      }
+    }
+    .categoryChildren{
+      display: block;
+    }
+  
+    i {
+      color: $yocaleOrange;
+    }
+  }
+}
+
+.ServiceMenuService{
+  background-color: $white;
+  border-bottom:1px solid lighten($grey, 25%);
+  color: darken($grey, 30%);
+  cursor: pointer;
+  position: relative;
+  font-size: 10px;
+  padding: 10px 12px;
+
+  .SM_left{
+    display: inline-block;
+
+    i {
+
+      color: lighten($grey, 10%);
+      display: inline-block;
+      font-size: 14px;
+      margin-left: 5px;
+      vertical-align:middle;
+
+      &:hover{
+        color: darken($grey, 10%);
+      }
+    }
+  }
+
+  .SM_right{
+    display: inline-block;
+    float: right;
+  }
+
+}

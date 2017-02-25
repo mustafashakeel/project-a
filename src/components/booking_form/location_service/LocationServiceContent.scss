@@ -4,79 +4,22 @@
   margin: 25px 0;
 }
 
-.infinity-menu-container{
-  margin-bottom: 10px;
-  margin-top: 10px;
+.serviceTooltip{ 
+  width: calc(90% - 20px);
+  // left: 10px !important;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(148,148,148,1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(148,148,148,1);
+  box-shadow: 0px 0px 5px 0px rgba(148,148,148,1);
+  &.place-top{
+    &:after{
+   
+    }
 
-  ul{
-    margin: 0;
-    padding: 0;
-  }
-}
+    &:before{
 
-.ServiceMenuCategory{
 
-  cursor: pointer;
-
-  i {
-    float: right;
-    font-size: 18px;
-    margin: 8px 5px;
-  }
-
-  span {
-    display: inline-block;
-    margin:10px 12px;
-  }
-  
-  &:first-child{
-   border-top:1px solid lighten($grey, 25%);
-  }
-
-  // padding: 10px 12px;
-  border-bottom:1px solid lighten($grey, 25%);
-  color:$grey;
-  font-size: 10px;
-
-  &.isActive{
-    background-color: $white;
-    color: $yocaleOrange;
-    font-weight: bold;
-
-    i {
-      color: $yocaleOrange;
     }
   }
 }
 
-.ServiceMenuService{
-  background-color: $white;
-  border-bottom:1px solid lighten($grey, 25%);
-  color: darken($grey, 30%);
-  cursor: pointer;
-  font-size: 10px;
-  padding: 10px 12px;
 
-  .SM_left{
-    display: inline-block;
-
-    i {
-
-      color: lighten($grey, 10%);
-      display: inline-block;
-      font-size: 14px;
-      margin-left: 5px;
-      vertical-align:middle;
-
-      &:hover{
-        color: darken($grey, 10%);
-      }
-    }
-  }
-
-  .SM_right{
-    display: inline-block;
-    float: right;
-  }
-
-}
