@@ -1,0 +1,28 @@
+@import '../../../styles/vars';
+
+#intakeForm{
+  .md-dialog-content{
+    height: 100%;
+  }
+
+  #numbers{
+    display: block;
+    width: 100%;
+  }
+
+  .doneIntakeFormBtn{
+    background: $yocaleOrange;
+    border: none;
+    bottom:0;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    left: 0;
+    outline: none;
+    padding: 10px 0;
+    position: absolute;
+    width: 100%;
+  }
+}

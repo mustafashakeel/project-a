@@ -1,22 +1,35 @@
 @import '../../../styles/vars';
 
 .PersonalInfoContent{
+
+  padding-bottom: 35px;
+
   h4 {
     @include uppercaseTitle;
   }
 
   .bookAppointmentBtn {
+    position: fixed;
+    bottom: 0;
     background-color: $yocaleBlue;
     border:none;
     color:$white;
     cursor: pointer;
+    font-size: 12px;
     font-weight: bold;
     margin-top: 30px;
     padding: 10px;
     width: 100%;
 
     &:focus{
-      display: none;
+      outline: none;
     }
   }
+}
+
+.md-dialog--centered{
+  max-width: 98vw !important;
+  width: 98vw !important;
+  max-height: 98vh !important;
+  height: 98vh !important
 }

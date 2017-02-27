@@ -32,11 +32,8 @@ class ListService extends React.Component {
   getToolTipContent = () => {
     if (this.state.isTooltipActive)
       return (
-        <div>
-          <div className="maskHide" onClick={()=>this.setState({isTooltipActive: !this.state.isTooltipActive})}></div>
-          <div className="toolTip">
-            <ServiceDetails data={this.props}/>
-          </div>
+        <div className="toolTip">
+          <ServiceDetails data={this.props}/>
         </div>
       )
   }

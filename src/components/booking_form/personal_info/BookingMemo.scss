@@ -46,4 +46,14 @@
       padding: 3px;
     }
   }
+
+  .selectNotification{
+    width: 100px;
+    margin-left: 10px;
+
+    .md-text-field{
+      height: 25px ;
+      // min-height: 25px;
+    }
+  }
 }

@@ -22,9 +22,8 @@ export class BookingMemo extends React.Component {
         <h4>{t('application.user_info.add_note')}</h4>
         <TextField
           id="bookingNote"
-          rows={2}
+          rows={1}
           block
-          paddedBlock
           className="SelectSimpleBorder"
           maxRows={4}
         />
@@ -34,17 +33,17 @@ export class BookingMemo extends React.Component {
           
               <SelectField
                 id="emailNote"
-                className="SelectSimpleBorder md-cell--2-phone"
+                className="SelectSimpleBorder selectNotification"
                 menuItems={['Email', 'Call']}
                 position={SelectField.Positions.BELOW}
-                defaultValue={'Email'}
+                value={'Email'}
                 iconChildren="keyboard_arrow_down"
               />
               <SelectField
                 id="hoursNote"
-                className="SelectSimpleBorder"
+                className="SelectSimpleBorder selectNotification"
                 menuItems={['24 hours', '48 hours']}
-                defaultValue={'24 hours'}
+                value={'24 hours'}
                 position={SelectField.Positions.BELOW}
                 iconChildren="keyboard_arrow_down"
               />

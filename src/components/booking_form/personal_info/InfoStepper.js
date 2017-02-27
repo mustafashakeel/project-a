@@ -61,17 +61,10 @@ export class InfoStepper extends React.Component {
               <Dialog
                 id="intakeForm"
                 visible={this.state.intakeFormOpen}
-                title={t('application.user_info.intake_form')}
                 focusOnMount={false}
                 modal              
-                onHide={this.intakeFormHide}
-                actions={[{
-                  onClick: this.intakeFormSave.bind(this),
-                  primary: true,
-                  label: t('application.user_info.save')
-                }]}
               >
-                <IntakeForm />
+                <IntakeForm onSave={this.intakeFormSave}/>
               </Dialog>
             </div>
           </Step>
