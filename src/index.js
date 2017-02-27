@@ -7,23 +7,25 @@ import { I18nextProvider } from 'react-i18next';
 import promise from 'redux-promise';
 import i18n from './i18n'; // initialized i18next instance
 
-
 import reducers from './reducers';
-
-const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 import BookingForm from './components/booking_form/BookingForm';
 import widgetSettings from './widgetSettings';
+import { getURLParameter }  from './utils';
+
 import './index.scss';
+
+const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
+
 
 
 const settings = {
   position: 'right',
   businessID: "123456789"
 };
-
-// i18n.changeLanguage("es");
-
+if (getURLParameter('lang') !== null){
+  i18n.changeLanguage(getURLParameter('lang'));
+}
 widgetSettings.setValue(settings);
 
 ReactDOM.render(
