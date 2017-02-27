@@ -30,9 +30,9 @@ export class ProviderTimeContent extends React.Component {
   providerList = () => {
     return [
       {label: "Any Provider", value: "Any Provider"},
-      {label: "Kate Hudson", value: "Kate Hudson", leftAvatar: <Avatar src="https://unsplash.it/60/60/?random" alt="A description of image 1" />},
-      {label: "Jennifer Smith", value: "Jennifer Smith", leftAvatar: <Avatar src="https://unsplash.it/60/60/?random" alt="A description of image 1" />},
-      {label: "Brian Roberts", value: "Brian Roberts",  leftAvatar: <Avatar src="https://unsplash.it/60/60/?random" alt="A description of image 1" />}
+      {label: "Kate Hudson", value: "Kate Hudson", leftAvatar: <Avatar src="/img/placeholder_person.png" alt="A description of image 1" />},
+      {label: "Jennifer Smith", value: "Jennifer Smith", leftAvatar: <Avatar src="/img/placeholder_person.png" alt="A description of image 1" />},
+      {label: "Brian Roberts", value: "Brian Roberts",  leftAvatar: <Avatar src="/img/placeholder_person.png" alt="A description of image 1" />}
     ]
   }
 

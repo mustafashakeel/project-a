@@ -2,17 +2,17 @@
     display: inline-block;
 
   .toolTip{
-    -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
-    -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
-    -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
-    -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(79,79,79,1);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(79,79,79,1);
+    box-shadow: 0px 0px 3px 0px rgba(79,79,79,1);
     position:absolute;
     left:10px;
     background: #fff;
     bottom: calc(100% + 3px);
     width: calc(100% - 20px);
     z-index: 2;
+    border-radius: 3px;
+    overflow: hidden;
     
   
   }

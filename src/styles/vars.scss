@@ -42,6 +42,12 @@ $desktop-xl:  		"only screen and (min-width: 1201px)";
   text-transform: uppercase;
 }
 
-$mainHeaderSize : 24px !important;
-$subHeaderSize : 16px !important;
-$contentSize : 14px !important;
+@mixin mainHeaderSize {
+  font-size: 16px !important;
+}
+@mixin subHeaderSize {
+  font-size: 8px !important;
+}
+@mixin contentSize { 
+  font-size: 11px !important;
+}
