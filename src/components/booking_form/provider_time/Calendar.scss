@@ -14,13 +14,24 @@
       content: " ";
       height: 3px;
       display: inline-block;
-      background: #ff0000;
       border-radius: 50%;
       position: absolute;
       bottom: 2px;
       right: 0;
       left: 0;
       margin: auto;
+
+      &.red{
+        background: #ff0000;
+      }
+
+      &.green{
+        background: #3be23b;
+      }
+
+      &.yellow{
+        background: #fff000;
+      }
     }
   }
 

@@ -2,11 +2,20 @@ import React from 'react';
 import FontIcon from 'react-md/lib/FontIcons';
 import classNames from 'classnames';
 
+import { connect } from 'react-redux';
+import { updateTab } from '../../../actions/index';
+
 import ServiceDetails from './ServiceDetails';
 
 import './ListService.scss';
 
-export default class ListService extends React.Component {
+function mapStateToProps(state) {
+  return {
+    currentTab: state.ui.currentTab
+  };
+}
+
+class ListService extends React.Component {
 
   state = {
     isTooltipActive: false,
@@ -44,11 +53,16 @@ export default class ListService extends React.Component {
       )
   }
 
+  selectService = (self, e) => {
+    if (self.target.tagName.toLowerCase() !== "i") {
+      this.props.updateTab(1);
+    }
+  }
+
   render() {
     return (
       <div>
-
-        <div className="ServiceMenuService" onClick={this.props.onClick}>
+        <div className="ServiceMenuService" onClick={this.selectService.bind(this)}>
           <div className="SM_left">
             <span className="ServiceTitle">{this.props.name}</span>
             <div className={this.getToolTipClass()}>
@@ -57,6 +71,7 @@ export default class ListService extends React.Component {
                 id={this.getTooltipID()} 
                 onClick={()=>this.setState({isTooltipActive: !this.state.isTooltipActive})}
               >info_outline</FontIcon>
+              <FontIcon>label_outline</FontIcon>
             </div>
 
           </div>
@@ -73,3 +88,9 @@ export default class ListService extends React.Component {
     );
   }
 }
+
+export default 
+connect(
+  mapStateToProps,
+  { updateTab }
+)(ListService)

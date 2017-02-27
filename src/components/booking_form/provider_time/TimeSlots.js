@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-
+import { translate } from 'react-i18next';
 import moment from 'moment';
 
 import './TimeSlots.scss';
@@ -44,13 +44,14 @@ export class TimeSlots extends React.Component {
   }
 
   render() {
+    const {t} = this.props;
     return (
       <div className="TimeSlots">
-        <h4>Select a time</h4>
+        <h4>{t('application.provider_time.select_time')}</h4>
         {this.props.selectedDate !== "" &&
-           this.props.selectedDate.format("dddd, MMMM Do YYYY h:mm a")
+           this.props.selectedDate.format("dddd, MMMM Do YYYY")
         }
-        <div className="slotsAvailableLabel">5 Slots Available</div>
+        <div className="slotsAvailableLabel">{t('application.provider_time.slots_available', {count: 5})}</div>
         <ul className="slotsAvailable">
           {this.listItems()}
         </ul>
@@ -62,4 +63,4 @@ export class TimeSlots extends React.Component {
 export default connect(
   mapStateToProps,
 // Implement map dispatch to props
-)(TimeSlots)
+)(translate()(TimeSlots))

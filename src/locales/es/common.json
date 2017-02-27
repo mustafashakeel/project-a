@@ -13,7 +13,10 @@
       "categories_count_plural": "{{count}} categorias"
     },
     "provider_time": {
-      "select_provider": "Selecciona un proovedor"
+      "select_provider": "Selecciona un proovedor",
+      "select_time": "Selecciona hora",
+      "slots_available": "{{count}} espacio disponible",
+      "slots_available_plural": "{{count}} espacios disponibles"
     },
     "user_info": {
       "add_note": "Agregar nota",

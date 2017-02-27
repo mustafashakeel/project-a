@@ -31,10 +31,16 @@ export class Calendar extends React.Component {
     })
   }
 
+  getRandColors = () => {
+    const colors = ["red", "green", "yellow"];
+    const rand = Math.floor((Math.random() * 3) );
+    return colors[rand];
+  }
+
   renderDay = (props, currentDate, selectedDate) => {
     return (
       <td {...props} >
-        <span className="circleAvailability"></span>
+        <span className={"circleAvailability " + this.getRandColors()}></span>
         { currentDate.date() }
       </td>
       );

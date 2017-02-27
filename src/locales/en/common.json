@@ -13,7 +13,10 @@
       "select_location": "Select a location"
     },
     "provider_time": {
-      "select_provider": "Select a provider"
+      "select_provider": "Select a provider",
+      "select_time": "Select a time",
+      "slots_available": "{{count}} Slot Available",
+      "slots_available_plural": "{{count}} Slots Available"
     },
     "user_info": {
       "add_note": "Add note",
