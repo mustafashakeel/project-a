@@ -22,18 +22,6 @@ class ListService extends React.Component {
     toolTipParent: ""
   }
 
-  componentWillMount() {
-    this.setState({
-      toolTipParent: "#" + this.getTooltipID()
-    })
-  }
-
-
-  getTooltipID = () => {
-    var id = "toolTip_" + this.props.id;
-    return id;
-  }
-
   getToolTipClass(){
     return classNames({
       'toolTipContainer': true,
@@ -68,8 +56,9 @@ class ListService extends React.Component {
             <div className={this.getToolTipClass()}>
               {this.getToolTipContent()}
               <FontIcon 
-                id={this.getTooltipID()} 
-                onClick={()=>this.setState({isTooltipActive: !this.state.isTooltipActive})}
+                className="info"
+                onMouseEnter={()=>this.setState({isTooltipActive: !this.state.isTooltipActive})}
+                onMouseLeave={()=>this.setState({isTooltipActive: !this.state.isTooltipActive})}
               >info_outline</FontIcon>
               <FontIcon>label_outline</FontIcon>
             </div>
