@@ -1,17 +1,19 @@
 import i18n from 'i18next';
 import XHR from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import translations from './translations'
 
 
 i18n
-  .use(XHR)
+  // .use(XHR)
   .use(LanguageDetector)
   .init({
     fallbackLng: 'en',
+    resources: translations,
 
     // have a common namespace used around the full app
-    ns: ['common'],
-    defaultNS: 'common',
+    ns: ['application'],
+    // defaultNS: 'common',
 
     debug: false,
 

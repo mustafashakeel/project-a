@@ -29,25 +29,9 @@ class BookingForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.settings = widgetSettings.getValue();
+    const { t } = this.props;
     this.state = {
       steps: {
-        step1: {
-          label: "",
-        },
-        step2: {
-          label: "",
-        },
-        step3: {
-          label: "",
-        }
-      }
-    }
-  }
-
-  shouldComponentUpdate =() => {
-    const { t } = this.props;
-    const steps = {
         step1: {
           label: t('application.steps.step1'),
         },
@@ -57,11 +41,8 @@ class BookingForm extends React.Component {
         step3: {
           label: t('application.steps.step3'),
         }
+      }
     }
-    this.setState({steps})
-
-
-    return true;
   }
 
   changeTab = (tabIndex) => {

@@ -26,6 +26,7 @@ const settings = {
 if (getURLParameter('lang') !== null){
   i18n.changeLanguage(getURLParameter('lang'));
 }
+
 widgetSettings.setValue(settings);
 
 ReactDOM.render(
