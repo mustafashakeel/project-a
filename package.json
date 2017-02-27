@@ -78,7 +78,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
-  "homepage": "http://yocale.demo.levertigo.net/form/",
+  // "homepage": "http://yocale.demo.levertigo.net/form/",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
