@@ -4,22 +4,4 @@
   margin: 25px 0;
 }
 
-.serviceTooltip{ 
-  width: calc(90% - 20px);
-  // left: 10px !important;
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(148,148,148,1);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(148,148,148,1);
-  box-shadow: 0px 0px 5px 0px rgba(148,148,148,1);
-  &.place-top{
-    &:after{
-   
-    }
-
-    &:before{
-
-
-    }
-  }
-}
-
 

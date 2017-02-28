@@ -1,5 +1,6 @@
 /* UI */
 export const UPDATE_TAB  = 'UPDATE_TAB';
+export const TOGGLE_TOOLTIP  = 'TOGGLE_TOOLTIP';
 export const UPDATE_STEPS  = 'UPDATE_STEPS';
 
 export function updateTab(indexTab){
@@ -7,6 +8,15 @@ export function updateTab(indexTab){
     type: UPDATE_TAB,
     payload: {
       tabIndex: indexTab
+    }
+  };
+}
+
+export function toggleTooltip(data){
+  return {
+    type: TOGGLE_TOOLTIP,
+    payload: {
+      data: data
     }
   };
 }

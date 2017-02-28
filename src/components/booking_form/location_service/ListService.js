@@ -1,11 +1,9 @@
 import React from 'react';
+import {findDOMNode} from 'react-dom';
 import FontIcon from 'react-md/lib/FontIcons';
-import classNames from 'classnames';
 
 import { connect } from 'react-redux';
 import { updateTab } from '../../../actions/index';
-
-import ServiceDetails from './ServiceDetails';
 
 import './ListService.scss';
 
@@ -17,25 +15,13 @@ function mapStateToProps(state) {
 
 class ListService extends React.Component {
 
-  state = {
-    isTooltipActive: false,
-    toolTipParent: ""
-  }
-
-  getToolTipClass(){
-    return classNames({
-      'toolTipContainer': true,
-      'active': this.state.isTooltipActive
+  onHoverIcon = (ref, shown) => {
+    this.props.toggleTooltip({
+      data:this.props,
+      shown: shown,
+      position: findDOMNode(this.refs[ref]).getBoundingClientRect()
     })
-  }
 
-  getToolTipContent = () => {
-    if (this.state.isTooltipActive)
-      return (
-        <div className="toolTip">
-          <ServiceDetails data={this.props}/>
-        </div>
-      )
   }
 
   selectService = (self, e) => {
@@ -50,12 +36,12 @@ class ListService extends React.Component {
         <div className="ServiceMenuService" onClick={this.selectService.bind(this)}>
           <div className="SM_left">
             <span className="ServiceTitle">{this.props.name}</span>
-            <div className={this.getToolTipClass()}>
-              {this.getToolTipContent()}
+            <div className="toolTipContainer">
               <FontIcon 
+                ref="service_icon"
                 className="info"
-                onMouseEnter={()=>this.setState({isTooltipActive: !this.state.isTooltipActive})}
-                onMouseLeave={()=>this.setState({isTooltipActive: !this.state.isTooltipActive})}
+                onMouseEnter={this.onHoverIcon.bind(this, "service_icon", true)}
+                onMouseLeave={this.onHoverIcon.bind(this, "service_icon", false)}
               >info_outline</FontIcon>
               <FontIcon>label_outline</FontIcon>
             </div>

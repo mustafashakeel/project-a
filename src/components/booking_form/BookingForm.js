@@ -1,31 +1,30 @@
 import React from 'react';
 import { translate } from 'react-i18next';
+import widgetSettings from '../../widgetSettings';
 
 import { connect } from 'react-redux';
-import { updateTab } from '../../actions/index';
+import { updateTab, toggleTooltip } from '../../actions/index';
 
 import HeaderWidget from './partials/HeaderWidget';
 import TabsProgress from '../common/tabs_progress/TabsProgress';
 import TabHeader from '../common/tabs_progress/TabHeader';
+import SwipeableViews from 'react-swipeable-views';
 
 import LocationServiceContent from './location_service/LocationServiceContent';
 import PersonalInfoContent from './personal_info/PersonalInfoContent';
 import ProviderTimeContent from './provider_time/ProviderTimeContent';
-
-import SwipeableViews from 'react-swipeable-views';
+import ServiceDetails from './location_service/ServiceDetails';
 
 import './BookingForm.scss';
-import widgetSettings from '../../widgetSettings';
 
 function mapStateToProps(state) {
   return {
-    currentTab: state.ui.currentTab
+    currentTab: state.ui.currentTab,
+    toolTip: state.ui.toolTip
   };
 }
 
 class BookingForm extends React.Component {
-
-  
 
   constructor(props) {
     super(props);
@@ -74,21 +73,25 @@ class BookingForm extends React.Component {
             />
           </TabsProgress>
         </div>
-
-        <SwipeableViews
-          index={this.props.currentTab}          
-          onChangeIndex={this.changeTab}
-        >
-          <div className="TabContainer">
-            <LocationServiceContent onFinish={this.changeTab.bind(this, 1)}/>
-          </div>
-          <div className="TabContainer">
-            <ProviderTimeContent onFinish={this.changeTab.bind(this, 2)}/>
-          </div>
-          <div className="TabContainer">
-            <PersonalInfoContent />
-          </div>
-        </SwipeableViews>
+        <div className="mainContent">
+          <SwipeableViews
+            index={this.props.currentTab}          
+            onChangeIndex={this.changeTab}
+          >
+            <div className="TabContainer">
+              <LocationServiceContent onFinish={this.changeTab.bind(this, 1)}/>
+            </div>
+            <div className="TabContainer">
+              <ProviderTimeContent onFinish={this.changeTab.bind(this, 2)}/>
+            </div>
+            <div className="TabContainer">
+              <PersonalInfoContent />
+            </div>
+          </SwipeableViews>
+        </div>
+        {this.props.toolTip.shown &&
+          <ServiceDetails {...this.props.toolTip.data} />
+        }
       </div>          
     );
   }
@@ -97,5 +100,5 @@ class BookingForm extends React.Component {
 export default 
 connect(
   mapStateToProps,
-  { updateTab }
+  { updateTab, toggleTooltip }
 )(translate()(BookingForm))

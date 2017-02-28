@@ -21,7 +21,7 @@ const treeInit = [
         customComponent: ListCategory,
         children: [
             {
-                name: "Service Name",
+                name: "Service Name Service Name Service Name",
                 id: 1535,
                 isOpen: false,
                 customComponent: ListService,

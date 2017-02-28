@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { toggleTooltip } from '../../../actions/index';
 
 import './MenuServices.scss';
 
@@ -10,11 +11,15 @@ function mapStateToProps(state) {
 }
 
 export class MenuServices extends React.Component {
+
+
+
   renderParent = () => {
     return this.props.list.map((parent)=>{
       var children = parent.children.map((child) => {
         return React.createElement(this.props.childComponent, {
           ...child,
+          toggleTooltip: this.props.toggleTooltip,
           key: child.id 
         });
       });
@@ -37,5 +42,5 @@ export class MenuServices extends React.Component {
 
 export default connect(
   mapStateToProps,
-// Implement map dispatch to props
+  {toggleTooltip}
 )(MenuServices)
