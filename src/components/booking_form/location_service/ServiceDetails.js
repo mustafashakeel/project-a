@@ -9,12 +9,12 @@ export default class ServiceDetails extends React.Component {
     super(props);
     this.state = {
       style: {
-        top: this.props.position.top,
+        top: this.props.toolTip.position.top,
         left: 10
       },
       arrowStyle:{
-        top: this.props.position.top - 10,
-        left: this.props.position.left
+        top: this.props.toolTip.position.top - 10,
+        left: this.props.toolTip.position.left
       },
       heightUpdated: false
     }
@@ -23,7 +23,7 @@ export default class ServiceDetails extends React.Component {
   componentDidMount(){
     if (this.state.heightUpdated === false){
       const height = findDOMNode(this.refs.tooltip).clientHeight;
-      const style = { top: this.props.position.top - height - 15, left: 10};
+      const style = { top: this.props.toolTip.position.top - height - 15, left: 10};
       this.setState({
         style: style,
         heightUpdated: true 
@@ -37,7 +37,7 @@ export default class ServiceDetails extends React.Component {
         <div className="arrow" style={this.state.arrowStyle}></div>
         <div className="ServiceDetails">
           <img role="presentation" src="/img/service_placeholder.jpg"/>
-          <h2>{this.props.data.name}</h2>
+          <h2>{this.props.toolTip.data.name}</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lobortis arcu vel ultricies molestie. Proin sit amet sem ultricies, convallis nisi non, sollicitudin enim.</p>
         </div>
       </div>  

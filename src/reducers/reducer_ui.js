@@ -17,11 +17,8 @@ export default function (state = INITIAL_STATE , action){
       };
 
     case TOGGLE_TOOLTIP:
-      const newToolTip = {
-        shown: action.payload.data.shown,
-        data: action.payload.data
-      }
-    return { ...state, toolTip: newToolTip};
+
+    return { ...state, toolTip: action.payload.data};
 
     default:
     return state;

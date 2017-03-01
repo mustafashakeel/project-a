@@ -15,6 +15,8 @@ import PersonalInfoContent from './personal_info/PersonalInfoContent';
 import ProviderTimeContent from './provider_time/ProviderTimeContent';
 import ServiceDetails from './location_service/ServiceDetails';
 
+import YocaleTooltip from '../common/yocale_tooltip/YocaleTooltip';
+
 import './BookingForm.scss';
 
 function mapStateToProps(state) {
@@ -89,9 +91,9 @@ class BookingForm extends React.Component {
             </div>
           </SwipeableViews>
         </div>
-        {this.props.toolTip && this.props.toolTip.shown &&
-          <ServiceDetails {...this.props.toolTip.data} />
-        }
+        <YocaleTooltip>
+          <ServiceDetails />
+        </YocaleTooltip>
       </div>          
     );
   }
