@@ -9,6 +9,11 @@
   background: $white !important;
 
   .rdtDay{     
+
+    &.rdtToday {
+      background: #eeeeee !important;
+    }
+
     .circleAvailability {
       width: 3px;
       content: " ";

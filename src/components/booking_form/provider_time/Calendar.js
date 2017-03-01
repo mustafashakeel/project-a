@@ -1,4 +1,5 @@
 import React from 'react';
+import {findDOMNode} from 'react-dom'
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -56,6 +57,10 @@ export class Calendar extends React.Component {
   }
 
   onChangeDate = (selectedDate) => {
+    var selfNode = findDOMNode(this.refs.timeslot_ref);
+    setTimeout(() => {
+      selfNode.scrollIntoViewIfNeeded()
+    }, 100)
     this.props.setBookingTime(selectedDate)
   }
 
@@ -69,8 +74,8 @@ export class Calendar extends React.Component {
             isValidDate={this.isValidDate}
             renderDay={this.renderDay}
           />
-        <FadeInOut show={this.props.booking.timestamp !== null}>
-          <TimeSlots selectedDate={this.props.booking.timestamp} onSelected={this.onSelectedTimeSlot.bind(this)} />
+        <FadeInOut ref="timeslot_ref" show={this.props.booking.timestamp !== null}>
+          <TimeSlots  selectedDate={this.props.booking.timestamp} onSelected={this.onSelectedTimeSlot.bind(this)} />
         </FadeInOut>
       </div>
     );

@@ -89,7 +89,7 @@ class BookingForm extends React.Component {
             </div>
           </SwipeableViews>
         </div>
-        {this.props.toolTip.shown &&
+        {this.props.toolTip && this.props.toolTip.shown &&
           <ServiceDetails {...this.props.toolTip.data} />
         }
       </div>          
