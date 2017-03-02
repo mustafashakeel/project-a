@@ -7,14 +7,14 @@ from '../actions/index';
 
 const INITIAL_STATE = { 
   credentials: {
-    email: '',
+    email: 'fer@sdfsd.com',
     password: '',
     firstName: '',
     lastName: '',
     phoneNumber: '',
     sendSms: ''
   },
-  isLoggedIn: false,
+  isLoggedIn: true,
   isUser: false,
   isNewUser: false
 };

@@ -66,7 +66,7 @@ var translations = {
           "notification": "Notification",
           "payment": "Payment",
           "save": "Save",
-          "logged_in": "You've logged in!"
+          "logged_in": "You are signed in as {{name}}."
         }
       }
     }
@@ -140,7 +140,7 @@ var translations = {
           "notification": "Notificación",
           "payment": "Pago",
           "save": "Guardar",
-          "logged_in": "Has ingresado!"
+          "logged_in": "Has ingresado como {{name}}."
         }
       }
     }

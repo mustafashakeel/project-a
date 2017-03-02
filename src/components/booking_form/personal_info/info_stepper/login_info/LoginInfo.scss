@@ -1,0 +1,15 @@
+@import '../../../../../styles/vars';
+
+.LoginInfo{
+    padding-bottom: 10px;
+  
+  p{
+    padding-bottom: 0 !important;
+  }
+
+  .dependantInput{
+    input {
+      @include contentSize;
+    }
+  }
+}

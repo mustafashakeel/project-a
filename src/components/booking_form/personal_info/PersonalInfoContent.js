@@ -4,9 +4,9 @@ import {connect} from 'react-redux';
 
 import { isLoggedIn } from '../../../actions'
 
-import Credentials from './Credentials';
-import InfoStepper from './InfoStepper';
-import BookingMemo from './BookingMemo';
+import Credentials from './credentials/Credentials';
+import InfoStepper from './info_stepper/InfoStepper';
+import BookingMemo from './booking_memo/BookingMemo';
 
 
 import './PersonalInfoContent.scss';

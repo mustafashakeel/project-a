@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchUser } from '../../../actions/index';
+import { fetchUser } from '../../../../actions/index';
 
 import validator from 'validator';
+import { checkFields } from '../../../../utils';
 
 import TextField from 'react-md/lib/TextFields';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
-import FadeInOut from '../../common/fade_in_out/FadeInOut';
+import FadeInOut from '../../../common/fade_in_out/FadeInOut';
 
 import './Credentials.scss'; 
 
@@ -92,7 +93,7 @@ class Credentials extends React.Component {
     }else{
       // Creating new account
       const fieldsCopy = this.state.fields;
-      const fieldsState = this.checkFields(fieldsCopy)      
+      const fieldsState = checkFields(fieldsCopy)      
       this.setState({ fields: fieldsState.fields });
 
       if (fieldsState.valid){
@@ -103,21 +104,6 @@ class Credentials extends React.Component {
     }
   }
 
-  checkFields = (fields) => {
-    let valid = 0;
-    let keysArray = Object.keys(fields);
-    keysArray.forEach(function(key) {
-      if(fields[key].required){
-        const emptyField = validator.isEmpty(fields[key].value)
-        fields[key].error = emptyField;
-        valid = (!emptyField) ? valid + 1 : valid;
-      }
-    });
-    return { 
-      fields, 
-      valid: valid === keysArray.length 
-    }
-  }
 
   render() {
     const {t} = this.props;

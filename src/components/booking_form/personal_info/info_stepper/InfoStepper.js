@@ -2,15 +2,16 @@ import React from 'react';
 import {findDOMNode} from 'react-dom';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { getCurrentUser, isLoggedIn } from '../../../actions/index';
+import { getCurrentUser, isLoggedIn } from '../../../../actions/index';
 
 import Dialog from 'react-md/lib/Dialogs';
 
-import Stepper from '../../common/stepper/Stepper';
-import Step from '../../common/stepper/Step';
+import Stepper from '../../../common/stepper/Stepper';
+import Step from '../../../common/stepper/Step';
 
-import IntakeForm from './IntakeForm';
-import PaymentCC from './PaymentCC';
+import LoginInfo from './login_info/LoginInfo';
+import IntakeForm from './intake_form/IntakeForm';
+import PaymentCC from './payment_cc/PaymentCC';
 
 import './InfoStepper.scss';
 
@@ -50,17 +51,7 @@ export class InfoStepper extends React.Component {
             completed={true}
             stepLine
             >
-
-            <h4>{t('application.user_info.logged_in')}</h4>
-            <div className="stepContent">
-              <p>
-                {this.props.user.credentials.email} <br/>
-                <span 
-                className="underline pointer" 
-                onClick={this.props.isLoggedIn.bind(null, false)}>Logout</span>
-              </p>
-              
-            </div>
+            <LoginInfo />            
           </Step>
           <Step
             completed={this.state.intakeFormTaken}
