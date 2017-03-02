@@ -1,4 +1,5 @@
 var translations = {
+  // ENGLISH
   en:{
     translation:{
       application:{
@@ -27,13 +28,41 @@ var translations = {
           "continue": "Continue",
           "continue_as_guest": "Continue as Guest",
           "create_account": "Create Account",
-          "create_password": "Create a password *",
           "edit": "Edit",
-          "enter_password": "Enter your password *",
           "enter_payment_info": "Enter your payment information",
           "fill_out_intake": "Fill out now",
           "intake_form": "Intake Form",
           "intake_form_copy": "This service requires that a form be filled out and will be emailed to you.",
+          "login_fields":{
+            email:{
+              placeholder: "Email *",
+              error: "Please complete."
+            },
+            firstName:{
+              placeholder: "First name *",
+              error: "Please complete."
+            },
+            lastName:{
+              placeholder: "Last name *",
+              error: "Please complete."
+            },
+            phoneNumber:{
+              placeholder: "Phone Number",
+              error: "Please complete."
+            },
+            enableSms:{
+              placeholder: "Enable SMS reminders",
+              error: "Please complete."
+            },
+            newPassword:{
+              placeholder: "Create a password *",
+              error: "Please complete."
+            },
+            password:{
+              placeholder: "Enter your password *",
+              error: "Please complete."
+            }
+          },
           "notification": "Notification",
           "payment": "Payment",
           "save": "Save",
@@ -42,6 +71,7 @@ var translations = {
       }
     }
   },
+  // SPANISH
   es:{
     translation :{
       application:{
@@ -77,6 +107,36 @@ var translations = {
           "fill_out_intake": "Llenar forma",
           "intake_form": "Intake Form",
           "intake_form_copy": "Este servicio requiere de llenar una forma que será enviada a tu email.",
+          "login_fields":{
+            email:{
+              placeholder: "Email *",
+              error: "Campo obligatorio."
+            },
+            firstName:{
+              placeholder: "Nombre *",
+              error: "Campo obligatorio."
+            },
+            lastName:{
+              placeholder: "Apellido *",
+              error: "Campo obligatorio."
+            },
+            phoneNumber:{
+              placeholder: "Teléfono",
+              error: "Campo obligatorio."
+            },
+            enableSms:{
+              placeholder: "Acepto recordatorios por SMS",
+              error: "Campo obligatorio."
+            },
+            newPassword:{
+              placeholder: "Crear password *",
+              error: "Campo obligatorio."
+            },
+            password:{
+              placeholder: "Ingresa tu password *",
+              error: "Campo obligatorio."
+            }
+          },
           "notification": "Notificación",
           "payment": "Pago",
           "save": "Guardar",

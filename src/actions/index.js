@@ -2,6 +2,8 @@
 export const UPDATE_TAB  = 'UPDATE_TAB';
 export const TOGGLE_TOOLTIP  = 'TOGGLE_TOOLTIP';
 export const UPDATE_STEPS  = 'UPDATE_STEPS';
+export const SHOW_LOGIN  = 'SHOW_LOGIN';
+export const IS_LOGGED_IN  = 'IS_LOGGED_IN';
 
 export function updateTab(indexTab){
   return {
@@ -19,6 +21,15 @@ export function toggleTooltip(data){
       data: data
     }
   };
+}
+
+export function showLogin(flag){
+  return  {
+    type: SHOW_LOGIN,
+    payload:{
+      show: flag
+    }
+  }
 }
 
 /* USERS */
@@ -47,6 +58,16 @@ export function fetchUser(email){
     }
   };
 
+}
+
+export function isLoggedIn(flag){
+  
+  return {
+    type: IS_LOGGED_IN,
+    payload: {
+      isLoggedIn: flag
+    }
+  }
 }
 
 export function getCurrentUser(){

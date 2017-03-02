@@ -1,7 +1,8 @@
 import React from 'react';
+import {findDOMNode} from 'react-dom';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { getCurrentUser } from '../../../actions/index';
+import { getCurrentUser, isLoggedIn } from '../../../actions/index';
 
 import Dialog from 'react-md/lib/Dialogs';
 
@@ -36,6 +37,11 @@ export class InfoStepper extends React.Component {
     });
   }
 
+  componentDidMount() {
+    var node = findDOMNode(this);
+    node.scrollIntoView();
+  }
+
   render() {
     const {t} = this.props;
     return (
@@ -47,7 +53,13 @@ export class InfoStepper extends React.Component {
 
             <h4>{t('application.user_info.logged_in')}</h4>
             <div className="stepContent">
-              <p>{this.props.user.credentials.email}</p>
+              <p>
+                {this.props.user.credentials.email} <br/>
+                <span 
+                className="underline pointer" 
+                onClick={this.props.isLoggedIn.bind(null, false)}>Logout</span>
+              </p>
+              
             </div>
           </Step>
           <Step
@@ -57,14 +69,21 @@ export class InfoStepper extends React.Component {
 
             <h4>{t('application.user_info.intake_form')}</h4>
             <div className="stepContent">
-              <p>{t('application.user_info.intake_form_copy')} <span className="linkIntakeForm" onClick={this.toggleIntakeForm.bind(this)}>{t('application.user_info.fill_out_intake')}.</span></p>
+              <p>
+                {t('application.user_info.intake_form_copy')} 
+                <span 
+                className="linkIntakeForm" 
+                onClick={this.toggleIntakeForm.bind(this)}
+                >{t('application.user_info.fill_out_intake')}.</span>
+              </p>
               <Dialog
+                aria-describedby="accessibleContent"
                 id="intakeForm"
                 visible={this.state.intakeFormOpen}
                 focusOnMount={false}
                 modal              
               >
-                <IntakeForm onSave={this.intakeFormSave}/>
+                <IntakeForm id="accessibleContent" onSave={this.intakeFormSave}/>
               </Dialog>
             </div>
           </Step>
@@ -83,5 +102,5 @@ export class InfoStepper extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { getCurrentUser }
+  { getCurrentUser, isLoggedIn }
 )(translate()(InfoStepper))

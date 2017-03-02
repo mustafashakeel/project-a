@@ -37,6 +37,8 @@ export class BookingMemo extends React.Component {
                 menuItems={['Email', 'Call']}
                 position={SelectField.Positions.BELOW}
                 value={'Email'}
+                defaultValue={'Email'}
+                onChange={()=>{}}
                 iconChildren="keyboard_arrow_down"
               />
               <SelectField
@@ -44,6 +46,8 @@ export class BookingMemo extends React.Component {
                 className="SelectSimpleBorder selectNotification"
                 menuItems={['24 hours', '48 hours']}
                 value={'24 hours'}
+                onChange={()=>{}}
+                defaultValue={'24 hours'}
                 position={SelectField.Positions.BELOW}
                 iconChildren="keyboard_arrow_down"
               />

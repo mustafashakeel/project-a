@@ -1,5 +1,8 @@
 import React from 'react';
 import {translate} from 'react-i18next';
+import {connect} from 'react-redux';
+
+import { isLoggedIn } from '../../../actions'
 
 import Credentials from './Credentials';
 import InfoStepper from './InfoStepper';
@@ -8,20 +11,24 @@ import BookingMemo from './BookingMemo';
 
 import './PersonalInfoContent.scss';
 
+function mapStateToProps(state) {
+  return {
+    renderLogin: !state.user.isLoggedIn
+  };
+}
+
+
 class PersonalInfoContent extends React.Component {
-  state = {
-    showLogin: true
-  }
 
   hideCredentials = () => {
-    this.setState({showLogin: false});
+    this.props.isLoggedIn(true);
   }
 
   render() {
     const {t} = this.props;
     return (
       <div className="PersonalInfoContent">
-      {this.state.showLogin ?
+      {this.props.renderLogin ?
         <Credentials hideCredentials={this.hideCredentials}/>
         :
         <div>
@@ -35,4 +42,7 @@ class PersonalInfoContent extends React.Component {
   }
 }
 
-export default translate()(PersonalInfoContent)
+export default connect(
+  mapStateToProps,
+  { isLoggedIn }
+)(translate()(PersonalInfoContent))
