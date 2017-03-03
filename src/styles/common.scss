@@ -1,5 +1,21 @@
 // REACT-MD OVERWRITES
 
+.inpuTextSmall {
+  input{
+    @include contentSize;
+  }
+  .md-divider--text-field{
+    margin-top: 3px;
+  }
+  .md-icon{
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .md-text-field-divider-container{
+    margin-left: 10px;
+  }
+}
+
 .dropdownSelect{
   background-color: $white;
   border: 1px solid lighten($grey, 25%);

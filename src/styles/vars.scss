@@ -51,3 +51,19 @@ $desktop-xl:  		"only screen and (min-width: 1201px)";
 @mixin contentSize { 
   font-size: 11px !important;
 }
+
+@mixin smallSelect{
+  .md-list--menu-below{
+    .md-list-item{
+      .md-text{
+        padding-top: 0;
+      }
+      .md-list-tile{
+        height: 25px !important;
+        .md-text{
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}

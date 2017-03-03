@@ -1,5 +1,4 @@
 import React from 'react';
-import {findDOMNode} from 'react-dom'
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -57,10 +56,6 @@ export class Calendar extends React.Component {
   }
 
   onChangeDate = (selectedDate) => {
-    var selfNode = findDOMNode(this.refs.timeslot_ref);
-    setTimeout(() => {
-      selfNode.scrollIntoViewIfNeeded()
-    }, 100)
     this.props.setBookingTime(selectedDate)
   }
 

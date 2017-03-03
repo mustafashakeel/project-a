@@ -104,7 +104,6 @@ class Credentials extends React.Component {
     }
   }
 
-
   render() {
     const {t} = this.props;
     return (
@@ -119,9 +118,9 @@ class Credentials extends React.Component {
             { ...this.state.fields.email}
             />
 
-            <FadeInOut show={this.state.isValidEmail || this.props.user.isUser}>
+            <FadeInOut show={this.state.isValidEmail || this.props.user.isUser} scroll={false}>
                 <div>
-                  <FadeInOut show={this.state.creatingNewAccount}>
+                  <FadeInOut show={this.state.creatingNewAccount} scroll={false}>
                     <div>
                       <TextField 
                         placeholder={t('application.user_info.login_fields.firstName.placeholder')} 

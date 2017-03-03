@@ -23,6 +23,7 @@ var translations = {
         },
         "user_info": {
           "add_note": "Add note",
+          "appointment_reminder": "Appointment Reminder",
           "book_my_appointment": "Book my appointment",
           "complete_info": "Complete your contact info to confirm your booking!",
           "continue": "Continue",
@@ -95,6 +96,7 @@ var translations = {
         },
         "user_info": {
           "add_note": "Agregar nota",
+          "appointment_reminder": "Recordar cita",
           "book_my_appointment": "Reservar mi cita",
           "complete_info": "Completa tu información de contacto para confirmar la cita!",
           "continue": "Continuar",

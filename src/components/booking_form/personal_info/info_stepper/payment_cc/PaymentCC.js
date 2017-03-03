@@ -43,7 +43,7 @@ export class PaymentCC extends React.Component {
           </div>
         :
         <div className="md-grid">
-          <div class="md-cell--6 md-cell--2-phone">
+          <div className="md-cell--6 md-cell--2-phone">
           <p>Total: $21.00<br/>
           Visa *************3425
           </p>

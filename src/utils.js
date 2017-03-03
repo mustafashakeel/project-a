@@ -1,7 +1,7 @@
 import validator from 'validator';
 
 export function checkFields(fields){
-  let valid = 0;
+  let valid = 1;
   let keysArray = Object.keys(fields);
   keysArray.forEach(function(key) {
     if(fields[key].required){
