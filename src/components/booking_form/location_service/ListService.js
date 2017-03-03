@@ -49,7 +49,7 @@ class ListService extends React.Component {
           </div>
           <div className="SM_right">
             <span className="ServiceDetails">
-              {this.props.length} • ${this.props.cost}
+              {this.props.OfferingDuration} min • ${this.props.OfferingPrice}
             </span>
 
           </div>

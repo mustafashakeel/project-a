@@ -24,7 +24,7 @@ export default class ListCategory extends React.Component {
     return (
       <div className={this.getClasses()} >
         <div className="categoryParent" onClick={() => this.setState({isOpen: !this.state.isOpen})}>
-          <span>{this.props.name}</span>
+          <span>{this.props.cat_name}</span>
           <FontIcon>{this.getIcon()}</FontIcon>
         </div>
         <div className="categoryChildren">

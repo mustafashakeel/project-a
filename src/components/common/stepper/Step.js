@@ -9,9 +9,9 @@ export default class Step extends React.Component {
     return classNames({
       [this.props.className]: this.props.className && true,
       [defaultClass]: true,
-      uncompleted: this.props.completed === false,
-      completed: this.props.completed === true,
-      active: this.props.active === true
+      uncompleted: !this.props.completed,
+      completed: this.props.completed,
+      active: this.props.active && !this.props.completed
     });
   }
 
@@ -34,4 +34,10 @@ export default class Step extends React.Component {
       </div>
     );
   }
+}
+
+Step.defaultProps = {
+  uncompleted: false,
+  completed: false,
+  active: false
 }
