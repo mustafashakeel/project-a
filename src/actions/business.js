@@ -1,0 +1,1 @@
+export const GET_BIZ_INFO = "GET_BIZ_INFO";
