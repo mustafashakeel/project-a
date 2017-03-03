@@ -1,0 +1,45 @@
+@import "../../styles/vars";
+.ThankPage{
+  padding: 30px;
+  text-align: center;
+
+  h4 {
+    font-weight: bold;
+    line-height: 1.2em
+  }
+
+  .appointmentInfo{
+    border: 1px solid $yocaleOrange;
+    padding: 10px;
+
+    .bizName{
+      @include mainHeaderSize;      
+    }
+
+    .bizAddress {
+      font-size: 13px;
+    }
+    .serviceName {
+      @include mainHeaderSize;
+      font-weight: bold;  
+      margin-top: 10px;
+    }
+    .bookingTime {
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .bookingDate {
+      font-size: 13px;
+    }
+    .addToCalendar{
+      margin-top: 10px;
+      width: 200px;
+    }
+    .viewEditYocale{
+      margin-top: 10px;
+      text-decoration: underline;
+      cursor: pointer;
+      color: $yocaleBlue;
+    }
+  }
+}

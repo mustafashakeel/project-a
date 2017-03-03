@@ -10,7 +10,6 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE , action){
   switch(action.type){
     case GET_BIZ_INFO:
-      console.log("Asd");
       return { ...state , info: business }
     case GET_BIZ_SERVICES:
       return { ...state , services: services}

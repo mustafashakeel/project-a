@@ -9,7 +9,7 @@ import i18n from './i18n/i18n'; // initialized i18next instance
 
 import reducers from './reducers';
 
-import BookingForm from './components/booking_form/BookingForm';
+import YocaleWidget from './components/YocaleWidget';
 import widgetSettings from './widgetSettings';
 import { getURLParameter }  from './utils';
 
@@ -31,6 +31,6 @@ widgetSettings.setValue(settings);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-      <I18nextProvider i18n={ i18n }><BookingForm /></I18nextProvider>
+      <I18nextProvider i18n={ i18n }><YocaleWidget /></I18nextProvider>
   </Provider>
   , document.getElementById('yocale-booking-widget'));

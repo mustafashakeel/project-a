@@ -2,7 +2,7 @@ import React from 'react';
 import {translate} from 'react-i18next';
 import {connect} from 'react-redux';
 
-import { isLoggedIn } from '../../../actions'
+import { isLoggedIn, appointmentBooked } from '../../../actions'
 
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
@@ -34,7 +34,12 @@ class PersonalInfoContent extends React.Component {
         <div>
           <InfoStepper />
           <AppointmentReminder />
-          <button className="bookAppointmentBtn">{t('application.user_info.book_my_appointment')}</button>
+          <button 
+            className="bookAppointmentBtn"
+            onClick={this.props.appointmentBooked.bind(this,true)}
+            >
+            {t('application.user_info.book_my_appointment')}
+          </button>
         </div>
       }
       </div>
@@ -44,5 +49,5 @@ class PersonalInfoContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn }
+  { isLoggedIn, appointmentBooked }
 )(translate()(PersonalInfoContent))
