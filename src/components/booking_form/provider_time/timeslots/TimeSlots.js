@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { translate } from 'react-i18next';
 import moment from 'moment';
 
-import { setBookingTime } from '../../../actions/index';
+import { setBookingTime } from '../../../../actions/index';
 
 import './TimeSlots.scss';
 

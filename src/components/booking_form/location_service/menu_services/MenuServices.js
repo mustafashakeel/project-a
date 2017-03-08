@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { toggleTooltip } from '../../../actions/index';
+import { toggleTooltip } from '../../../../actions/index';
 
 import './MenuServices.scss';
 

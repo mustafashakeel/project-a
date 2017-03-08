@@ -3,7 +3,7 @@ import {findDOMNode} from 'react-dom';
 import FontIcon from 'react-md/lib/FontIcons';
 
 import { connect } from 'react-redux';
-import { updateTab, setBookingService } from '../../../actions/index';
+import { updateTab, setBookingService } from '../../../../actions/index';
 
 import './ListService.scss';
 

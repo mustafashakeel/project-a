@@ -13,7 +13,7 @@ import SwipeableViews from 'react-swipeable-views';
 import LocationServiceContent from './location_service/LocationServiceContent';
 import PersonalInfoContent from './personal_info/PersonalInfoContent';
 import ProviderTimeContent from './provider_time/ProviderTimeContent';
-import ServiceDetails from './location_service/ServiceDetails';
+import ServiceDetails from './location_service/service_details/ServiceDetails';
 
 import YocaleTooltip from '../common/yocale_tooltip/YocaleTooltip';
 

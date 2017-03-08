@@ -8,9 +8,9 @@ import Stepper from '../../common/stepper/Stepper';
 import Step from '../../common/stepper/Step';
 import SelectField from 'react-md/lib/SelectFields';
 
-import ListCategory from "./ListCategory";
-import ListService from "./ListService";
-import MenuServices from './MenuServices';
+import ListCategory from "./list_category/ListCategory";
+import ListService from "./list_service/ListService";
+import MenuServices from './menu_services/MenuServices';
 
 
 

@@ -5,10 +5,10 @@ import moment from 'moment-timezone';
 import { setBookingTime } from '../../../actions/index';
 
 import Datetime from 'react-datetime';
-import FadeInOut from '../../common/fade_in_out/FadeInOut';
-import TimeSlots from './TimeSlots';
+import FadeInOut from '../../../common/fade_in_out/FadeInOut';
+import TimeSlots from '../timeslots/TimeSlots';
 
-import availability from './availability';
+import availability from '../availability';
 
 import './Calendar.scss';
 
