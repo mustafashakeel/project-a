@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment-timezone';
 
-import { setBookingTime } from '../../../actions/index';
+import { setBookingTime } from '../../../../actions/index';
 
 import Datetime from 'react-datetime';
 import FadeInOut from '../../../common/fade_in_out/FadeInOut';

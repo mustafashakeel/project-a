@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { fetchProviders, setBookingProvider } from '../../../actions/index';
 
-import Calendar from './Calendar'
+import Calendar from './calendar/Calendar'
 
 import SelectField from 'react-md/lib/SelectFields';
 import Avatar from 'react-md/lib/Avatars';
