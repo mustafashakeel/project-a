@@ -55,7 +55,7 @@ export class LoginInfo extends React.Component {
               <span>Book for myself</span>
             }
           </p>
-          <FadeInOut show={this.state.bookDependant}>
+          <FadeInOut show={this.state.bookDependant} scroll={false}>
             <TextField 
               className="dependantInput"
               onChange={this.onChangeDependant.bind(this)} 

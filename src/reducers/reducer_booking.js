@@ -1,8 +1,9 @@
-import { SET_BOOKING_TIME, SET_BOOKING_STATUS } from '../actions/index';
+import { SET_BOOKING_TIME, SET_BOOKING_STATUS, SET_BOOKING_LOCATION, SET_BOOKING_SERVICE } from '../actions/index';
 
 const INITIAL_STATE = {
   isBooked: false, 
-  location: null,
+  location: {},
+  service:{},
   provider: null,
   timestamp: null
 };
@@ -13,8 +14,11 @@ export default function (state = INITIAL_STATE , action){
     case SET_BOOKING_TIME:
       return { ...state, timestamp: action.payload.timestamp };
     case SET_BOOKING_STATUS:
-      console.log(action.payload);
       return { ...state, isBooked: action.payload.booked };
+    case SET_BOOKING_LOCATION:
+      return { ...state, location: action.payload.location };
+    case SET_BOOKING_SERVICE:
+      return { ...state, service: action.payload.service };
     default:
       return state;
 
