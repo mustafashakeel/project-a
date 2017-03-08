@@ -22,7 +22,7 @@ function mapStateToProps(state) {
 export class Calendar extends React.Component {
 
   state = {
-    selectedDate: ""
+    selectedDateObject: null
   }
 
   isValidDate = (current) => {
@@ -52,25 +52,31 @@ export class Calendar extends React.Component {
         'minutes': slot.minutes()
     });
     this.props.setBookingTime(this.props.booking.timestamp);
-    this.props.onSlotSelected();
+    // this.props.onSlotSelected();
   }
 
   onChangeDate = (selectedDate) => {
+    const selectedDateObject = availability._days.find((availabilityDate) => {
+      return moment(availabilityDate._date).day() === selectedDate.day()
+    })
+    this.setState({selectedDateObject})
     this.props.setBookingTime(selectedDate)
   }
 
   render() {
     return (
       <div>
-        <Datetime
-            input={false}
-            timeFormat={false}
-            onChange={this.onChangeDate.bind(this)}
-            isValidDate={this.isValidDate}
-            renderDay={this.renderDay}
-          />
-        <FadeInOut ref="timeslot_ref" show={this.props.booking.timestamp !== null}>
-          <TimeSlots  selectedDate={this.props.booking.timestamp} onSelected={this.onSelectedTimeSlot.bind(this)} />
+        <FadeInOut show={this.props.booking.provider.name}>
+          <Datetime
+              input={false}
+              timeFormat={false}
+              onChange={this.onChangeDate.bind(this)}
+              isValidDate={this.isValidDate}
+              renderDay={this.renderDay}
+            />
+        </FadeInOut>  
+        <FadeInOut show={this.props.booking.timestamp !== null}>
+          <TimeSlots selectedDateObject={this.state.selectedDateObject} onSelected={this.onSelectedTimeSlot.bind(this)} />
         </FadeInOut>
       </div>
     );

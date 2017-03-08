@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import { fetchProviders, setBookingProvider } from '../../../actions/index';
 
 import Calendar from './Calendar'
 
@@ -11,29 +12,30 @@ import './ProviderTimeContent.scss';
 
 function mapStateToProps(state) {
   return {
-
+    providers: state.business.providers,
+    provider: state.booking.provider
   };
 }
 
 export class ProviderTimeContent extends React.Component {
 
-  state = {
-    provider: ''
-  }
-
-  onChangeProvider = (newValue) => {
-    this.setState({
-      provider: newValue
-    });
+  onChangeProvider = (newValue, newValueIndex) => {
+    this.props.setBookingProvider(this.props.providers[newValueIndex]);
   }
 
   providerList = () => {
-    return [
-      {label: "Any Provider", value: "Any Provider"},
-      {label: "Kate Hudson", value: "Kate Hudson", leftAvatar: <Avatar src="/img/placeholder_person.png" alt="A description of image 1" />},
-      {label: "Jennifer Smith", value: "Jennifer Smith", leftAvatar: <Avatar src="/img/placeholder_person.png" alt="A description of image 1" />},
-      {label: "Brian Roberts", value: "Brian Roberts",  leftAvatar: <Avatar src="/img/placeholder_person.png" alt="A description of image 1" />}
-    ]
+    return this.props.providers.map((provider, index) => {
+      return {
+        ...provider,
+        leftAvatar: <Avatar src={provider.profile_picture} alt={provider.name}  />
+      }
+    });
+  }
+
+
+
+  componentWillMount() {
+    this.props.fetchProviders();
   }
 
   render() {
@@ -45,8 +47,10 @@ export class ProviderTimeContent extends React.Component {
           placeholder={t('application.provider_time.select_provider')}
           position={SelectField.Positions.BELOW}
           menuItems={this.providerList()}
-          value={this.state.provider}
-          onChange={this.onChangeProvider}
+          itemLabel="name"
+          itemValue="name"
+          value={this.props.provider.name}
+          onChange={this.onChangeProvider.bind(this)}
           className="dropdownSelect"
           iconChildren="keyboard_arrow_down"
         />
@@ -60,5 +64,5 @@ export class ProviderTimeContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-// Implement map dispatch to props
+  {fetchProviders, setBookingProvider}
 )(translate()(ProviderTimeContent))

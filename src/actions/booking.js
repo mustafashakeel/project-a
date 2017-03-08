@@ -2,6 +2,7 @@ export const SET_BOOKING_TIME = 'SET_BOOKING_TIME';
 export const SET_BOOKING_STATUS = 'SET_BOOKING_STATUS'
 export const SET_BOOKING_LOCATION = 'SET_BOOKING_LOCATION'
 export const SET_BOOKING_SERVICE = 'SET_BOOKING_SERVICE'
+export const SET_BOOKING_PROVIDER = 'SET_BOOKING_PROVIDER'
 
 export function setBookingTime(timestamp){
   return {
@@ -35,6 +36,15 @@ export function setBookingService(serviceObj){
     type: SET_BOOKING_SERVICE,
     payload: {
       service: serviceObj
+    }
+  }
+}
+
+export function setBookingProvider(providerObj){
+  return {
+    type: SET_BOOKING_PROVIDER,
+    payload: {
+      provider: providerObj
     }
   }
 }

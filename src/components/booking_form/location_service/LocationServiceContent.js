@@ -32,7 +32,7 @@ class LocationServiceContent extends React.Component {
   }
 
   onChangeLocation = (newValue, newValueIndex) => {
-    this.props.setBookingLocation(this.props.business.locations[newValueIndex],);
+    this.props.setBookingLocation(this.props.business.locations[newValueIndex]);
     this.setState({
       currentStep: 1
     })

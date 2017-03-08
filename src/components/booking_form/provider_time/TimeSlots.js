@@ -4,11 +4,13 @@ import classNames from 'classnames';
 import { translate } from 'react-i18next';
 import moment from 'moment';
 
+import { setBookingTime } from '../../../actions/index';
+
 import './TimeSlots.scss';
 
 function mapStateToProps(state) {
   return {
-
+    booking: state.booking
   };
 }
 
@@ -18,15 +20,30 @@ export class TimeSlots extends React.Component {
     super(props);
 
     this.state = {
-      slots:[
-        moment().set({'hour' : "7", 'minute'  : "30", 'second' : "00" }),
-        moment().set({'hour' : "8", 'minute'  : "00", 'second' : "00" }),
-        moment().set({'hour' : "12", 'minute'  : "00", 'second' : "00" }),
-        moment().set({'hour' : "14", 'minute'  : "30", 'second' : "00" }),
-        moment().set({'hour' : "15", 'minute'  : "00", 'second' : "00" })
-      ] 
+      slots:[] 
     };
     
+  }
+
+  createTimeSlots (){
+    const slots = [];
+    const serviceTime = 30;
+    const startTime = moment(this.props.selectedDateObject._schedules[0]._startTime);
+    const endTime = moment(this.props.selectedDateObject._schedules[0]._endTime).subtract(serviceTime, 'm');
+    const bookings = this.props.selectedDateObject._schedules[0]._bookings;
+    let newTime = startTime.clone();
+    while ( newTime.isBefore(endTime)){
+      const booked = bookings.find((booked) => {
+        return newTime.isBetween(booked._startTime, booked._endTime) || newTime.isSame(booked._startTime);               
+      })
+      if (booked){
+        newTime = moment(booked._endTime)
+      }
+      slots.push(newTime.clone());   
+
+      newTime = newTime.add(serviceTime, 'm');
+    }
+    this.setState( { slots });
   }
 
   listItems = () => {
@@ -39,8 +56,12 @@ export class TimeSlots extends React.Component {
 
   getActiveClassName = (slot) => {
     return classNames({
-      active : this.props.selectedDate.hour() === slot.hour() && this.props.selectedDate.minutes() === slot.minutes()
+      active : this.props.booking.timestamp.hour() === slot.hour() && this.props.booking.timestamp.minutes() === slot.minutes()
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.createTimeSlots()  
   }
 
   render() {
@@ -48,10 +69,10 @@ export class TimeSlots extends React.Component {
     return (
       <div className="TimeSlots">
         <h4>{t('application.provider_time.select_time')}</h4>
-        {this.props.selectedDate !== "" &&
-           this.props.selectedDate.format("dddd, MMMM Do YYYY")
+        {this.props.booking.timestamp !== "" &&
+           this.props.booking.timestamp.format("dddd, MMMM Do YYYY h:mm")
         }
-        <div className="slotsAvailableLabel">{t('application.provider_time.slots_available', {count: 5})}</div>
+        <div className="slotsAvailableLabel">{t('application.provider_time.slots_available', {count: this.state.slots.length})}</div>
         <ul className="slotsAvailable">
           {this.listItems()}
         </ul>
@@ -62,5 +83,5 @@ export class TimeSlots extends React.Component {
 
 export default connect(
   mapStateToProps,
-// Implement map dispatch to props
+  {setBookingTime}
 )(translate()(TimeSlots))
