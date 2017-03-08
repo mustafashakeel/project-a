@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
 import { isLoggedIn } from '../../../../../actions/index';
-import { checkFields } from '../../../../../utils';
+// import { checkFields } from '../../../../../utils';
 
 import FadeInOut from '../../../../common/fade_in_out/FadeInOut';
 import TextField from 'react-md/lib/TextFields';

@@ -1,7 +1,7 @@
 import { UPDATE_TAB, TOGGLE_TOOLTIP, SHOW_LOGIN } from '../actions/index';
 
 const INITIAL_STATE = { 
-  currentTab : 1,
+  currentTab : 0,
   toolTip: {
     shown: false,
     data: {}

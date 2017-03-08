@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 import { setBookingTime } from '../../../actions/index';
 
 import Datetime from 'react-datetime';
 import FadeInOut from '../../common/fade_in_out/FadeInOut';
-import TimeSlots from './TimeSlots'
+import TimeSlots from './TimeSlots';
 
 import availability from './availability';
 
@@ -24,6 +24,10 @@ export class Calendar extends React.Component {
   state = {
     selectedDateObject: null
   }
+  // constructor(props) {
+  //   super(props);
+  //   // console.log(moment.tz.names());
+  // }
 
   isValidDate = (current) => {
     return availability._days.some((availabilityDate) => {
@@ -52,7 +56,7 @@ export class Calendar extends React.Component {
         'minutes': slot.minutes()
     });
     this.props.setBookingTime(this.props.booking.timestamp);
-    // this.props.onSlotSelected();
+    this.props.onSlotSelected();
   }
 
   onChangeDate = (selectedDate) => {

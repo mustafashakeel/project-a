@@ -1,3 +1,5 @@
+/*jshint loopfunc: true */
+
 import React from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
@@ -40,13 +42,12 @@ export class TimeSlots extends React.Component {
         newTime = moment(booked._endTime)
       }
       slots.push(newTime.clone());   
-
       newTime = newTime.add(serviceTime, 'm');
     }
-    this.setState( { slots });
+    this.setState({slots});
   }
 
-  listItems = () => {
+  listItems() {
     return this.state.slots.map((slot, key) =>
       <li key={key} onClick={this.props.onSelected.bind(null, slot)} className={this.getActiveClassName(slot)}>
         {slot.format("h:mm a")}
@@ -54,7 +55,7 @@ export class TimeSlots extends React.Component {
     )
   }
 
-  getActiveClassName = (slot) => {
+  getActiveClassName(slot) {
     return classNames({
       active : this.props.booking.timestamp.hour() === slot.hour() && this.props.booking.timestamp.minutes() === slot.minutes()
     })

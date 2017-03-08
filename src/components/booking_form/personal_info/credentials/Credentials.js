@@ -141,6 +141,7 @@ class Credentials extends React.Component {
                         { ...this.state.fields.phoneNumber}/>  
                       <Checkbox
                         id="credentialsPassword"
+                        name="credentialsPassword"
                         label={t('application.user_info.login_fields.enableSms.placeholder')} 
                         value={this.state.fields.sendSMS}
                       />                      
