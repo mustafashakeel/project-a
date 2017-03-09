@@ -49,15 +49,12 @@ export class InfoStepper extends React.Component {
         <Stepper className="infoStepper">
           <Step
             completed={true}
-            stepLine
-            >
+            stepLine >
             <LoginInfo />            
           </Step>
           <Step
             completed={this.state.intakeFormTaken}
-            stepLine
-            >
-
+            stepLine >
             <h4>{t('application.user_info.intake_form')}</h4>
             <div className="stepContent">
               <p>
@@ -72,15 +69,13 @@ export class InfoStepper extends React.Component {
                 id="intakeForm"
                 visible={this.state.intakeFormOpen}
                 focusOnMount={false}
-                modal              
-              >
+                modal >
                 <IntakeForm id="accessibleContent" onSave={this.intakeFormSave}/>
               </Dialog>
             </div>
           </Step>
           <Step
-            completed={false}         
-            >
+            completed={false} >
             <h4>{t('application.user_info.payment')}</h4>
             <div className="stepContentBorder">
               <PaymentCC />            

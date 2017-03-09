@@ -3,15 +3,18 @@ import {
   SET_BOOKING_STATUS,
   SET_BOOKING_LOCATION,
   SET_BOOKING_SERVICE,
-  SET_BOOKING_PROVIDER
+  SET_BOOKING_PROVIDER,
+  SET_BOOKING_DEPENDANT
 } from '../actions/index';
 
 const INITIAL_STATE = {
-  isBooked: false, 
+  isBooked: false,
   location: {},
   service:{},
   provider: {},
-  timestamp: null
+  timestamp: null,
+  dependant: "",
+  payment: {}  
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -27,6 +30,8 @@ export default function (state = INITIAL_STATE , action){
       return { ...state, service: action.payload.service };
     case SET_BOOKING_PROVIDER:
       return { ...state, provider: action.payload.provider };
+    case SET_BOOKING_DEPENDANT:
+      return { ...state, dependant: action.payload.dependant };
     default:
       return state;
 

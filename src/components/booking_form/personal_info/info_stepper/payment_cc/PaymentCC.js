@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-
 import './PaymentCC.scss';
 
 function mapStateToProps(state) {
   return {
-
+    booking: state.booking,
+    business: state.business.info
   };
 }
 
@@ -14,25 +14,49 @@ export class PaymentCC extends React.Component {
   state = {
     paymentDetails : false
   }
+
+  priceItems = []
+
+  renderPriceItem(){
+    return this.priceItems.map((item)=>{
+      return <p><span>{item.name}: </span> <span>${item.amount.toFixed(2)}</span></p>
+    });
+  }
+
+  renderTotal(){
+    let total = 0;
+    this.priceItems.map((item)=>{
+      total = total + item.amount;
+    });
+    return total.toFixed(2);
+  }
+
+  componentWillMount() {
+    if (this.props.booking.location.tax) {
+      const offeringPrice = this.props.booking.service.OfferingPrice
+      this.priceItems.push({name:"Subtotal", amount: offeringPrice})
+      const taxes = this.props.booking.location.tax;
+      return taxes.map((tax)=>{
+        const taxPrice = ((offeringPrice * tax.rate) / 100);
+        this.priceItems.push({name: tax.name + "(" + tax.rate + "%)", amount: taxPrice})
+      });
+    }
+  }
+
   render() {
-    const {t} = this.props;
+    const {t, booking, business} = this.props;
+    console.log(this.props);
     return (
       <div className="Payment">
         {!this.state.paymentDetails ?
 
           <div className="md-grid">
             <div className="md-cell--12 ">
-              <p><strong>Infrared Sauna</strong> - 1 Class</p>
+              <p><strong>{booking.service.name}</strong></p>
             </div>
-            <div className="md-cell--6 md-cell--2-phone">
-              <p>Subtotal:</p>
-              <p>Tax:</p>
-              <p>Total:</p>
-            </div>
-            <div className="md-cell--6 md-cell--2-phone">
-              <p>$20.00</p>
-              <p>$1.00</p>
-              <p>$21.00</p>
+            <div className="md-cell--12 priceSummary">
+              {this.renderPriceItem()}   
+              <p><span>Total:</span> <span>${this.renderTotal()}</span></p>          
             </div>
             <div className="md-cell--12 align-center pointer">
               <p 
@@ -44,7 +68,7 @@ export class PaymentCC extends React.Component {
         :
         <div className="md-grid">
           <div className="md-cell--6 md-cell--2-phone">
-          <p>Total: $21.00<br/>
+          <p>Total: ${this.renderTotal()}<br/>
           Visa *************3425
           </p>
           </div>

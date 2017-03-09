@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
-import { isLoggedIn } from '../../../../../actions/index';
+import { isLoggedIn, setBookingDependant } from '../../../../../actions/index';
 // import { checkFields } from '../../../../../utils';
 
 import FadeInOut from '../../../../common/fade_in_out/FadeInOut';
@@ -12,7 +12,8 @@ import './LoginInfo.scss';
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    booking: state.booking
   };
 }
 
@@ -29,9 +30,19 @@ export class LoginInfo extends React.Component {
   }
 
   onChangeDependant(newVal) {
+    this.props.setBookingDependant(newVal)
+  }
+
+  componentWillReceiveProps(nextProps) {
     const fields = this.state.fields;
-    fields.dependantName.value = newVal;
+    fields.dependantName.value = nextProps.booking.dependant;
     this.setState({ fields });
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if(!nextState.bookDependant && this.props.booking.dependant !== ''){
+      this.props.setBookingDependant('')
+    }
   }
 
   render() {
@@ -71,5 +82,5 @@ export class LoginInfo extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn }
+  { isLoggedIn, setBookingDependant }
 )(translate()(LoginInfo))

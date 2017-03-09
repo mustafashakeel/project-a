@@ -10,4 +10,14 @@
     text-transform: uppercase;
     vertical-align: middle;
   }
+
+  .priceSummary{
+    display: flex;
+    flex-direction: column;
+    p {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
 }
