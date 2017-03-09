@@ -45,7 +45,6 @@ export class PaymentCC extends React.Component {
 
   render() {
     const {t, booking, business} = this.props;
-    console.log(this.props);
     return (
       <div className="Payment">
         {!this.state.paymentDetails ?
