@@ -26,7 +26,6 @@ export function groupOfferingsByCat(services){
 
   services.forEach(function(service) {
       service.categories.forEach(function(category) {
-          // create a new category if it does not exist yet
           if(!categoriesIndexed[category.id]) {
               categoriesIndexed[category.id] = {
                   id: category.id,
@@ -35,11 +34,32 @@ export function groupOfferingsByCat(services){
               };
               categories.push(categoriesIndexed[category.id]);
           }
-
-          // add the service to the category
           categoriesIndexed[category.id].children.push(service);
       });
   });
 
   return categoriesIndexed;
+}
+
+export function getProvidersFromAvailabilities(availabilities){
+
+  if(typeof availabilities._days === undefined){
+    return [];
+  }
+
+  var providersIndexed = [];
+  var providers = [];
+
+  availabilities._days.forEach(function(day) {
+      day._schedules[0]._providers.forEach(function(provider) {
+          if(!providersIndexed[provider.Id]) {
+              provider.fullName = provider.User.FirstName + " " + provider.User.LastName;
+              providersIndexed[provider.Id] = provider;
+
+              providers.push(providersIndexed[provider.Id]);
+          }
+      });
+  });
+
+  return providers;
 }

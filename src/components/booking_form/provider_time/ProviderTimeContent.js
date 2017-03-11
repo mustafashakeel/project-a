@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchProviders, setBookingProvider } from '../../../actions/index';
+import { fetchAvailabilities, setBookingProvider } from '../../../actions/index';
 
 import Calendar from './calendar/Calendar'
 
@@ -27,7 +27,7 @@ export class ProviderTimeContent extends React.Component {
     return this.props.providers.map((provider, index) => {
       return {
         ...provider,
-        leftAvatar: <Avatar src={provider.profile_picture} alt={provider.name}  />
+        leftAvatar: <Avatar src={provider.User.Pictures[0].PictureFileName} alt={provider.fullName}  />
       }
     });
   }
@@ -35,7 +35,7 @@ export class ProviderTimeContent extends React.Component {
 
 
   componentWillMount() {
-    this.props.fetchProviders();
+    this.props.fetchAvailabilities();
   }
 
   render() {
@@ -47,9 +47,9 @@ export class ProviderTimeContent extends React.Component {
           placeholder={t('application.provider_time.select_provider')}
           position={SelectField.Positions.BELOW}
           menuItems={this.providerList()}
-          itemLabel="name"
-          itemValue="name"
-          value={this.props.provider.name}
+          itemLabel="fullName"
+          itemValue="fullName"
+          value={this.props.provider.fullName}
           onChange={this.onChangeProvider.bind(this)}
           className="dropdownSelect"
           iconChildren="keyboard_arrow_down"
@@ -64,5 +64,5 @@ export class ProviderTimeContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {fetchProviders, setBookingProvider}
+  {fetchAvailabilities, setBookingProvider}
 )(translate()(ProviderTimeContent))
