@@ -22,7 +22,8 @@ import './BookingForm.scss';
 function mapStateToProps(state) {
   return {
     currentTab: state.ui.currentTab,
-    toolTip: state.ui.toolTip
+    toolTip: state.ui.toolTip,
+    booking: state.booking
   };
 }
 
@@ -32,16 +33,15 @@ class BookingForm extends React.Component {
     super(props);
     const { t } = this.props;
     this.state = {
-      steps: {
-        step1: {
-          label: t('application.steps.step1'),
-        },
-        step2: {
-          label: t('application.steps.step2'),
-        },
-        step3: {
-          label: t('application.steps.step3'),
-        }
+      step1: {
+        label: t('application.steps.step1'),
+        label2: ""
+      },
+      step2: {
+        label: t('application.steps.step2')
+      },
+      step3: {
+        label: t('application.steps.step3')
       }
     }
   }
@@ -50,26 +50,41 @@ class BookingForm extends React.Component {
     this.props.updateTab(tabIndex);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const {booking} = nextProps;
+    const newSteps = this.state;
+    if (booking.location.address && booking.service.name){
+      newSteps.step1.label = booking.location.address;
+      newSteps.step1.label2 = booking.service.name;
+    }
+    if (booking.timestamp){
+      newSteps.step2.label = booking.timestamp.format("dddd MMMM Do");
+    }
+
+    this.setState(newSteps)
+  }
+
   render() {
-    var { steps } = this.state;
+    var { step1, step2, step3 } = this.state;
     return (
       <div className="booking-form">
         <div className="mainHeader">
           <HeaderWidget />    
           <TabsProgress currentTab={this.props.currentTab} onTabClick={this.changeTab}>
             <TabHeader 
-              label={steps.step1.label} 
+              label={step1.label} 
+              label2={step1.label2}
               index={0}
               icon="home" 
             />
             <TabHeader 
-              label={steps.step2.label} 
+              label={step2.label} 
               index={1} 
               isCenter 
               icon="date_range" 
             />
             <TabHeader 
-              label={steps.step3.label} 
+              label={step3.label} 
               index={2} 
               icon="perm_identity" 
             />
