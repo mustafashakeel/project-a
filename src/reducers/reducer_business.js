@@ -3,6 +3,8 @@ import business from './mocks/business';
 import services from './mocks/services';
 import providers from './mocks/providers';
 
+import { groupOfferingsByCat } from '../utils';
+
 const INITIAL_STATE = { 
   info: {},
   services: [],
@@ -14,7 +16,7 @@ export default function (state = INITIAL_STATE , action){
     case GET_BIZ_INFO:
       return { ...state , info: business }
     case GET_BIZ_SERVICES:
-      return { ...state , services: services}
+      return { ...state , services: groupOfferingsByCat(services)}
     case GET_BIZ_PROVIDERS:
       return { ...state , providers: providers}
     default:
