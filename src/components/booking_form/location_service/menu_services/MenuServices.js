@@ -20,7 +20,7 @@ export class MenuServices extends React.Component {
         return React.createElement(this.props.childComponent, {
           ...child,
           toggleTooltip: this.props.toggleTooltip,
-          key: child.id 
+          key: child.offeringId
         });
       });
       return React.createElement(this.props.parentComponent, {

@@ -52,9 +52,8 @@ class LocationServiceContent extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (nextState.currentStep === 1 ){
-      const locationId = this.props.booking.location.id;
-      console.log("Getting service for location:", locationId);
+    if (nextState.currentStep === 1 && this.props.booking.location.id !== nextProps.booking.location.id){
+      const locationId = nextProps.booking.location.id;
       this.props.fetchLocationServices(locationId);
     }  
   }
