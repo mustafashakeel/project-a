@@ -9,7 +9,6 @@ import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
 import AppointmentReminder from './appointment_reminder/AppointmentReminder';
 
-
 import './PersonalInfoContent.scss';
 
 function mapStateToProps(state) {
