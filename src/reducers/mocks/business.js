@@ -8,7 +8,7 @@ export default {
                         "address": "1002-1515 Homer Mews Vancouver BC",
                         "longitude": 32132132.21,
                         "latitude": 43243243.21,
-                        "timezone": "+7",
+                        "timezone": "+07:00",
                         "tax":[
                             {
                             "name" : "GST",
@@ -26,7 +26,7 @@ export default {
                         "address": "1002-1515 Airpot Mews Vancouver BC",
                         "longitude": 52132132.21,
                         "latitude": 53243243.21,
-                        "timezone": "+7",
+                        "timezone": "+07:00",
                         "tax":[
                             {
                             "name" : "GST",
@@ -44,7 +44,7 @@ export default {
                         "address": "1002-1515 Terminal Mews Vancouver BC",
                         "longitude": 42132132.21,
                         "latitude": 43243243.21,
-                        "timezone": "+7",
+                        "timezone": "+07:00",
                         "tax":[
                             {
                             "name" : "GST",

@@ -4,18 +4,21 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class FadeInOut extends React.Component {
 
+
   scrollToElement(){
     var self = this;
+
     setTimeout(function(){
       var node = findDOMNode(self.refs.fade_children);
+      var parent = node.closest('.react-swipeable-view-container > div');
       if(node){
-        node.scrollIntoView({behavior: "smooth", block: "end"});      
+        parent.scrollTop = node.offsetTop + node.clientHeight;
       }
     }, 100)
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if(this.props.scroll){
+    if(nextProps.scroll && nextProps.show){
       this.scrollToElement();
     }
   }

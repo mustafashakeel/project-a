@@ -1,6 +1,7 @@
 import React from 'react';
 import {translate} from 'react-i18next';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 import { isLoggedIn, appointmentBooked } from '../../../actions'
 
@@ -13,7 +14,9 @@ import './PersonalInfoContent.scss';
 
 function mapStateToProps(state) {
   return {
-    renderLogin: !state.user.isLoggedIn
+    renderLogin: !state.user.isLoggedIn,
+    booking: state.booking,
+    user: state.user
   };
 }
 
@@ -23,6 +26,22 @@ class PersonalInfoContent extends React.Component {
   hideCredentials = () => {
     this.props.isLoggedIn(true);
   }
+
+  bookAppointment(){
+    const {booking, user} = this.props;
+    const self = this;
+    axios.post('http://localhost:8080/charge',{
+      email: user.credentials.email,
+      source: booking.payment.id,
+      amount: (booking.grantTotal * 100),
+      description: booking.service.name
+    }).then((response)=>{
+      if(response.data.paid === true) {
+        self.props.appointmentBooked(true);
+      }
+    })
+  }
+
 
   render() {
     const {t} = this.props;
@@ -36,7 +55,7 @@ class PersonalInfoContent extends React.Component {
           <AppointmentReminder />
           <button 
             className="bookAppointmentBtn"
-            onClick={this.props.appointmentBooked.bind(this,true)}
+            onClick={this.bookAppointment.bind(this)}
             >
             {t('application.user_info.book_my_appointment')}
           </button>

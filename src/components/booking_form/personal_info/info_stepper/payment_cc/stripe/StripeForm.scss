@@ -1,0 +1,20 @@
+@import '../../../../../../styles/vars';
+
+.StripeForm{
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid lighten($grey, 20%);
+
+  h4{
+    padding-left: 0 !important; 
+  }
+
+  .error{
+    color: darken(#ff0000, 3%);
+    font-size: 11px;
+  }
+
+  .saveCardBtn{
+    margin-top: 10px;
+  }
+}

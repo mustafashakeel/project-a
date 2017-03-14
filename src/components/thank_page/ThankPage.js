@@ -5,30 +5,24 @@ import './ThankPage.scss';
 
 function mapStateToProps(state) {
   return {
-
+    booking: state.booking,
+    business: state.business.info
   };
 }
 
 export class ThankPage extends React.Component {
-  static propTypes = {
-    name: React.PropTypes.string,
-  };
-
-  constructor(props) {
-    super(props);
-  }
-
   render() {
+    const {business, booking} = this.props;
     return (
       <div className="ThankPage">
         <h4>Your booking is confirmed! An email has been sent to you.</h4>
         <div className="appointmentInfo">
-          <div className="bizName">Anastasia Beuty Salon</div>
-          <div className="bizAddress">1625 Horny St Unit 102</div>
-          <div className="serviceName">Infrared Sauna</div>
-          <div className="providerName">Jenny Provider</div>
-          <div className="bookingTime">3:00 PM - 4:00 PM</div>
-          <div className="bookingDate">December 10, 2016</div>
+          <div className="bizName">{business.name}</div>
+          <div className="bizAddress">{booking.location.address}</div>
+          <div className="serviceName">{booking.service.name}</div>
+          <div className="providerName">{booking.provider.name}</div>
+          <div className="bookingTime">{booking.timestamp.format("h:mm a")} - {booking.timestamp.add(booking.service.OfferingDuration, 'm').format("h:mm a")}</div>
+          <div className="bookingDate">{booking.timestamp.format("dddd, MMMM Do YYYY")}</div>
           <div className="yocaleButton addToCalendar">Add to Calendar</div>
           <div className="viewEditYocale">View or Edit Appointment on Yocale</div>
         </div>

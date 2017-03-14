@@ -24,8 +24,16 @@ export default class TabHeader extends React.Component {
         <FontIcon className={this.getIconClass()}>
           {this.props.icon}
         </FontIcon>
-        <div className="TabHeaderLabel">{this.props.label}</div>
+        <div className="TabHeaderLabel">
+          <span>{this.props.label}</span>
+          <span>{this.props.label2}</span>
+        </div>
       </div>
     );
   }
+}
+
+TabHeader.defaultProps = {
+  label: "",
+  label2: ""
 }

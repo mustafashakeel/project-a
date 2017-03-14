@@ -3,7 +3,7 @@ import {findDOMNode} from 'react-dom';
 import FontIcon from 'react-md/lib/FontIcons';
 
 import { connect } from 'react-redux';
-import { updateTab } from '../../../actions/index';
+import { updateTab, setBookingService } from '../../../../actions/index';
 
 import './ListService.scss';
 
@@ -26,6 +26,7 @@ class ListService extends React.Component {
 
   selectService = (self, e) => {
     if (self.target.tagName.toLowerCase() !== "i") {
+      this.props.setBookingService(this.props);
       this.props.updateTab(1);
     }
   }
@@ -64,5 +65,5 @@ class ListService extends React.Component {
 export default 
 connect(
   mapStateToProps,
-  { updateTab }
+  { updateTab, setBookingService }
 )(ListService)

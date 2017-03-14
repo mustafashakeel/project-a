@@ -52,6 +52,14 @@
     .TabHeaderLabel {
       line-height: 1em;
       margin-top: 3px;
+      span{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        display: block;
+        line-height: 1em;
+      }
     }
 
     .TabHeaderIcon{
