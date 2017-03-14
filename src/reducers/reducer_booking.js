@@ -5,7 +5,9 @@ import {
   SET_BOOKING_SERVICE,
   SET_BOOKING_PROVIDER,
   SET_BOOKING_DEPENDANT,
-  SET_REMINDER_OPTS
+  SET_PAYMENT_DETAILS,
+  SET_REMINDER_OPTS,
+  SET_GRANT_TOTAL
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -16,6 +18,7 @@ const INITIAL_STATE = {
   timestamp: null,
   dependant: "",
   payment: {},
+  grantTotal: 0,
   reminder: {
     enableReminder: false,
     channel: "email",
@@ -40,6 +43,10 @@ export default function (state = INITIAL_STATE , action){
       return { ...state, provider: action.payload.provider };
     case SET_BOOKING_DEPENDANT:
       return { ...state, dependant: action.payload.dependant };
+    case SET_PAYMENT_DETAILS:
+      return { ...state, payment: action.payload.token };
+    case SET_GRANT_TOTAL:
+      return { ...state, grantTotal: action.payload.total }  
     case SET_REMINDER_OPTS:
       const reminder = {...state.reminder}
       reminder[action.payload.key] = action.payload.val;
