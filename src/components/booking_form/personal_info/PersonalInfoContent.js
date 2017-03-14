@@ -30,7 +30,7 @@ class PersonalInfoContent extends React.Component {
   bookAppointment(){
     const {booking, user} = this.props;
     const self = this;
-    axios.post('http://localhost:8080/charge',{
+    axios.post('http://express-stripe.herokuapp.com/charge',{
       email: user.credentials.email,
       source: booking.payment.id,
       amount: (booking.grantTotal * 100),
