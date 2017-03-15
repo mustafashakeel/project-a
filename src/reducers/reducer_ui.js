@@ -14,18 +14,14 @@ export default function (state = INITIAL_STATE , action){
 
     case UPDATE_TAB:
       return { ...state, currentTab: action.payload.tabIndex};
-    break;
 
     case TOGGLE_TOOLTIP:
       return { ...state, toolTip: action.payload.data};
-    break; 
 
     case SHOW_LOGIN:
       return { ...state, showLogin: action.payload.show};
-    break;
     default:
       return state;
-    break;
 
   }
 }

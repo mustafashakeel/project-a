@@ -30,7 +30,7 @@ export class PaymentCC extends React.Component {
   getTotal(){
     if (this.props.booking.grantTotal === 0){
       let total = 0;
-      this.priceItems.map((item)=>{
+      this.priceItems.forEach((item)=>{
         total = total + item.amount;
       });
       this.props.setGrantTotal(total.toFixed(2));

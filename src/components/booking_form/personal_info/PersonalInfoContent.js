@@ -9,6 +9,8 @@ import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
 import AppointmentReminder from './appointment_reminder/AppointmentReminder';
 
+import Snackbar from 'react-md/lib/Snackbars';
+
 import './PersonalInfoContent.scss';
 
 function mapStateToProps(state) {
@@ -22,8 +24,25 @@ function mapStateToProps(state) {
 
 class PersonalInfoContent extends React.Component {
 
+  state = {
+    toasts: [],
+    autohide: false,
+  }
+
   hideCredentials = () => {
     this.props.isLoggedIn(true);
+  }
+
+  removeToast() {
+    const [, ...toasts] = this.state.toasts;
+    this.setState({ toasts });
+  }
+
+  addToast(text, action) {
+    const toasts = this.state.toasts.slice();
+    toasts.push({ text, action });
+
+    this.setState({ toasts });
   }
 
   bookAppointment(){
@@ -35,8 +54,11 @@ class PersonalInfoContent extends React.Component {
       amount: (booking.grantTotal * 100),
       description: booking.service.name
     }).then((response)=>{
-      if(response.data.paid === true) {
+      // console.log(response);
+      if(response.data.paid === true && response.data.status === "succeeded") {
         self.props.appointmentBooked(true);
+      }else{
+        self.addToast(response.data.message, "Retry")
       }
     })
   }
@@ -60,6 +82,7 @@ class PersonalInfoContent extends React.Component {
           </button>
         </div>
       }
+        <Snackbar {...this.state} onDismiss={this.removeToast.bind(this)} />
       </div>
     );
   }
