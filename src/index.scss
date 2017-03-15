@@ -5,6 +5,7 @@
 @import '../node_modules/react-datetime/css/react-datetime';
 
 $md-primary-color: $yocaleOrange;
+$md-secondary-color : $yocaleOrange;
 
 // Include all components
 @include react-md-everything;

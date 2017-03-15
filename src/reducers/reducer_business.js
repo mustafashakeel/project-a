@@ -24,8 +24,8 @@ export default function (state = INITIAL_STATE , action){
       return { ...state , info: business }
     case GET_BIZ_SERVICES:
       return { ...state , services: groupOfferingsByCat(services)}
-    case GET_BIZ_PROVIDERS:
-      return { ...state , providers: providers}
+    // case GET_BIZ_PROVIDERS:
+    //   return { ...state , providers: providers}
     case GET_AVAILABILITIES:
       const providers = getProvidersFromAvailabilities(action.payload.data);
       return { ...state , availabilities: action.payload.data, providers: providers}

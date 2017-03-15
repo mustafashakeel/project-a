@@ -28,11 +28,11 @@ export class Calendar extends React.Component {
 
   constructor(props) {
     super(props);
-    var names = Object.keys(moment.tz._zones)
-        .map(function(k) { return moment.tz._zones[k].split('|')[0]; })
-        .filter(function(z) { return z.indexOf('/') >= 0; })
-        .sort();
-    console.log(names);
+    // var names = Object.keys(moment.tz._zones)
+    //     .map(function(k) { return moment.tz._zones[k].split('|')[0]; })
+    //     .filter(function(z) { return z.indexOf('/') >= 0; })
+    //     .sort();
+    // console.log(names);
   }
 
   isValidDate = (current) => {
