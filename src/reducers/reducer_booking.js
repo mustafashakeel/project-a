@@ -7,13 +7,18 @@ import {
   SET_BOOKING_DEPENDANT,
   SET_PAYMENT_DETAILS,
   SET_REMINDER_OPTS,
-  SET_GRANT_TOTAL
+  SET_GRANT_TOTAL,
+  GET_INTAKE_FORMS,
+  LEASE_BOOKING,
+  IS_LOGGED_IN
 } from '../actions/index';
 
 const INITIAL_STATE = {
+  bookingId: null,
   isBooked: false,
   location: {},
   service:{},
+  intake_forms: [],
   provider: {},
   timestamp: null,
   dependant: "",
@@ -51,6 +56,16 @@ export default function (state = INITIAL_STATE , action){
       const reminder = {...state.reminder}
       reminder[action.payload.key] = action.payload.val;
       return { ...state, reminder: reminder };
+    case GET_INTAKE_FORMS:
+      return { ...state, intake_forms: action.payload.data }
+    case LEASE_BOOKING:
+      return { ...state, bookingId: action.payload.data.bookingId}
+    case IS_LOGGED_IN:
+      // from users action
+      if (action.payload.isLoggedIn == false){
+        return { ...state, bookingId: null}
+      }
+
     default:
       return state;
 

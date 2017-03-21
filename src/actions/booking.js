@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const SET_BOOKING_TIME = 'SET_BOOKING_TIME';
 export const SET_BOOKING_STATUS = 'SET_BOOKING_STATUS';
 export const SET_BOOKING_LOCATION = 'SET_BOOKING_LOCATION';
@@ -7,6 +9,11 @@ export const SET_BOOKING_DEPENDANT = 'SET_BOOKING_DEPENDANT';
 export const SET_PAYMENT_DETAILS = 'SET_PAYMENT_DETAILS';
 export const SET_REMINDER_OPTS = 'SET_REMINDER_OPTS';
 export const SET_GRANT_TOTAL = 'SET_GRANT_TOTAL';
+
+export const GET_INTAKE_FORMS = 'GET_INTAKE_FORMS';
+export const LEASE_BOOKING = 'LEASE_BOOKING';
+
+const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 
 export function setBookingTime(timestamp){
   return {
@@ -88,4 +95,22 @@ export function setGrantTotal(total){
       total: total
     }
   }
+}
+
+
+export function getIntakeForms(bookingId){
+  const request = axios.get(`${ROOT_URL}/booking/forms/:bookingId`);
+  
+  return {
+    type: GET_INTAKE_FORMS,
+    payload: request
+  }
+}
+
+export function leaseBooking(bookingObj){
+  return {
+    type: LEASE_BOOKING,
+    payload: { data: { bookingId: 1900  } }
+  }
+
 }

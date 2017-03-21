@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import widgetSettings from '../../widgetSettings';
+// import widgetSettings from '../../widgetSettings';
 
 import { connect } from 'react-redux';
 import { updateTab, toggleTooltip } from '../../actions/index';

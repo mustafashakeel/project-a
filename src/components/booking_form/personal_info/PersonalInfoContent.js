@@ -3,7 +3,7 @@ import {translate} from 'react-i18next';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
-import { isLoggedIn, appointmentBooked } from '../../../actions'
+import { isLoggedIn, appointmentBooked, getIntakeForms } from '../../../actions'
 
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
@@ -26,11 +26,7 @@ class PersonalInfoContent extends React.Component {
 
   state = {
     toasts: [],
-    autohide: false,
-  }
-
-  hideCredentials = () => {
-    this.props.isLoggedIn(true);
+    autohide: false
   }
 
   removeToast() {
@@ -63,13 +59,21 @@ class PersonalInfoContent extends React.Component {
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+    // user is logged in and booking was leased
+    if(this.props.booking.bookingId !== nextProps.booking.bookingId &&  nextProps.booking.bookingId !== null && this.props.renderLogin){
+      this.props.isLoggedIn(true);
+      this.props.getIntakeForms(nextProps.booking.bookingId);
+    }
+  }
+
 
   render() {
     const {t} = this.props;
     return (
       <div className="PersonalInfoContent">
       {this.props.renderLogin ?
-        <Credentials hideCredentials={this.hideCredentials}/>
+        <Credentials/>
         :
         <div>
           <InfoStepper />
@@ -90,5 +94,5 @@ class PersonalInfoContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn, appointmentBooked }
+  { isLoggedIn, appointmentBooked, getIntakeForms }
 )(translate()(PersonalInfoContent))
