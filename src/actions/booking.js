@@ -11,6 +11,7 @@ export const SET_REMINDER_OPTS = 'SET_REMINDER_OPTS';
 export const SET_GRANT_TOTAL = 'SET_GRANT_TOTAL';
 
 export const GET_INTAKE_FORMS = 'GET_INTAKE_FORMS';
+export const SAVE_INTAKE_FORM = 'SAVE_INTAKE_FORM';
 export const LEASE_BOOKING = 'LEASE_BOOKING';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
@@ -100,10 +101,20 @@ export function setGrantTotal(total){
 
 export function getIntakeForms(bookingId){
   const request = axios.get(`${ROOT_URL}/booking/forms/:bookingId`);
+  // const request = axios.get('http://demo1743653.mockable.io/forms');
   
   return {
     type: GET_INTAKE_FORMS,
     payload: request
+  }
+}
+
+export function saveIntakeForm(formObj){
+  return {
+    type: SAVE_INTAKE_FORM,
+    payload: {
+      formObj: formObj
+    }
   }
 }
 

@@ -22,8 +22,8 @@ export class PaymentCC extends React.Component {
   priceItems = []
 
   renderPriceItem(){
-    return this.priceItems.map((item)=>{
-      return <p><span>{item.name}: </span> <span>${item.amount.toFixed(2)}</span></p>
+    return this.priceItems.map((item, index)=>{
+      return <p key={index}><span>{item.name}: </span> <span>${item.amount.toFixed(2)}</span></p>
     });
   }
 
