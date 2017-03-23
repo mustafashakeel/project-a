@@ -8,16 +8,19 @@ import {
   SET_PAYMENT_DETAILS,
   SET_REMINDER_OPTS,
   SET_GRANT_TOTAL,
+  SET_PAYMENT_STATUS,
   GET_INTAKE_FORMS,
   SAVE_INTAKE_FORM,
   LEASE_BOOKING,
-  IS_LOGGED_IN
+  IS_LOGGED_IN,
+  BOOK_APPOINTMENT
 } from '../actions/index';
 
 const INITIAL_STATE = {
-  bookingId: null,
   lease: null,
   isBooked: false,
+  isPaid: false,
+  booked_summary: { status: 0},
   location: {},
   service:{},
   intake_forms: {
@@ -46,6 +49,9 @@ export default function (state = INITIAL_STATE , action){
 
     case SET_BOOKING_STATUS:
       return { ...state, isBooked: action.payload.booked };
+
+    case SET_PAYMENT_STATUS:
+      return { ...state, isPaid: action.payload.isPaid };      
 
     case SET_BOOKING_LOCATION:
       return { ...state, location: action.payload.location };
@@ -92,11 +98,15 @@ export default function (state = INITIAL_STATE , action){
     case LEASE_BOOKING:
       return { ...state, lease: action.payload.data}
 
+    case BOOK_APPOINTMENT:
+      return { ...state, booked_summary: action.payload.data}
+
     case IS_LOGGED_IN:
       // from users action
       if (action.payload.isLoggedIn == false){
         return { ...state, lease: null}
       }
+
 
     default:
       return state;

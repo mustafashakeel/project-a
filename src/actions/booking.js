@@ -9,10 +9,12 @@ export const SET_BOOKING_DEPENDANT = 'SET_BOOKING_DEPENDANT';
 export const SET_PAYMENT_DETAILS = 'SET_PAYMENT_DETAILS';
 export const SET_REMINDER_OPTS = 'SET_REMINDER_OPTS';
 export const SET_GRANT_TOTAL = 'SET_GRANT_TOTAL';
+export const SET_PAYMENT_STATUS = 'SET_PAYMENT_STATUS';
 
 export const GET_INTAKE_FORMS = 'GET_INTAKE_FORMS';
 export const SAVE_INTAKE_FORM = 'SAVE_INTAKE_FORM';
 export const LEASE_BOOKING = 'LEASE_BOOKING';
+export const BOOK_APPOINTMENT = 'BOOK_APPOINTMENT';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 
@@ -102,7 +104,6 @@ export function setGrantTotal(total){
 export function getIntakeForms(bookingId){
   const request = axios.get(`${ROOT_URL}/booking/forms/:bookingId`);
   // const request = axios.get('http://demo1743653.mockable.io/forms');
-  
   return {
     type: GET_INTAKE_FORMS,
     payload: request
@@ -122,10 +123,28 @@ export function leaseBooking(props){
   // const request = axios.post(`${ROOT_URL}/booking/lease`, props);
   const request = axios.post('http://demo1743653.mockable.io/lease');
 
-
   return {
     type: LEASE_BOOKING,
     payload: request
   }
+}
 
+export function bookingIsPaid(flag){
+  return {
+    type: SET_PAYMENT_STATUS,
+    payload: {
+      isPaid: flag
+    }
+  }
+}
+
+export function bookAppointment(bookingId){
+  // const request = axios.post(`${ROOT_URL}/booking/Confirm`, { bookingId });
+    const request = axios.get('http://demo1743653.mockable.io/book');
+
+
+  return {
+    type: BOOK_APPOINTMENT,
+    payload: request
+  }
 }

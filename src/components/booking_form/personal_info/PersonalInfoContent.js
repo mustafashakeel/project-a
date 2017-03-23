@@ -3,7 +3,7 @@ import {translate} from 'react-i18next';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
-import { isLoggedIn, appointmentBooked, getIntakeForms } from '../../../actions'
+import { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms } from '../../../actions'
 
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
@@ -52,7 +52,7 @@ class PersonalInfoContent extends React.Component {
     }).then((response)=>{
       // console.log(response);
       if(response.data.paid === true && response.data.status === "succeeded") {
-        self.props.appointmentBooked(true);
+        self.props.bookingIsPaid(true);
       }else{
         self.addToast(response.data.message, "Retry")
       }
@@ -64,6 +64,11 @@ class PersonalInfoContent extends React.Component {
     if(nextProps.booking.lease !== null && this.props.renderLogin){
       this.props.isLoggedIn(true);
       this.props.getIntakeForms(nextProps.booking.lease.id);
+    }
+
+    // when payments is successful
+    if(nextProps.booking.isPaid && !nextProps.booking.isBooked){
+      this.props.bookAppointment(nextProps.booking.lease.id);
     }
   }
 
@@ -94,5 +99,5 @@ class PersonalInfoContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn, appointmentBooked, getIntakeForms }
+  { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms }
 )(translate()(PersonalInfoContent))
