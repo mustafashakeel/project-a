@@ -92,7 +92,13 @@ class Credentials extends React.Component {
   }
 
   loginEvent() {
-    this.props.leaseBooking(this.props.booking);
+    const {booking} = this.props;
+    this.props.leaseBooking({
+      providerId: booking.provider.Id,
+      locationId: booking.location.id,
+      offeringId: booking.service.offeringId,
+      starDateTime: booking.timestamp.format()
+    });
   }
 
   createAccountEvent()  {

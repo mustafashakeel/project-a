@@ -61,9 +61,9 @@ class PersonalInfoContent extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // user is logged in and booking was leased
-    if(this.props.booking.bookingId !== nextProps.booking.bookingId &&  nextProps.booking.bookingId !== null && this.props.renderLogin){
+    if(nextProps.booking.lease !== null && this.props.renderLogin){
       this.props.isLoggedIn(true);
-      this.props.getIntakeForms(nextProps.booking.bookingId);
+      this.props.getIntakeForms(nextProps.booking.lease.id);
     }
   }
 

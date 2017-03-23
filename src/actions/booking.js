@@ -118,10 +118,14 @@ export function saveIntakeForm(formObj){
   }
 }
 
-export function leaseBooking(bookingObj){
+export function leaseBooking(props){
+  // const request = axios.post(`${ROOT_URL}/booking/lease`, props);
+  const request = axios.post('http://demo1743653.mockable.io/lease');
+
+
   return {
     type: LEASE_BOOKING,
-    payload: { data: { bookingId: 1900  } }
+    payload: request
   }
 
 }

@@ -16,6 +16,7 @@ import {
 
 const INITIAL_STATE = {
   bookingId: null,
+  lease: null,
   isBooked: false,
   location: {},
   service:{},
@@ -89,12 +90,12 @@ export default function (state = INITIAL_STATE , action){
       return { ...state, intake_forms: intake_forms }
 
     case LEASE_BOOKING:
-      return { ...state, bookingId: action.payload.data.bookingId}
+      return { ...state, lease: action.payload.data}
 
     case IS_LOGGED_IN:
       // from users action
       if (action.payload.isLoggedIn == false){
-        return { ...state, bookingId: null}
+        return { ...state, lease: null}
       }
 
     default:
