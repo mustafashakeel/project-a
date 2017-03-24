@@ -35,9 +35,9 @@ export function fetchProviders(businessId, locationId){
 }
 
 export function fetchAvailabilities(businessId, locationId){
-  const request = axios.get(`${MOCK_URL}/availability`);
   
   return dispatch => {
+    const request = axios.get(`${MOCK_URL}/availability`);
     dispatch(showLoading());
     return dispatch({
       type: GET_AVAILABILITIES,

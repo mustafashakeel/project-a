@@ -106,16 +106,10 @@ export function setGrantTotal(total){
 export function getIntakeForms(bookingId){
   const request = axios.get(`${ROOT_URL}/booking/forms/:bookingId`);
   // const request = axios.get('http://demo1743653.mockable.io/forms');
-  return dispatch => {
-    dispatch(showLoading());
-    return dispatch({
+    return {
       type: GET_INTAKE_FORMS,
       payload: request
-    })
-    .then(() => {
-      dispatch(hideLoading());
-    });
-  }
+    };
 }
 
 export function saveIntakeForm(formObj){
@@ -146,10 +140,9 @@ export function bookingIsPaid(flag){
 }
 
 export function bookAppointment(bookingId){
-  // const request = axios.post(`${ROOT_URL}/booking/Confirm`, { bookingId });
-  const request = axios.get('http://demo1743653.mockable.io/book');
 
   return dispatch => {
+    const request = axios.post(`${ROOT_URL}/booking/Confirm`, { bookingId });
     dispatch(showLoading());
     return dispatch({
       type: BOOK_APPOINTMENT,

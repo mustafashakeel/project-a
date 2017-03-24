@@ -57,9 +57,9 @@ export function signupUser(fields, booking){
     phone: fields.phoneNumber.value
   };
 
-  const request = axios.post(`${ROOT_URL}/account/register/`, values);
 
   return dispatch => {
+    const request = axios.post(`${ROOT_URL}/account/register/`, values);
     dispatch(showLoading());
     request.then(() =>{
       dispatch(leaseBooking(booking)).then(() => {
@@ -78,9 +78,8 @@ export function loginUser(fields, booking){
     phone: fields.phoneNumber.value
   };
 
-  const request = axios.post(`${ROOT_URL}/account/register/`, values);
-
   return dispatch => {
+    const request = axios.post(`${ROOT_URL}/account/register/`, values);
     dispatch(showLoading());
     request.then(() =>{
       dispatch(leaseBooking(booking)).then(() => {

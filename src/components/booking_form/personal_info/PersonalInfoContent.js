@@ -4,13 +4,11 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms, toggleLoadingBar } from '../../../actions'
+import { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms, toggleLoadingBar, addErrorMsg } from '../../../actions'
 
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
 import AppointmentReminder from './appointment_reminder/AppointmentReminder';
-
-import Snackbar from 'react-md/lib/Snackbars';
 
 import './PersonalInfoContent.scss';
 
@@ -30,17 +28,6 @@ class PersonalInfoContent extends React.Component {
     autohide: false
   }
 
-  removeToast() {
-    const [, ...toasts] = this.state.toasts;
-    this.setState({ toasts });
-  }
-
-  addToast(text, action) {
-    const toasts = this.state.toasts.slice();
-    toasts.push({ text, action });
-
-    this.setState({ toasts });
-  }
 
   bookAppointment(){
     const {booking, user} = this.props;
@@ -56,7 +43,7 @@ class PersonalInfoContent extends React.Component {
       if(response.data.paid === true && response.data.status === "succeeded") {
         self.props.bookingIsPaid(true);
       }else{
-        self.addToast(response.data.message, "Retry")
+        self.props.addErrorMsg(response.data.message, "Retry")
       }
     })
   }
@@ -93,7 +80,7 @@ class PersonalInfoContent extends React.Component {
           </button>
         </div>
       }
-        <Snackbar {...this.state} onDismiss={this.removeToast.bind(this)} />
+        
       </div>
     );
   }
@@ -101,5 +88,5 @@ class PersonalInfoContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms, toggleLoadingBar }
+  { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms, toggleLoadingBar, addErrorMsg }
 )(translate()(PersonalInfoContent))
