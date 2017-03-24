@@ -3,7 +3,8 @@ import {translate} from 'react-i18next';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
-import { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms } from '../../../actions'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms, toggleLoadingBar } from '../../../actions'
 
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
@@ -44,13 +45,14 @@ class PersonalInfoContent extends React.Component {
   bookAppointment(){
     const {booking, user} = this.props;
     const self = this;
+    this.props.toggleLoadingBar(true);
     axios.post('http://express-stripe.herokuapp.com/charge',{
       email: user.credentials.email,
       source: booking.payment.id,
       amount: (booking.grantTotal * 100),
       description: booking.service.name
     }).then((response)=>{
-      // console.log(response);
+      this.props.toggleLoadingBar(false);
       if(response.data.paid === true && response.data.status === "succeeded") {
         self.props.bookingIsPaid(true);
       }else{
@@ -99,5 +101,5 @@ class PersonalInfoContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms }
+  { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms, toggleLoadingBar }
 )(translate()(PersonalInfoContent))

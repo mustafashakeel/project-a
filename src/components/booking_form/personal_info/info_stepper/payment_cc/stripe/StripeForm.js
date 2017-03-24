@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { setPaymentsDetails } from '../../../../../../actions/index';
+import { setPaymentsDetails, toggleLoadingBar } from '../../../../../../actions/index';
 
 
 import TextField from 'react-md/lib/TextFields';
@@ -59,8 +59,9 @@ export class StripeForm extends React.Component {
     const extraDetails = {
       name: this.state.name
     };
-
+    this.props.toggleLoadingBar(true);
     stripe.createToken(card, extraDetails).then((result) => {
+      this.props.toggleLoadingBar(false);
       this.setState({error: false})
       if(result.error){
         this.setState({error: true, errorMsg: result.error.message})
@@ -117,5 +118,5 @@ export class StripeForm extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { setPaymentsDetails }
+  { setPaymentsDetails, toggleLoadingBar }
 )(StripeForm)

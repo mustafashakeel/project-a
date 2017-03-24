@@ -11,6 +11,15 @@ $heightHeader: 90px;
   z-index: 2;
 }
 
+.loadingBar{
+  background-color: lighten($yocaleOrange, 20%);
+  height: 3px;
+  z-index: 3;
+  position: fixed;
+  top: 0;
+  display: block;
+}
+
 .react-swipeable-view-container{
   position: fixed;
   width: 100%;

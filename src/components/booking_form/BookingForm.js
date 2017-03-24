@@ -17,6 +17,9 @@ import ServiceDetails from './location_service/service_details/ServiceDetails';
 
 import YocaleTooltip from '../common/yocale_tooltip/YocaleTooltip';
 
+import LoadingBar from 'react-redux-loading-bar'
+
+
 import './BookingForm.scss';
 
 function mapStateToProps(state) {
@@ -69,6 +72,7 @@ class BookingForm extends React.Component {
     return (
       <div className="booking-form">
         <div className="mainHeader">
+          <LoadingBar className="loadingBar" />
           <HeaderWidget />    
           <TabsProgress currentTab={this.props.currentTab} onTabClick={this.changeTab}>
             <TabHeader 

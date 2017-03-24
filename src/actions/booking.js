@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 export const SET_BOOKING_TIME = 'SET_BOOKING_TIME';
 export const SET_BOOKING_STATUS = 'SET_BOOKING_STATUS';
@@ -15,6 +16,7 @@ export const GET_INTAKE_FORMS = 'GET_INTAKE_FORMS';
 export const SAVE_INTAKE_FORM = 'SAVE_INTAKE_FORM';
 export const LEASE_BOOKING = 'LEASE_BOOKING';
 export const BOOK_APPOINTMENT = 'BOOK_APPOINTMENT';
+export const TEST_ACTION = 'TEST_ACTION';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 
@@ -104,9 +106,15 @@ export function setGrantTotal(total){
 export function getIntakeForms(bookingId){
   const request = axios.get(`${ROOT_URL}/booking/forms/:bookingId`);
   // const request = axios.get('http://demo1743653.mockable.io/forms');
-  return {
-    type: GET_INTAKE_FORMS,
-    payload: request
+  return dispatch => {
+    dispatch(showLoading());
+    return dispatch({
+      type: GET_INTAKE_FORMS,
+      payload: request
+    })
+    .then(() => {
+      dispatch(hideLoading());
+    });
   }
 }
 
@@ -123,9 +131,15 @@ export function leaseBooking(props){
   // const request = axios.post(`${ROOT_URL}/booking/lease`, props);
   const request = axios.post('http://demo1743653.mockable.io/lease');
 
-  return {
-    type: LEASE_BOOKING,
-    payload: request
+  return dispatch => {
+    dispatch(showLoading());
+    return dispatch({
+      type: LEASE_BOOKING,
+      payload: request
+    })
+    .then(() => {
+      dispatch(hideLoading());
+    });
   }
 }
 
@@ -140,11 +154,32 @@ export function bookingIsPaid(flag){
 
 export function bookAppointment(bookingId){
   // const request = axios.post(`${ROOT_URL}/booking/Confirm`, { bookingId });
-    const request = axios.get('http://demo1743653.mockable.io/book');
+  const request = axios.get('http://demo1743653.mockable.io/book');
+
+  return dispatch => {
+    dispatch(showLoading());
+    return dispatch({
+      type: BOOK_APPOINTMENT,
+      payload: request
+    })
+    .then(() => {
+      dispatch(hideLoading());
+    });
+  }
+}
 
 
-  return {
-    type: BOOK_APPOINTMENT,
-    payload: request
+export function testThunk(){
+  const request = axios.get('http://demo1743653.mockable.io/availability');
+  console.log("here");
+  return dispatch => {
+    dispatch(showLoading());
+    return dispatch({
+      type: "TEST_THUNK",
+      payload:request
+    })
+    .then(() => {
+      dispatch(hideLoading());
+    });
   }
 }
