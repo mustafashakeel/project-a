@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { addErrorMsg } from './ui';
+
+import { isLoggedIn } from './users'
 
 export const SET_BOOKING_TIME = 'SET_BOOKING_TIME';
 export const SET_BOOKING_STATUS = 'SET_BOOKING_STATUS';
@@ -19,6 +22,7 @@ export const BOOK_APPOINTMENT = 'BOOK_APPOINTMENT';
 export const TEST_ACTION = 'TEST_ACTION';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
+const STRIPE_CHARGE_URL = "http://express-stripe.herokuapp.com/charge";
 
 export function setBookingTime(timestamp){
   return {
@@ -122,12 +126,25 @@ export function saveIntakeForm(formObj){
 }
 
 export function leaseBooking(props){
-  const request = axios.post(`${ROOT_URL}/booking/lease`, props);
 
-  return {
-      type: LEASE_BOOKING,
-      payload: request
+  return dispatch => {
+
+    const request = axios.post(`${ROOT_URL}/booking/lease`, props);  
+    dispatch(showLoading());
+
+    request.then((response) => {
+      dispatch({
+          type: LEASE_BOOKING,
+          payload: response
+      });
+      dispatch(isLoggedIn(true));
+      dispatch(getIntakeForms(response.id));
+      dispatch(hideLoading());
+    });  
+
+  
   };
+
 }
 
 export function bookingIsPaid(flag){
@@ -136,22 +153,24 @@ export function bookingIsPaid(flag){
     payload: {
       isPaid: flag
     }
-  }
+  };
 }
 
-export function bookAppointment(bookingId){
+export function bookAppointment(bookingId, paymentDetails){
 
   return dispatch => {
     const request = axios.post(`${ROOT_URL}/booking/Confirm`, { bookingId });
+    request.then(() => {
+      dispatch(hideLoading());
+    });
+
     dispatch(showLoading());
     return dispatch({
       type: BOOK_APPOINTMENT,
       payload: request
     })
-    .then(() => {
-      dispatch(hideLoading());
-    });
-  }
+    
+  };
 }
 
 /*
@@ -173,6 +192,30 @@ export function fetchBiz(bizId){
 }
 */
 
-export function proccessPayment(props){
+export function proccessPayment(bookingId, paymentDetails){
+  return dispatch => {
+    dispatch(showLoading());
+    axios.post(STRIPE_CHARGE_URL, paymentDetails)
+      .then((response) => {
+        if(response.data.paid === true && response.data.status === "succeeded") {
+          const request = axios.post(`${ROOT_URL}/booking/Confirm`, { bookingId });
+          return dispatch({
+            type: BOOK_APPOINTMENT,
+            payload: request
+          })
+          .then(() => {
+            dispatch(bookingIsPaid(true));
+            dispatch(hideLoading());
+          });
+        }else{
+          dispatch(addErrorMsg(response.data.message, "Retry"))
+          dispatch(hideLoading());
+        }        
+      }).
+      catch((error) => {
+        dispatch(hideLoading());
+        dispatch(addErrorMsg("There was an error.", "Retry"))
+      })
+  }
 
 }

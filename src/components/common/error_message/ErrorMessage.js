@@ -25,7 +25,6 @@ export class ErrorMessage extends React.Component {
 
 
   render() {
-    console.log(this.props.errorMsgs);
     return (
       <Snackbar {...this.props.errorMsgs} onDismiss={this.removeToast.bind(this)} />
     );

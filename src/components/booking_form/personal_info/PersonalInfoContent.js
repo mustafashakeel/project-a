@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms, toggleLoadingBar, addErrorMsg } from '../../../actions'
+import { isLoggedIn, proccessPayment } from '../../../actions'
 
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
@@ -23,42 +23,29 @@ function mapStateToProps(state) {
 
 class PersonalInfoContent extends React.Component {
 
-  state = {
-    toasts: [],
-    autohide: false
-  }
-
-
   bookAppointment(){
     const {booking, user} = this.props;
-    const self = this;
-    this.props.toggleLoadingBar(true);
-    axios.post('http://express-stripe.herokuapp.com/charge',{
+    const paymentDetails = {
       email: user.credentials.email,
       source: booking.payment.id,
       amount: (booking.grantTotal * 100),
       description: booking.service.name
-    }).then((response)=>{
-      this.props.toggleLoadingBar(false);
-      if(response.data.paid === true && response.data.status === "succeeded") {
-        self.props.bookingIsPaid(true);
-      }else{
-        self.props.addErrorMsg(response.data.message, "Retry")
-      }
-    })
+    };
+
+    this.props.proccessPayment(booking.lease.id, paymentDetails);
   }
 
   componentWillReceiveProps(nextProps) {
-    // user is logged in and booking was leased
-    if(nextProps.booking.lease !== null && this.props.renderLogin){
-      this.props.isLoggedIn(true);
-      this.props.getIntakeForms(nextProps.booking.lease.id);
-    }
+    // // user is logged in and booking was leased
+    // if(nextProps.booking.lease !== null && this.props.renderLogin){
+    //   this.props.isLoggedIn(true);
+    //   this.props.getIntakeForms(nextProps.booking.lease.id);
+    // }
 
-    // when payments is successful
-    if(nextProps.booking.isPaid && !nextProps.booking.isBooked){
-      this.props.bookAppointment(nextProps.booking.lease.id);
-    }
+    // // when payments is successful
+    // if(nextProps.booking.isPaid && !nextProps.booking.isBooked){
+    //   this.props.bookAppointment(nextProps.booking.lease.id);
+    // }
   }
 
 
@@ -88,5 +75,5 @@ class PersonalInfoContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn, bookAppointment, bookingIsPaid, getIntakeForms, toggleLoadingBar, addErrorMsg }
+  { isLoggedIn, proccessPayment }
 )(translate()(PersonalInfoContent))

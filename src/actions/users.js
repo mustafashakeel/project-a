@@ -91,10 +91,7 @@ export function loginUser(fields, booking){
 
 export function loginAsGuest(booking){
   return dispatch => {
-    dispatch(showLoading());
-    dispatch(leaseBooking(booking)).then(() => {
-      dispatch(hideLoading());
-    });
+    dispatch(leaseBooking(booking));
   };
 }
 
