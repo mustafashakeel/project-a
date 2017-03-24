@@ -128,19 +128,12 @@ export function saveIntakeForm(formObj){
 }
 
 export function leaseBooking(props){
-  // const request = axios.post(`${ROOT_URL}/booking/lease`, props);
-  const request = axios.post('http://demo1743653.mockable.io/lease');
+  const request = axios.post(`${ROOT_URL}/booking/lease`, props);
 
-  return dispatch => {
-    dispatch(showLoading());
-    return dispatch({
+  return {
       type: LEASE_BOOKING,
       payload: request
-    })
-    .then(() => {
-      dispatch(hideLoading());
-    });
-  }
+  };
 }
 
 export function bookingIsPaid(flag){
@@ -168,18 +161,25 @@ export function bookAppointment(bookingId){
   }
 }
 
+/*
+export function fetchBiz(bizId){
+  const request = axios.get(`${ROOT_URL}/business/:businessId`);
 
-export function testThunk(){
-  const request = axios.get('http://demo1743653.mockable.io/availability');
-  console.log("here");
   return dispatch => {
     dispatch(showLoading());
     return dispatch({
-      type: "TEST_THUNK",
-      payload:request
+      type: GET_BIZ_INFO,
+      payload: request.then((result)=>{
+        console.log(result);
+        dispatch(fetchProviders()).then(() =>{
+          dispatch(hideLoading());        
+         }); 
+      })
     })
-    .then(() => {
-      dispatch(hideLoading());
-    });
   }
+}
+*/
+
+export function proccessPayment(props){
+
 }

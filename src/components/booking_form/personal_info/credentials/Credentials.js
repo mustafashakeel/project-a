@@ -3,7 +3,7 @@ import _ from 'underscore';
 
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchUser, leaseBooking } from '../../../../actions/index';
+import { fetchUser, loginAsGuest, signupUser } from '../../../../actions/index';
 
 import validator from 'validator';
 import { checkFields } from '../../../../utils';
@@ -92,16 +92,22 @@ class Credentials extends React.Component {
   }
 
   loginEvent() {
+    const leaseObj = this.leaseObj();
+    this.props.loginAsGuest(leaseObj);
+  }
+
+  leaseObj(){
     const {booking} = this.props;
-    this.props.leaseBooking({
+    return {
       providerId: booking.provider.Id,
       locationId: booking.location.id,
       offeringId: booking.service.offeringId,
       starDateTime: booking.timestamp.format()
-    });
+    };
   }
 
   createAccountEvent()  {
+
     if(!this.state.creatingNewAccount ){
       // Showing new user fields
       this.setState({ creatingNewAccount: true });
@@ -113,7 +119,9 @@ class Credentials extends React.Component {
 
       if (fieldsState.valid){
         console.log("Creating account");
-        this.props.leaseBooking(this.props.booking);
+        const leaseObj = this.leaseObj();
+
+        this.props.signupUser(fieldsState.fields, leaseObj);
       }
 
     }
@@ -197,5 +205,5 @@ class Credentials extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { fetchUser, leaseBooking }
+  { fetchUser, loginAsGuest, signupUser }
 )(translate()(Credentials))
