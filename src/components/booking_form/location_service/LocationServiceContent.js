@@ -86,7 +86,7 @@ class LocationServiceContent extends React.Component {
             completed={this.state.currentStep > 1} 
             active={this.state.currentStep === 1}
             >
-            <h4>{t('application.location_service.choose_service')} <span>({t('application.location_service.categories_count', {count: 4})})</span></h4>
+            <h4>{t('application.location_service.choose_service')} <span>({t('application.location_service.categories_count', {count: this.props.services.length})})</span></h4>
             <MenuServices
                 className="ServiceMenu" 
                 parentComponent={ListCategory} 

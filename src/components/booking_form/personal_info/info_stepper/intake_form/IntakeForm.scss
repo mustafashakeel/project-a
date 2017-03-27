@@ -25,4 +25,48 @@
     position: absolute;
     width: 100%;
   }
+
+  .formTitles{
+    display: flex;
+    border-bottom: 1px solid $grey;
+
+    h3{
+      cursor: pointer;
+      margin-right: 15px;
+      margin-bottom: 5px;
+      padding-right: 15px;
+      border-right: 1px solid $grey;
+
+      &:last-child{
+        border-right: none;
+      }
+
+      &:hover, &.active{
+        font-weight: bold;
+      }
+    }
+  }
+
+  .SingleForm{
+    padding-top: 15px;
+    display: none;
+
+    &.active{
+      display: block;
+    }
+    
+    .onCompleted{
+      display: none;
+    }
+
+    &.completed{
+      form{
+        display: none;
+      }
+
+      .onCompleted{
+        display: block;
+      }
+    }
+  }
 }

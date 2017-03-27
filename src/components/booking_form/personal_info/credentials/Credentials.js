@@ -1,7 +1,9 @@
 import React from 'react';
+import _ from 'underscore';
+
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchUser } from '../../../../actions/index';
+import { fetchUser, loginAsGuest, signupUser } from '../../../../actions/index';
 
 import validator from 'validator';
 import { checkFields } from '../../../../utils';
@@ -14,7 +16,8 @@ import './Credentials.scss';
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    booking: state.booking
   };
 }
 
@@ -73,20 +76,38 @@ class Credentials extends React.Component {
     }
   }
 
-  onChangeEmail = (email) => {
-    this.props.fetchUser(email);
-    this.setState({
-      isValidEmail: validator.isEmail(email)
-    })
+  onChangeEmail(email){
+    // _.throttle(() => {
+      this.props.fetchUser(email);
+      this.setState({
+        isValidEmail: validator.isEmail(email)
+      })      
+    // }, 2000);
   }
 
-  onChangeFields = (key, value) => {
+  onChangeFields(key, value) {
     var state = this.state.fields;
     state[key].value = value;
     this.setState({ fields: state});
   }
 
-  createAccountEvent = () => {
+  loginEvent() {
+    const leaseObj = this.leaseObj();
+    this.props.loginAsGuest(leaseObj);
+  }
+
+  leaseObj(){
+    const {booking} = this.props;
+    return {
+      providerId: booking.provider.Id,
+      locationId: booking.location.id,
+      offeringId: booking.service.offeringId,
+      starDateTime: booking.timestamp.format()
+    };
+  }
+
+  createAccountEvent()  {
+
     if(!this.state.creatingNewAccount ){
       // Showing new user fields
       this.setState({ creatingNewAccount: true });
@@ -98,7 +119,9 @@ class Credentials extends React.Component {
 
       if (fieldsState.valid){
         console.log("Creating account");
-        this.props.hideCredentials();
+        const leaseObj = this.leaseObj();
+
+        this.props.signupUser(fieldsState.fields, leaseObj);
       }
 
     }
@@ -166,7 +189,7 @@ class Credentials extends React.Component {
                   {!this.state.creatingNewAccount &&
                     <button 
                       className="yocaleButton"
-                      onClick={this.props.hideCredentials}
+                      onClick={this.loginEvent.bind(this)}
                     >{(this.props.user.isUser)? t('application.user_info.continue') : t('application.user_info.continue_as_guest')}</button>
                   }
                   
@@ -182,5 +205,5 @@ class Credentials extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { fetchUser }
+  { fetchUser, loginAsGuest, signupUser }
 )(translate()(Credentials))

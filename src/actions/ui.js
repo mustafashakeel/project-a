@@ -1,7 +1,11 @@
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
+
 export const UPDATE_TAB  = 'UPDATE_TAB';
 export const TOGGLE_TOOLTIP  = 'TOGGLE_TOOLTIP';
 export const UPDATE_STEPS  = 'UPDATE_STEPS';
 export const SHOW_LOGIN  = 'SHOW_LOGIN';
+export const ADD_ERROR_MSG = 'ADD_ERROR_MSG';
+export const SET_ERROR_MSGS = 'SET_ERROR_MSGS';
 
 export function updateTab(indexTab){
   return {
@@ -27,5 +31,35 @@ export function showLogin(flag){
     payload:{
       show: flag
     }
-  }
+  };
+}
+
+export function toggleLoadingBar(flag){
+
+  return dispatch => {
+    if (flag){
+      dispatch(showLoading());
+    }else{
+      dispatch(hideLoading());    }
+
+  };
+}
+
+export function addErrorMsg(text, action){
+  return {
+    type: ADD_ERROR_MSG,
+    payload: {
+      text,
+      action
+    }
+  };
+}
+
+export function setErrorMsgs(toasts){
+  return {
+    type: SET_ERROR_MSGS,
+    payload: {
+      toasts
+    }
+  };
 }

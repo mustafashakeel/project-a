@@ -3,13 +3,12 @@ import {translate} from 'react-i18next';
 import {connect} from 'react-redux';
 import axios from 'axios';
 
-import { isLoggedIn, appointmentBooked } from '../../../actions'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { isLoggedIn, proccessPayment } from '../../../actions'
 
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
 import AppointmentReminder from './appointment_reminder/AppointmentReminder';
-
-import Snackbar from 'react-md/lib/Snackbars';
 
 import './PersonalInfoContent.scss';
 
@@ -24,43 +23,29 @@ function mapStateToProps(state) {
 
 class PersonalInfoContent extends React.Component {
 
-  state = {
-    toasts: [],
-    autohide: false,
-  }
-
-  hideCredentials = () => {
-    this.props.isLoggedIn(true);
-  }
-
-  removeToast() {
-    const [, ...toasts] = this.state.toasts;
-    this.setState({ toasts });
-  }
-
-  addToast(text, action) {
-    const toasts = this.state.toasts.slice();
-    toasts.push({ text, action });
-
-    this.setState({ toasts });
-  }
-
   bookAppointment(){
     const {booking, user} = this.props;
-    const self = this;
-    axios.post('http://express-stripe.herokuapp.com/charge',{
+    const paymentDetails = {
       email: user.credentials.email,
       source: booking.payment.id,
       amount: (booking.grantTotal * 100),
       description: booking.service.name
-    }).then((response)=>{
-      // console.log(response);
-      if(response.data.paid === true && response.data.status === "succeeded") {
-        self.props.appointmentBooked(true);
-      }else{
-        self.addToast(response.data.message, "Retry")
-      }
-    })
+    };
+
+    this.props.proccessPayment(booking.lease.id, paymentDetails);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // // user is logged in and booking was leased
+    // if(nextProps.booking.lease !== null && this.props.renderLogin){
+    //   this.props.isLoggedIn(true);
+    //   this.props.getIntakeForms(nextProps.booking.lease.id);
+    // }
+
+    // // when payments is successful
+    // if(nextProps.booking.isPaid && !nextProps.booking.isBooked){
+    //   this.props.bookAppointment(nextProps.booking.lease.id);
+    // }
   }
 
 
@@ -69,7 +54,7 @@ class PersonalInfoContent extends React.Component {
     return (
       <div className="PersonalInfoContent">
       {this.props.renderLogin ?
-        <Credentials hideCredentials={this.hideCredentials}/>
+        <Credentials/>
         :
         <div>
           <InfoStepper />
@@ -82,7 +67,7 @@ class PersonalInfoContent extends React.Component {
           </button>
         </div>
       }
-        <Snackbar {...this.state} onDismiss={this.removeToast.bind(this)} />
+        
       </div>
     );
   }
@@ -90,5 +75,5 @@ class PersonalInfoContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn, appointmentBooked }
+  { isLoggedIn, proccessPayment }
 )(translate()(PersonalInfoContent))

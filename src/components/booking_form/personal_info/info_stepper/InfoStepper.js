@@ -2,7 +2,7 @@ import React from 'react';
 import {findDOMNode} from 'react-dom';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { getCurrentUser, isLoggedIn } from '../../../../actions/index';
+import { getCurrentUser, isLoggedIn, getIntakeForms } from '../../../../actions/index';
 
 import Dialog from 'react-md/lib/Dialogs';
 
@@ -17,7 +17,8 @@ import './InfoStepper.scss';
 
 function mapStateToProps(state) {
   return {
-    user: state.user
+    user: state.user,
+    booking: state.booking
   };
 }
 
@@ -88,5 +89,5 @@ export class InfoStepper extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { getCurrentUser, isLoggedIn }
+  { getCurrentUser, isLoggedIn, getIntakeForms }
 )(translate()(InfoStepper))

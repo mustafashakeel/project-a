@@ -38,7 +38,7 @@ export function groupOfferingsByCat(services){
       });
   });
 
-  return categoriesIndexed;
+  return categories;
 }
 
 export function getProvidersFromAvailabilities(availabilities){

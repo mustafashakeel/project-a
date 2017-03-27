@@ -22,8 +22,8 @@ export class PaymentCC extends React.Component {
   priceItems = []
 
   renderPriceItem(){
-    return this.priceItems.map((item)=>{
-      return <p><span>{item.name}: </span> <span>${item.amount.toFixed(2)}</span></p>
+    return this.priceItems.map((item, index)=>{
+      return <p key={index}><span>{item.name}: </span> <span>${item.amount.toFixed(2)}</span></p>
     });
   }
 
@@ -38,17 +38,17 @@ export class PaymentCC extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.booking.location.tax) {
       const offeringPrice = this.props.booking.service.OfferingPrice
       this.priceItems.push({name:"Subtotal", amount: offeringPrice})
+    if (this.props.booking.location.tax) {
       const taxes = this.props.booking.location.tax;
       taxes.map((tax)=>{
         const taxPrice = ((offeringPrice * tax.rate) / 100);
         this.priceItems.push({name: tax.name + "(" + tax.rate + "%)", amount: taxPrice})
       });
-      this.getTotal();
-
     }
+    this.getTotal();
+
   }
 
   render() {

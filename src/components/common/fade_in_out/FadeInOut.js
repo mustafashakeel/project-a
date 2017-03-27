@@ -10,8 +10,8 @@ export default class FadeInOut extends React.Component {
 
     setTimeout(function(){
       var node = findDOMNode(self.refs.fade_children);
-      var parent = node.closest('.react-swipeable-view-container > div');
       if(node){
+        var parent = node.closest('.react-swipeable-view-container > div');
         parent.scrollTop = node.offsetTop + node.clientHeight;
       }
     }, 100)

@@ -1,9 +1,9 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import widgetSettings from '../../widgetSettings';
+// import widgetSettings from '../../widgetSettings';
 
 import { connect } from 'react-redux';
-import { updateTab, toggleTooltip } from '../../actions/index';
+import { updateTab, toggleTooltip, addErrorMsg } from '../../actions/index';
 
 import HeaderWidget from './partials/HeaderWidget';
 import TabsProgress from '../common/tabs_progress/TabsProgress';
@@ -16,6 +16,10 @@ import ProviderTimeContent from './provider_time/ProviderTimeContent';
 import ServiceDetails from './location_service/service_details/ServiceDetails';
 
 import YocaleTooltip from '../common/yocale_tooltip/YocaleTooltip';
+import ErrorMessage from '../common/error_message/ErrorMessage';
+
+import LoadingBar from 'react-redux-loading-bar'
+
 
 import './BookingForm.scss';
 
@@ -69,6 +73,7 @@ class BookingForm extends React.Component {
     return (
       <div className="booking-form">
         <div className="mainHeader">
+          <LoadingBar className="loadingBar" />
           <HeaderWidget />    
           <TabsProgress currentTab={this.props.currentTab} onTabClick={this.changeTab}>
             <TabHeader 
@@ -109,6 +114,7 @@ class BookingForm extends React.Component {
         <YocaleTooltip>
           <ServiceDetails />
         </YocaleTooltip>
+        <ErrorMessage />
       </div>          
     );
   }
@@ -117,5 +123,5 @@ class BookingForm extends React.Component {
 export default 
 connect(
   mapStateToProps,
-  { updateTab, toggleTooltip }
+  { updateTab, toggleTooltip, addErrorMsg }
 )(translate()(BookingForm))

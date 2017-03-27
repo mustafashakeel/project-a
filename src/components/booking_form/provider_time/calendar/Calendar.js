@@ -85,14 +85,10 @@ export class Calendar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.booking.provider && this.props.booking.provider.Id !== nextProps.booking.provider.Id){
+    if (this.props.booking.provider && this.props.booking.provider.providerId !== nextProps.booking.provider.providerId){
       this.setState({selectedDateObject: null})
     }
-    this.filterDatesByProvider(nextProps.booking.provider.Id);
-  }
-
-  componentWillMount() {
-    this.props.fetchAvailabilities();
+    this.filterDatesByProvider(nextProps.booking.provider.providerId);
   }
 
   render() {

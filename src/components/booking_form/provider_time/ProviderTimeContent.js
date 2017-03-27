@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchAvailabilities, setBookingProvider } from '../../../actions/index';
+import { fetchAvailabilities, setBookingProvider, fetchProviders } from '../../../actions/index';
 
 import Calendar from './calendar/Calendar'
 
@@ -12,34 +12,42 @@ import './ProviderTimeContent.scss';
 
 function mapStateToProps(state) {
   return {
-    providers: state.business.providers,
-    provider: state.booking.provider
+    availabilities: state.business.availabilities,
+    currentTab: state.ui.currentTab,
+    business: state.business,
+    booking: state.booking
   };
 }
 
 export class ProviderTimeContent extends React.Component {
 
   onChangeProvider = (newValue, newValueIndex) => {
-    this.props.setBookingProvider(this.props.providers[newValueIndex]);
+    this.props.setBookingProvider(this.props.business.providers[newValueIndex]);
   }
 
   providerList = () => {
-    return this.props.providers.map((provider, index) => {
+    return this.props.business.providers.map((provider, index) => {
       return {
         ...provider,
-        leftAvatar: <Avatar src={provider.User.Pictures[0].PictureFileName} alt={provider.fullName}  />
+        leftAvatar: <Avatar src={provider.picture} alt={provider.fullName}  />
       }
     });
   }
 
-
-
-  componentWillMount() {
-    this.props.fetchAvailabilities();
+  componentWillReceiveProps(nextProps) {
+    const { business, booking } = this.props;
+    if (nextProps.currentTab === 1 ) {
+      if (Object.keys(nextProps.availabilities).length === 0){
+        this.props.fetchAvailabilities();
+      }
+      if (nextProps.business.providers.length === 0){
+        this.props.fetchProviders(business.info.id, booking.location.id, booking.service.offeringId);
+      }
+    }
   }
 
   render() {
-    const { t } = this.props;
+    const { t, booking } = this.props;
     return (
       <div className="ProviderTimeContent">
         <SelectField
@@ -49,7 +57,7 @@ export class ProviderTimeContent extends React.Component {
           menuItems={this.providerList()}
           itemLabel="fullName"
           itemValue="fullName"
-          value={this.props.provider.fullName}
+          value={booking.provider.fullName}
           onChange={this.onChangeProvider.bind(this)}
           className="dropdownSelect"
           iconChildren="keyboard_arrow_down"
@@ -64,5 +72,5 @@ export class ProviderTimeContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {fetchAvailabilities, setBookingProvider}
+  {fetchAvailabilities, setBookingProvider, fetchProviders}
 )(translate()(ProviderTimeContent))
