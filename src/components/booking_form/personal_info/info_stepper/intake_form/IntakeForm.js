@@ -65,7 +65,7 @@ export class IntakeForm extends React.Component {
             {this.mapFormNames()}
           </div>
           <div className="formContent">
-            {this.mapFormsContent()}
+            {/*this.mapFormsContent() */}
           </div>
           {this.state.isDone && 
             <button className="doneIntakeFormBtn" onClick={this.props.onSave}>Done</button>  

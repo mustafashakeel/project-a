@@ -62,9 +62,7 @@ export function signupUser(fields, booking){
     const request = axios.post(`${ROOT_URL}/account/register/`, values);
     dispatch(showLoading());
     request.then(() =>{
-      dispatch(leaseBooking(booking)).then(() => {
-        dispatch(hideLoading());
-      });
+      dispatch(leaseBooking(booking));
     });
   };
 }
@@ -82,9 +80,7 @@ export function loginUser(fields, booking){
     const request = axios.post(`${ROOT_URL}/account/register/`, values);
     dispatch(showLoading());
     request.then(() =>{
-      dispatch(leaseBooking(booking)).then(() => {
-        dispatch(hideLoading());
-      });
+      dispatch(leaseBooking(booking));
     });
   };
 }

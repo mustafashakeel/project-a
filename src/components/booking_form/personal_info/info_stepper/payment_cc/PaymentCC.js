@@ -38,17 +38,17 @@ export class PaymentCC extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.booking.location.tax) {
       const offeringPrice = this.props.booking.service.OfferingPrice
       this.priceItems.push({name:"Subtotal", amount: offeringPrice})
+    if (this.props.booking.location.tax) {
       const taxes = this.props.booking.location.tax;
       taxes.map((tax)=>{
         const taxPrice = ((offeringPrice * tax.rate) / 100);
         this.priceItems.push({name: tax.name + "(" + tax.rate + "%)", amount: taxPrice})
       });
-      this.getTotal();
-
     }
+    this.getTotal();
+
   }
 
   render() {

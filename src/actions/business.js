@@ -10,27 +10,44 @@ const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 const MOCK_URL = "http://demo1743653.mockable.io";
 
 export function fetchBiz(bizId){
-  const request = axios.get(`${ROOT_URL}/business/:businessId`);
-
-  return {
-    type: GET_BIZ_INFO,
-    payload: request
+  return dispatch => {
+    const request = axios.get(`${ROOT_URL}/business/:businessId`);
+    dispatch(showLoading());
+    return dispatch({
+      type: GET_BIZ_INFO,
+      payload: request
+    })
+    .then(() => {
+      dispatch(hideLoading());
+    });
   };
 }
 
-export function fetchLocationServices(locationId){
-  const request = axios.get(`${MOCK_URL}/availability`);
-  return {
-    type: GET_BIZ_SERVICES,
-    payload: request
+export function fetchLocationServices(businessId, locationId){
+  return dispatch => {
+    const request = axios.get(`${ROOT_URL}/offerings/:businessId/:locationId`);
+    dispatch(showLoading());
+    return dispatch({
+      type: GET_BIZ_SERVICES,
+      payload: request
+    })
+    .then(() => {
+      dispatch(hideLoading());
+    });
   };
 }
 
-export function fetchProviders(businessId, locationId){
-  const request = axios.get(`${MOCK_URL}/availability`);
-  return {
-    type: GET_BIZ_PROVIDERS,
-    payload: request
+export function fetchProviders(businessId, locationId, offeringId){
+  return dispatch => {
+    const request = axios.get(`${ROOT_URL}/business/providers/:businessId/:locationId/:offeringId`);
+    dispatch(showLoading());
+    return dispatch({
+      type: GET_BIZ_PROVIDERS,
+      payload: request
+    })
+    .then(() => {
+      dispatch(hideLoading());
+    });
   };
 }
 
