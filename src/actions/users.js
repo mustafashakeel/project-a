@@ -50,13 +50,13 @@ export function getCurrentUser(){
   }
 }
 
-export function signupUser(fields, booking){
+export function signupUser(user, booking){
   const values = {
-    email: fields.email.value,
-    password: fields.password.value,
-    firstName: fields.firstName.value,
-    lastName: fields.lastName.value,
-    phone: fields.phoneNumber.value
+    email: user.email.value,
+    password: user.password.value,
+    firstName: user.firstName.value,
+    lastName: user.lastName.value,
+    phone: user.phoneNumber.value
   };
 
 
