@@ -1,7 +1,9 @@
 import { 
   FETCH_USER, 
   GET_CURRENT_USER, 
-  IS_LOGGED_IN 
+  IS_LOGGED_IN,
+  LOGIN_AS_GUEST,
+  LOGIN_AS_USER
 } 
 from '../actions/index';
 
@@ -39,6 +41,10 @@ export default function (state = INITIAL_STATE , action){
     case GET_CURRENT_USER:
       return state;      
     
+    case LOGIN_AS_GUEST:
+      return {...state, isNewUser: false, isUser: true}
+    case LOGIN_AS_USER:
+      return {...state, isNewUser: true, isUser:false}
     default:
       return state;
 

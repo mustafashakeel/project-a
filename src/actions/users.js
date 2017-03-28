@@ -6,6 +6,8 @@ export const UPDATE_USER_CREDENTIALS = 'UPDATE_USER_CREDENTIALS';
 export const FETCH_USER = 'FETCH_USER';
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const IS_LOGGED_IN  = 'IS_LOGGED_IN';
+export const LOGIN_AS_GUEST = 'LOGIN_AS_GUEST';
+export const LOGIN_AS_USER = 'LOGIN_AS_USER';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 
@@ -80,6 +82,9 @@ export function loginUser(fields, booking){
     const request = axios.post(`${ROOT_URL}/account/register/`, values);
     dispatch(showLoading());
     request.then(() =>{
+      dispatch({ 
+        type: LOGIN_AS_USER
+      });
       dispatch(leaseBooking(booking));
     });
   };
@@ -87,6 +92,9 @@ export function loginUser(fields, booking){
 
 export function loginAsGuest(booking){
   return dispatch => {
+    dispatch({ 
+      type: LOGIN_AS_GUEST
+    });
     dispatch(leaseBooking(booking));
   };
 }

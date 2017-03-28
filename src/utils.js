@@ -1,18 +1,20 @@
 import validator from 'validator';
 
 export function checkFields(fields){
-  let valid = 1;
+  let valid = 0;
+  let required = 0;
   let keysArray = Object.keys(fields);
   keysArray.forEach(function(key) {
     if(fields[key].required){
       const emptyField = validator.isEmpty(fields[key].value)
       fields[key].error = emptyField;
       valid = (!emptyField) ? valid + 1 : valid;
+      required++;
     }
   });
   return { 
     fields, 
-    valid: valid === keysArray.length 
+    valid: valid === required 
   }
 }
 
