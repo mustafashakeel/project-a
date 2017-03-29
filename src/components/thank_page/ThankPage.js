@@ -1,41 +1,47 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import BookingSummary from './booking_summary/BookingSummary';
+import ConfirmationEmail from './confirmation_email/ConfirmationEmail';
+
 import './ThankPage.scss';
 
 function mapStateToProps(state) {
   return {
-    booking: state.booking,
-    business: state.business.info
+    user: state.user
   };
 }
 
 export class ThankPage extends React.Component {
+  state = {
+    showSummary: false
+  }
+
   render() {
     const {business, booking} = this.props;
+    console.log(this.props.user.isNewUser);
+    console.log(this.state.showSummary);
     return (
       <div className="ThankPage">
-        <h4>Your booking is confirmed! An email has been sent to you.</h4>
-        <div className="appointmentInfo">
-          <div className="bizName">{business.name}</div>
-          <div className="bizAddress">{booking.location.address}</div>
-          <div className="serviceName">{booking.service.name}</div>
-          <div className="providerName">{booking.provider.name}</div>
-          <div className="bookingTime">{booking.timestamp.format("h:mm a")} - {booking.timestamp.add(booking.service.OfferingDuration, 'm').format("h:mm a")}</div>
-          <div className="bookingDate">{booking.timestamp.format("dddd, MMMM Do YYYY")}</div>
-          <div className="yocaleButton addToCalendar">Add to Calendar</div>
-          <div className="viewEditYocale">View or Edit Appointment on Yocale</div>
-        </div>
+        {(this.props.user.isNewUser && !this.state.showSummary) &&
+          <div>
+            <ConfirmationEmail/>
+            <button 
+              className="continueBtn"
+              onClick={() => this.setState({showSummary: true})}
+            >Continue</button>
+          </div>
+        }
 
-        <div className="moreServices">
-          
-        </div>
+        {this.state.showSummary &&
+          <BookingSummary/>
+        }
+        
       </div>
     );
   }
 }
 
 export default connect(
-  mapStateToProps,
-// Implement map dispatch to props
+  mapStateToProps
 )(ThankPage)
