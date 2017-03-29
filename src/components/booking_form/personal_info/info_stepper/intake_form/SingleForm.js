@@ -67,7 +67,6 @@ class SingleForm extends React.Component {
                   item.value = formValues[completedItem];
                 break;
               }
-              console.log(item);
             }
         }
     }
