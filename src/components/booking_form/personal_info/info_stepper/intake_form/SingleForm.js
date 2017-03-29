@@ -85,12 +85,11 @@ class SingleForm extends React.Component {
   }
 
   render() {
-    console.log(this.props.completed);
     return (
       <div className={this.getClassNames()}>
         <form onSubmit={this.submitForm.bind(this)} ref="theForm">
           <p>{this.props.form.description}</p>
-          <div dangerouslySetInnerHTML={this.createMarkup()} />
+          <div style={{position:'relative'}} dangerouslySetInnerHTML={this.createMarkup()} />
           <input type="submit" value="Submit"/>
         </form>
         <div className="onCompleted">Completed</div>
