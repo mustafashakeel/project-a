@@ -8,6 +8,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import SingleForm from './SingleForm'
 
 import './IntakeForm.scss';
+// import './materialFormStyle.scss';
 
 function mapStateToProps(state) {
   return {

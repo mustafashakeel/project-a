@@ -243,24 +243,45 @@ input,
   }
 
   // Radio & Checkbox
-  .checkbox,
-  .form-radio {
-    label {
+  .checkbox{
+
+    width: auto;
+    opacity: 0.00000001;
+    position: absolute;
+    left: 0;
+
+    &:checked{
+      opacity: 1;
+    }
+
+  }
+
+  label[for*='checkbox'] {
       position: relative;
       cursor: pointer;
       padding-left: $mf-checkbox-gap;
       text-align: left;
       color: $mf-input-color;
       display: block;
-    }
 
-    input {
-      width: auto;
-      opacity: 0.00000001;
+    &:before{
+      display:block;
+      content: "";
+      color: #999;
       position: absolute;
+      top: 0;
       left: 0;
+      width: 1rem;
+      height: 1rem;
+      z-index: 0;
+      border: 0.125rem solid currentColor;
+      border-radius: 0.0625rem;
+      -webkit-transition: border-color 0.28s ease;
+      transition: border-color 0.28s ease;
     }
   }
+
+
 
   .radio {
     margin-bottom: $mf-font-size;
@@ -316,8 +337,8 @@ input,
   .checkbox {
     // scss-lint:disable QualifyingElement
     
-    margin-top: ($mf-gap * 2);
-    margin-bottom: $mf-font-size;
+    /*margin-top: ($mf-gap * 2);
+    margin-bottom: $mf-font-size; */
     
     .helper {
       color: $mf-border-color;
