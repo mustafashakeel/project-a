@@ -25,4 +25,7 @@ $heightHeader: 90px;
   width: 100%;
   top: $heightHeader;
   height: calc(100% - #{$heightHeader});
+  > div{
+    position: relative;
+  }
 }

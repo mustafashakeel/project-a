@@ -9,6 +9,7 @@ import { isLoggedIn, proccessPayment } from '../../../actions'
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
 import AppointmentReminder from './appointment_reminder/AppointmentReminder';
+import BookingNote from './info_stepper/booking_note/BookingNote';
 
 import './PersonalInfoContent.scss';
 
@@ -58,7 +59,7 @@ class PersonalInfoContent extends React.Component {
         :
         <div>
           <InfoStepper />
-          <AppointmentReminder />
+          <BookingNote />
           <button 
             className="bookAppointmentBtn"
             onClick={this.bookAppointment.bind(this)}
