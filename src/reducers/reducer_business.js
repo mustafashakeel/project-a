@@ -22,7 +22,11 @@ export default function (state = INITIAL_STATE , action){
     case GET_BIZ_SERVICES:
       return { ...state , services: groupOfferingsByCat(action.payload.data)}
     case GET_BIZ_PROVIDERS:
-      return { ...state , providers: action.payload.data }
+      const providers = action.payload.data;
+      providers.map((provider)=>{
+        provider.selectLabel = provider.fullName + " - Next available date: " + provider.nextAvailableTime;
+      })
+      return { ...state , providers }
     case GET_AVAILABILITIES:
       return { ...state , availabilities: action.payload.data}
     default:

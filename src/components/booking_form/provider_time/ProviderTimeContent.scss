@@ -6,4 +6,24 @@
     margin-top: 5px;
     width: 30px !important;
   }
+
+  .ProviderSelector{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+
+    .ProviderSelectedPicture{
+      // position: absolute;
+      margin-top: -10px;
+      margin-left: 20px;
+      z-index: 2;
+    }
+    .dropdownSelect{
+      z-index: 1;
+      margin-left: 20px;
+      margin-right: 20px;
+      width: 100%;
+    }
+  }
 }

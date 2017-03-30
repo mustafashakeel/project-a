@@ -27,6 +27,7 @@ export default class FadeInOut extends React.Component {
     return (
       <ReactCSSTransitionGroup
         transitionName="fade"
+        className="fadeInOutContainer"
         transitionEnterTimeout={400}
         transitionLeaveTimeout={350}
         component='div'>
