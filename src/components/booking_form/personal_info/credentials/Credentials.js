@@ -3,7 +3,7 @@ import _ from 'underscore';
 
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchUser, loginAsGuest, signupUser } from '../../../../actions/index';
+import { fetchUser, loginAsGuest, signupUser, userExists } from '../../../../actions/index';
 
 import validator from 'validator';
 import { checkFields } from '../../../../utils';
@@ -77,12 +77,16 @@ class Credentials extends React.Component {
   }
 
   onChangeEmail(email){
-    // _.throttle(() => {
-      this.props.fetchUser(email);
-      this.setState({
-        isValidEmail: validator.isEmail(email)
-      })      
-    // }, 2000);
+    const isValidEmail = validator.isEmail(email)
+    this.props.fetchUser(email);
+    this.setState({
+      isValidEmail: isValidEmail
+    })      
+
+    var self = this;
+    if (isValidEmail) {      
+      _.throttle(this.props.userExists(email), 100);
+    }
   }
 
   onChangeFields(key, value) {
@@ -217,5 +221,5 @@ class Credentials extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { fetchUser, loginAsGuest, signupUser }
+  { fetchUser, loginAsGuest, signupUser, userExists }
 )(translate()(Credentials))

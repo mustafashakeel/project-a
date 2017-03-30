@@ -8,29 +8,43 @@ export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const IS_LOGGED_IN  = 'IS_LOGGED_IN';
 export const LOGIN_AS_GUEST = 'LOGIN_AS_GUEST';
 export const LOGIN_AS_USER = 'LOGIN_AS_USER';
+export const IS_REGISTERED_USER = 'IS_REGISTERED_USER';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 
 export function fetchUser(email){  
-
-  let isUser = false;
-  switch(email){
-    case "user@yocale.com":
-      isUser = true;
-    break;
-   default:break;
-  }
 
   return {
     type: FETCH_USER,
     payload: {
       credentials : {
         email: email
-      },
-      isUser: isUser
+      }
     }
   };
 
+}
+
+export function userExists(email){
+  console.log("fetchingUser");
+  return dispatch => {
+    const request = axios.get(`${ROOT_URL}/user/account_type/emailAddress`);
+    request.then((response) => {
+      // if ( response.data.accountType === 'Yocale'){
+      if (email === "user@yocale.com") {
+        dispatch({
+            type: IS_REGISTERED_USER,
+            payload: true
+        });
+      }else{
+        dispatch({
+            type: IS_REGISTERED_USER,
+            payload: false
+        });
+      }
+    });  
+
+  };
 }
 
 export function isLoggedIn(flag){
