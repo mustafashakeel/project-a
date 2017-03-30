@@ -32,6 +32,15 @@
     display: none;
   }
 
+  &.cat_uncategorized{
+    .categoryParent{
+      display: none;
+    }
+    .categoryChildren{
+      display: block;
+    }
+  }
+
   &.isActive{
 
     background-color: $white;

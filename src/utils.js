@@ -25,8 +25,14 @@ export function getURLParameter(name) {
 export function groupOfferingsByCat(services){
   var categoriesIndexed = [];
   var categories = [];
+  var uncategorized = {
+    id: 'uncategorized',
+    cat_name: "Misc",
+    children: []
+  };
 
   services.forEach(function(service) {
+    if (service.categories.length > 0 ) {
       service.categories.forEach(function(category) {
           if(!categoriesIndexed[category.id]) {
               categoriesIndexed[category.id] = {
@@ -38,9 +44,13 @@ export function groupOfferingsByCat(services){
           }
           categoriesIndexed[category.id].children.push(service);
       });
+    } else {
+      uncategorized.children.push(service);
+      // console.log(service);
+    }
   });
 
-  return categories;
+  return categories.concat(uncategorized);
 }
 
 export function getProvidersFromAvailabilities(availabilities){

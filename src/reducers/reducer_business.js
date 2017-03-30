@@ -5,10 +5,6 @@ import {
   GET_AVAILABILITIES
 } from '../actions/index';
 
-import business from './mocks/business';
-import services from './mocks/services';
-// import providers from './mocks/providers';
-
 import { groupOfferingsByCat, getProvidersFromAvailabilities } from '../utils';
 
 const INITIAL_STATE = { 
@@ -24,8 +20,7 @@ export default function (state = INITIAL_STATE , action){
 
       return { ...state , info: action.payload.data }
     case GET_BIZ_SERVICES:
-      // return { ...state , services: groupOfferingsByCat(action.payload.data)}
-      return { ...state , services: groupOfferingsByCat(services)}
+      return { ...state , services: groupOfferingsByCat(action.payload.data)}
     case GET_BIZ_PROVIDERS:
       return { ...state , providers: action.payload.data }
     case GET_AVAILABILITIES:
