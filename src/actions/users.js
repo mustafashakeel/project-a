@@ -11,6 +11,7 @@ export const LOGIN_AS_USER = 'LOGIN_AS_USER';
 export const IS_REGISTERED_USER = 'IS_REGISTERED_USER';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
+// const ROOT_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
 
 export function fetchUser(email){  
 
