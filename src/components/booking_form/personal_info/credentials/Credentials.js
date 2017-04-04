@@ -3,7 +3,7 @@ import _ from 'underscore';
 
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchUser, loginAsGuest, signupUser, userExists } from '../../../../actions/index';
+import { fetchUser, loginAsGuest, signupUser, userExists, loginUser } from '../../../../actions/index';
 
 import validator from 'validator';
 import { checkFields } from '../../../../utils';
@@ -124,7 +124,7 @@ class Credentials extends React.Component {
     if (fieldsState.valid){
       const leaseObj = this.leaseObj();
       //change for final login as user
-      this.props.loginAsGuest(leaseObj);
+      this.props.loginUser(fieldsState.fields, leaseObj);
     }
   }
 
@@ -221,5 +221,5 @@ class Credentials extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { fetchUser, loginAsGuest, signupUser, userExists }
+  { fetchUser, loginAsGuest, signupUser, userExists, loginUser }
 )(translate()(Credentials))

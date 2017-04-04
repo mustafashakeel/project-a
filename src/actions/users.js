@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { leaseBooking } from './booking';
+import { addErrorMsg } from './ui';
+import najax from 'najax';
 
 export const UPDATE_USER_CREDENTIALS = 'UPDATE_USER_CREDENTIALS';
 export const FETCH_USER = 'FETCH_USER';
@@ -9,6 +11,7 @@ export const IS_LOGGED_IN  = 'IS_LOGGED_IN';
 export const LOGIN_AS_GUEST = 'LOGIN_AS_GUEST';
 export const LOGIN_AS_USER = 'LOGIN_AS_USER';
 export const IS_REGISTERED_USER = 'IS_REGISTERED_USER';
+
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 // const ROOT_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
@@ -32,7 +35,7 @@ export function userExists(email){
     const request = axios.get(`${ROOT_URL}/user/account_type/emailAddress`);
     request.then((response) => {
       // if ( response.data.accountType === 'Yocale'){
-      if (email === "user@yocale.com") {
+      if (email === "hadi@biz.com") {
         dispatch({
             type: IS_REGISTERED_USER,
             payload: true
@@ -84,24 +87,42 @@ export function signupUser(user, booking){
   };
 }
 
-export function loginUser(fields, booking){
-  const values = {
-    email: fields.email.value,
-    password: fields.password.value,
-    firstName: fields.firstName.value,
-    lastName: fields.lastName.value,
-    phone: fields.phoneNumber.value
-  };
+export function loginUser(fields, booking){  
 
   return dispatch => {
-    const request = axios.post(`${ROOT_URL}/account/register/`, values);
-    dispatch(showLoading());
-    request.then(() =>{
-      dispatch({ 
-        type: LOGIN_AS_USER
-      });
-      dispatch(leaseBooking(booking));
+    const data = {
+      client_id: "0b531646fc4849309332e06670be0357",
+      client_secret: "rzx2bLL-BWV9tB4BqjeJBWfazEouLBsW6NqVS8ixX-Y",
+      grant_type: "password",
+      username: fields.email.value,
+      password: fields.password.value
+    }
+    
+
+    const request = najax({
+        url: "https://ydevauth.azurewebsites.net/oauth/token",
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        data: data,
+        dataType: "json"
     });
+
+    dispatch(showLoading());
+    request.success((response) =>{
+      if (response.access_token){
+        dispatch({ 
+          type: LOGIN_AS_USER
+        });
+        dispatch(leaseBooking(booking));
+      }else {
+        dispatch(addErrorMsg("Invalid user or password", "Retry"));
+      }
+      
+    }).
+    error((error) => {
+      dispatch(hideLoading());
+      dispatch(addErrorMsg("Invalid user or password", "Retry"));
+    })
   };
 }
 

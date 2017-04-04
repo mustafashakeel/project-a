@@ -63,6 +63,7 @@
     "immutable": "^3.8.1",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.11",
+    "najax": "^1.0.3",
     "npm-font-source-sans-pro": "^1.0.2",
     "pushstate-server": "^2.2.2",
     "react": "^15.4.2",

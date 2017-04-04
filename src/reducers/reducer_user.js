@@ -44,9 +44,9 @@ export default function (state = INITIAL_STATE , action){
     case IS_REGISTERED_USER:
       return {...state, isUser: action.payload}
     case LOGIN_AS_GUEST:
-      return {...state, isNewUser: false, isUser: true}
+      return {...state, isNewUser: true, isUser: false}
     case LOGIN_AS_USER:
-      return {...state, isNewUser: true, isUser:false}
+      return {...state, isNewUser: false, isUser:true}
     default:
       return state;
 
