@@ -6,7 +6,7 @@ import { fetchUser } from '../../../actions/index';
 import validator from 'validator';
 
 import TextField from 'react-md/lib/TextFields';
-import FadeInOut from '../../common/fade_in_out/FadeInOut';
+// import FadeInOut from '../../common/fade_in_out/FadeInOut';
 
 
 function mapStateToProps(state) {
@@ -45,12 +45,10 @@ export class ConfirmationEmail extends React.Component {
           value={this.props.user.credentials.email}
           />
 
-          <FadeInOut show={this.state.isValidEmail} scroll={false}>
             <button 
               className="yocaleButton"
               onClick={this.createNewUser.bind(this)}
             >Send confirmation</button>
-          </FadeInOut>
       </div>
     );
   }
