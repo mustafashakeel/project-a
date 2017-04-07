@@ -83,15 +83,15 @@ export function fetchProviders(businessId, locationId, offeringId){
 
 export function fetchAvailabilities(){
   return (dispatch, getState) => {
-    const {booking, business} = getState();
+    const {booking, business, ui} = getState();
     // const request = axios.get(`${MOCK_URL}/availability`);
     const params = {
           businessId: business.info.id,
           locationId: booking.location.id,
           providerId: booking.provider.providerId,
           offeringId: booking.service.offeringId,
-          numberOfDays: 30,
-          startDate: moment().format('YYYY-MM-DD')
+          numberOfDays: 31,
+          startDate: ui.calendarMonth.format('YYYY-MM-DD')
         }
     // params.numberOfDays = 30;
     // params.startDate = moment().format('YYYY-MM-DD');

@@ -78,6 +78,10 @@ export function getProvidersFromAvailabilities(availabilities){
 
 
 export function parseAvailabilities(availabilities){
+  if(!availabilities){
+    return [];
+  }
+
   let availabilitiesArray = [];
 
   availabilities.forEach((provider) => {

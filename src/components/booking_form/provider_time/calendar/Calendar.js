@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import moment from 'moment-timezone';
 import _ from 'underscore';
 
-import { setBookingTime, fetchAvailabilities } from '../../../../actions/index';
+import { setBookingTime, fetchAvailabilities, changeMonthCalendar } from '../../../../actions/index';
 
 import Datetime from 'react-datetime';
 import FadeInOut from '../../../common/fade_in_out/FadeInOut';
@@ -45,7 +45,7 @@ export class Calendar extends React.Component {
   }
 
   getStatusColor = (dayObj) => {
-    if (!dayObj){
+    if (!dayObj || dayObj.timeSlots.length === 0){
       return;
     }
     if (dayObj.timeSlots.length > 5){
@@ -56,9 +56,10 @@ export class Calendar extends React.Component {
   }
 
   renderDay = (props, currentDate, selectedDate) => {
-    const theDay = this.props.availabilities.find((day) => {
+    let theDay = this.props.availabilities.find((day) => {
       return day.startDate == currentDate.format('YYYY-MM-DD');
     });
+
     return (
       <td {...props} >
         <span className={"circleAvailability " + this.getStatusColor(theDay)}></span>
@@ -79,7 +80,7 @@ export class Calendar extends React.Component {
 
   onChangeDate = (selectedDate) => {
     const selectedDateObject = this.props.availabilities.find((availabilityDate) => {
-      return moment(availabilityDate.startDate).day() === selectedDate.day()
+      return moment(availabilityDate.startDate).format('YYYY-MM-DD') === selectedDate.format('YYYY-MM-DD')
     })
     this.setState({selectedDateObject})
     this.props.setBookingTime(selectedDate)
@@ -94,21 +95,23 @@ export class Calendar extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    const b = findDOMNode(this.refs.calendarContainer);
-    console.log(b.closest('div > .rdt'));
-    // console.log(this.refs.calendarContainer);
-    // console.log(findDOMNode(this.refs.calendarContainer.refs.fade_children));
+
   }
 
   clickCalendar(self, e){
-    console.log(self.target.tagName);
+    const clickedElementClass = self.target.parentElement.className;
+    if (clickedElementClass === 'rdtNext'){
+      this.props.changeMonthCalendar('add', 1);
+    }else if (clickedElementClass === 'rdtPrev'){
+      this.props.changeMonthCalendar('subtract', 1);
+    }
   }
 
   render() {
     return (
       <div >
-        <FadeInOut className="fades" ref="calendarContainer" show={this.props.booking.provider.fullName && this.props.availabilities.length}>
-          <div onClick={this.clickCalendar} >
+        <FadeInOut className="fades" ref="calendarContainer" show={this.props.booking.provider.fullName}>
+          <div onClick={this.clickCalendar.bind(this)} >
           <Datetime
               ref="calendar"
               
@@ -130,5 +133,5 @@ export class Calendar extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {setBookingTime, fetchAvailabilities}
+  {setBookingTime, fetchAvailabilities, changeMonthCalendar}
 )(Calendar)

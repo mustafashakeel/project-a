@@ -1,9 +1,12 @@
+import moment from 'moment';
+
 import { 
   UPDATE_TAB, 
   TOGGLE_TOOLTIP, 
   SHOW_LOGIN, 
   ADD_ERROR_MSG, 
-  SET_ERROR_MSGS 
+  SET_ERROR_MSGS,
+  CHANGE_MONTH_CALENDAR
 } from '../actions/index';
 
 const INITIAL_STATE = { 
@@ -16,7 +19,8 @@ const INITIAL_STATE = {
   errorMsgs: {
     toasts: [],
     autohide:true
-  }
+  },
+  calendarMonth: moment().startOf('month')
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -43,6 +47,8 @@ export default function (state = INITIAL_STATE , action){
       errorMsgs = {...state.errorMsgs, toasts: action.payload.toasts}
       return { ...state, errorMsgs };
 
+    case CHANGE_MONTH_CALENDAR:
+      return { ...state, calendarMonth: action.payload.newMonth }
     default:
       return state;
 
