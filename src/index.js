@@ -16,15 +16,12 @@ import { getURLParameter }  from './utils';
 
 import './index.scss';
 
-
-const createStoreWithMiddleware = applyMiddleware(promise, thunk)(createStore);
-
-
-
 const settings = {
   position: 'right',
-  businessID: "123456789"
+  // businessID: getURLParameter('businessID')
+  businessID: 3654
 };
+
 if (getURLParameter('lang') !== null){
   i18n.changeLanguage(getURLParameter('lang'));
 }

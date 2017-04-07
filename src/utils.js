@@ -78,7 +78,7 @@ export function getProvidersFromAvailabilities(availabilities){
 
 
 export function parseAvailabilities(availabilities){
-  if(!availabilities){
+  if (!availabilities){
     return [];
   }
 
@@ -98,7 +98,6 @@ export function parseAvailabilities(availabilities){
     });
 
     availabilitiesArray.push(provider.availabilities)
-    // console.log(provider.availabilities);
   })
   if (availabilitiesArray.length > 1) {
     return deepmerge.all(availabilitiesArray);

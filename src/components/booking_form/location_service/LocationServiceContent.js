@@ -2,6 +2,7 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 
+import widgetSettings from '../../../widgetSettings';
 import { fetchBiz, fetchLocationServices, setBookingLocation } from '../../../actions/index';
 
 import Stepper from '../../common/stepper/Stepper';
@@ -39,7 +40,7 @@ class LocationServiceContent extends React.Component {
   }
 
   componentWillMount() {
-      this.props.fetchBiz(3654);
+      this.props.fetchBiz(widgetSettings.getValue().businessID);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,7 +55,7 @@ class LocationServiceContent extends React.Component {
   componentWillUpdate(nextProps, nextState) {
     if (this.props.booking.location.id !== nextProps.booking.location.id){
       const locationId = nextProps.booking.location.id;
-      this.props.fetchLocationServices(3654, locationId);
+      this.props.fetchLocationServices(widgetSettings.getValue().businessID, locationId);
     }  
   }
 
