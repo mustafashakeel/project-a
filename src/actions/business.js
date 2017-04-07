@@ -1,4 +1,6 @@
 import axios from 'axios';
+import moment from 'moment';
+import store from '../reducers';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { setBookingLocation } from './booking'
 
@@ -8,7 +10,7 @@ export const GET_BIZ_PROVIDERS = "GET_BIZ_PROVIDERS";
 export const GET_AVAILABILITIES = "GET_AVAILABILITIES";
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
-const MOCK_URL = "http://demo1743653.mockable.io";
+// const MOCK_URL = "http://demo1743653.mockable.io";
 const PROD_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
 
 
@@ -79,10 +81,27 @@ export function fetchProviders(businessId, locationId, offeringId){
   };
 }
 
-export function fetchAvailabilities(businessId, locationId){
-  
-  return dispatch => {
-    const request = axios.get(`${MOCK_URL}/availability`);
+export function fetchAvailabilities(){
+  return (dispatch, getState) => {
+    const {booking, business} = getState();
+    // const request = axios.get(`${MOCK_URL}/availability`);
+    const params = {
+          businessId: business.info.id,
+          locationId: booking.location.id,
+          providerId: booking.provider.providerId,
+          offeringId: booking.service.offeringId,
+          numberOfDays: 30,
+          startDate: moment().format('YYYY-MM-DD')
+        }
+    // params.numberOfDays = 30;
+    // params.startDate = moment().format('YYYY-MM-DD');
+    
+    const request = axios.request({
+      url:`${PROD_URL}/business/availabilities/`, 
+      method: 'get',
+      params: params
+    });
+
     dispatch(showLoading());
     return dispatch({
       type: GET_AVAILABILITIES,

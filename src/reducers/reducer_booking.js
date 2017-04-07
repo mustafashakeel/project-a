@@ -27,7 +27,7 @@ const INITIAL_STATE = {
     source: [],
     completed: [],
   },
-  provider: {},
+  provider: { id: "" },
   timestamp: null,
   dependant: "",
   payment: {},

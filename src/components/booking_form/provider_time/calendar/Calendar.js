@@ -1,4 +1,7 @@
 import React from 'react';
+import {findDOMNode} from 'react-dom';
+import getElement from 'react-get-element';
+
 import { connect } from 'react-redux';
 import moment from 'moment-timezone';
 import _ from 'underscore';
@@ -36,72 +39,86 @@ export class Calendar extends React.Component {
   }
 
   isValidDate = (current) => {
-    return this.state.filteredDates.some((availabilityDate) => {
-      return current.isSame( moment(availabilityDate._date), 'day' )
+    return this.props.availabilities.some((availabilityDate) => {
+      return current.isSame( moment(availabilityDate.startDate), 'day' )
     })
   }
 
-  getRandColors = () => {
-    const colors = ["red", "green", "yellow"];
-    const rand = Math.floor((Math.random() * 3) );
-    return colors[rand];
+  getStatusColor = (dayObj) => {
+    if (!dayObj){
+      return;
+    }
+    if (dayObj.timeSlots.length > 5){
+      return 'green';
+    }else{
+      return 'red';
+    }
   }
 
   renderDay = (props, currentDate, selectedDate) => {
+    const theDay = this.props.availabilities.find((day) => {
+      return day.startDate == currentDate.format('YYYY-MM-DD');
+    });
     return (
       <td {...props} >
-        <span className={"circleAvailability " + this.getRandColors()}></span>
+        <span className={"circleAvailability " + this.getStatusColor(theDay)}></span>
         { currentDate.date() }
       </td>
       );
   }
 
   onSelectedTimeSlot = (slot) => {
+
     this.props.booking.timestamp.set({
-        'hour': slot.hour(),
-        'minutes': slot.minutes()
+        'hour': slot.time.hour(),
+        'minutes': slot.time.minutes()
     });
     this.props.setBookingTime(this.props.booking.timestamp);
-    this.props.onSlotSelected();
+    // this.props.onSlotSelected();
   }
 
   onChangeDate = (selectedDate) => {
-    const selectedDateObject = this.props.availabilities._days.find((availabilityDate) => {
-      return moment(availabilityDate._date).day() === selectedDate.day()
+    const selectedDateObject = this.props.availabilities.find((availabilityDate) => {
+      return moment(availabilityDate.startDate).day() === selectedDate.day()
     })
     this.setState({selectedDateObject})
     this.props.setBookingTime(selectedDate)
-  }
-
-  filterDatesByProvider(providerId) {
-    const filteredDates = _.filter(this.props.availabilities._days, (day) => {
-      return day._schedules[0]._providers.some((provider) => {
-        return providerId === provider.Id;
-      });
-    })
-
-    this.setState({filteredDates})
-
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.booking.provider && this.props.booking.provider.providerId !== nextProps.booking.provider.providerId){
       this.setState({selectedDateObject: null})
     }
-    this.filterDatesByProvider(nextProps.booking.provider.providerId);
+   
+
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    const b = findDOMNode(this.refs.calendarContainer);
+    console.log(b.closest('div > .rdt'));
+    // console.log(this.refs.calendarContainer);
+    // console.log(findDOMNode(this.refs.calendarContainer.refs.fade_children));
+  }
+
+  clickCalendar(self, e){
+    console.log(self.target.tagName);
   }
 
   render() {
     return (
-      <div>
-        <FadeInOut show={this.props.booking.provider.fullName}>
+      <div >
+        <FadeInOut className="fades" ref="calendarContainer" show={this.props.booking.provider.fullName && this.props.availabilities.length}>
+          <div onClick={this.clickCalendar} >
           <Datetime
+              ref="calendar"
+              
               input={false}
               timeFormat={false}
               onChange={this.onChangeDate.bind(this)}
               isValidDate={this.isValidDate.bind(this)}
-              renderDay={this.renderDay}
+              renderDay={this.renderDay.bind(this)}
             />
+            </div>
         </FadeInOut>  
         <FadeInOut show={this.state.selectedDateObject !== null}>
           <TimeSlots selectedDateObject={this.state.selectedDateObject} onSelected={this.onSelectedTimeSlot.bind(this)} />

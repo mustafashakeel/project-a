@@ -37,9 +37,9 @@ export class ProviderTimeContent extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { business, booking } = this.props;
+    const { business, booking } = nextProps;
     if (nextProps.currentTab === 1 ) {
-      if (Object.keys(nextProps.availabilities).length === 0){
+      if (booking.provider.providerId !== this.props.booking.provider.providerId){
         this.props.fetchAvailabilities();
       }
       if (nextProps.business.providers.length === 0){

@@ -5,13 +5,15 @@ import {
   GET_AVAILABILITIES
 } from '../actions/index';
 
+import {parseAvailabilities} from '../utils'
+
 import { groupOfferingsByCat, getProvidersFromAvailabilities } from '../utils';
 
 const INITIAL_STATE = { 
   info: {},
   services: [],
   providers: [],
-  availabilities: {}
+  availabilities: []
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -28,7 +30,7 @@ export default function (state = INITIAL_STATE , action){
       })
       return { ...state , providers }
     case GET_AVAILABILITIES:
-      return { ...state , availabilities: action.payload.data}
+      return { ...state , availabilities: parseAvailabilities(action.payload.data)}
     default:
       return state;
   }

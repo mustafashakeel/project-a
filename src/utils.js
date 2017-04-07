@@ -1,5 +1,5 @@
 import validator from 'validator';
-
+import deepmerge from 'deepmerge'
 export function checkFields(fields){
   let valid = 0;
   let required = 0;
@@ -74,4 +74,33 @@ export function getProvidersFromAvailabilities(availabilities){
   });
 
   return providers;
+}
+
+
+export function parseAvailabilities(availabilities){
+  let availabilitiesArray = [];
+
+  availabilities.forEach((provider) => {
+    provider.availabilities.forEach((availabilities) => {
+      const newTimeSlots = [];
+
+      availabilities.timeSlots.forEach((timeslot)=>{
+        newTimeSlots.push({
+          "time": timeslot,
+          "provider" : [provider.providerId]
+        })
+      })
+      availabilities.timeSlots = newTimeSlots;
+    });
+
+    availabilitiesArray.push(provider.availabilities)
+    // console.log(provider.availabilities);
+  })
+  if (availabilitiesArray.length > 1) {
+    return deepmerge.all(availabilitiesArray);
+  }else{
+    return availabilitiesArray[0];    
+  }
+
+
 }

@@ -39,7 +39,7 @@ class LocationServiceContent extends React.Component {
   }
 
   componentWillMount() {
-      this.props.fetchBiz(3456);
+      this.props.fetchBiz(3654);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,7 +54,7 @@ class LocationServiceContent extends React.Component {
   componentWillUpdate(nextProps, nextState) {
     if (this.props.booking.location.id !== nextProps.booking.location.id){
       const locationId = nextProps.booking.location.id;
-      this.props.fetchLocationServices(3456, locationId);
+      this.props.fetchLocationServices(3654, locationId);
     }  
   }
 
