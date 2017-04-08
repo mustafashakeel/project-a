@@ -1,4 +1,5 @@
 import axios from 'axios';
+import cookie from 'react-cookie';
 import timezones from '../reducers/mocks/timezones';
 
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
@@ -144,7 +145,12 @@ export function saveIntakeForm(formObj){
 export function leaseBooking(props){
 
   return dispatch => {
-
+    if (cookie && cookie.load('access_token')) {
+      const headers = {
+        'Authorization': `Bearer  ${cookie.load('access_token')}`
+      }
+    }
+    
     const request = axios.post(`${ROOT_URL}/booking/lease`, props);  
     dispatch(showLoading());
 

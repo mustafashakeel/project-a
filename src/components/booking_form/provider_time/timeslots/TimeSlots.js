@@ -19,28 +19,30 @@ function mapStateToProps(state) {
 export class TimeSlots extends React.Component {
 
   state = {
-    slots: []
+    slots: [],
+    timezone: ''
   }
 
   listItems() {
-    const timezone = (this.props.booking.userTimezone !== '')? this.props.booking.userTimezone.utc : '';
-
     return this.props.selectedDateObject.timeSlots.map((slot, key) =>
       <li key={key} onClick={this.props.onSelected.bind(null, slot)}>
-        {moment(slot.time).utcOffset(timezone).format("h:mm A")}
+        {moment(slot.time).utcOffset(this.state.timezone).format("h:mm A")}
       </li>
     )
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    this.setState({ timezone : (this.props.booking.userTimezone !== '')? this.props.booking.userTimezone.utc : ''});
+  }
+
   render() {
     const {t} = this.props;
-    const timezone = (this.props.booking.userTimezone !== '')? this.props.booking.userTimezone.utc : '';
     const cloneTimestamp = this.props.booking.timestamp.clone();
     return (
       <div className="TimeSlots">
         <h4>{t('application.provider_time.select_time')}</h4>
         {this.props.booking.timestamp !== "" &&
-           cloneTimestamp.utcOffset(timezone).format("dddd, MMMM Do YYYY")
+           cloneTimestamp.utcOffset(this.state.timezone).format("dddd, MMMM Do YYYY")
         }
 
         <div className="slotsAvailableLabel">{t('application.provider_time.slots_available', {count: this.props.selectedDateObject.timeSlots.length})}</div>

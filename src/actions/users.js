@@ -1,8 +1,10 @@
 import axios from 'axios';
+import najax from 'najax';
+import cookie from 'react-cookie';
+
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { leaseBooking } from './booking';
 import { addErrorMsg } from './ui';
-import najax from 'najax';
 
 export const UPDATE_USER_CREDENTIALS = 'UPDATE_USER_CREDENTIALS';
 export const FETCH_USER = 'FETCH_USER';
@@ -14,6 +16,8 @@ export const IS_REGISTERED_USER = 'IS_REGISTERED_USER';
 
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
+const PROD_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
+
 // const ROOT_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
 
 export function fetchUser(email){  
@@ -32,10 +36,13 @@ export function fetchUser(email){
 export function userExists(email){
   console.log("fetchingUser");
   return dispatch => {
-    const request = axios.get(`${ROOT_URL}/user/account_type/emailAddress`);
+    const request = axios.request({
+      url: `${PROD_URL}/account/accountType`,
+      method: 'get',
+      params: { email: email }
+    });
     request.then((response) => {
-      // if ( response.data.accountType === 'Yocale'){
-      if (email === "hadi@biz.com") {
+      if ( response.data.accountType === 'Yocale'){
         dispatch({
             type: IS_REGISTERED_USER,
             payload: true
@@ -46,6 +53,12 @@ export function userExists(email){
             payload: false
         });
       }
+    })
+    .catch((error) => {
+      dispatch({
+          type: IS_REGISTERED_USER,
+          payload: false
+      });
     });  
 
   };
@@ -77,12 +90,16 @@ export function signupUser(user, booking){
     phone: user.phoneNumber.value
   };
 
-
   return dispatch => {
-    const request = axios.post(`${ROOT_URL}/account/register/`, values);
+    const request = axios.post(`${PROD_URL}/account/register/`, values);
     dispatch(showLoading());
-    request.then(() =>{
+    request
+    .then(() =>{
       dispatch(leaseBooking(booking));
+    })
+    .error((error) => {
+      dispatch(hideLoading());
+      dispatch(addErrorMsg(error.message));
     });
   };
 }
@@ -110,6 +127,7 @@ export function loginUser(fields, booking){
     dispatch(showLoading());
     request.success((response) =>{
       if (response.access_token){
+        cookie.save('access_token', response.access_token);
         dispatch({ 
           type: LOGIN_AS_USER
         });

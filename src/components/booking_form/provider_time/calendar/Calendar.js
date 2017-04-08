@@ -1,6 +1,5 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
-import getElement from 'react-get-element';
 
 import { connect } from 'react-redux';
 import moment from 'moment';
