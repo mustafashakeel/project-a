@@ -31,7 +31,7 @@ export class TimeSlots extends React.Component {
     )
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillMount() {
     this.setState({ timezone : (this.props.booking.userTimezone !== '')? this.props.booking.userTimezone.utc : ''});
   }
 

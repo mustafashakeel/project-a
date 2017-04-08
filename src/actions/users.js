@@ -34,7 +34,6 @@ export function fetchUser(email){
 }
 
 export function userExists(email){
-  console.log("fetchingUser");
   return dispatch => {
     const request = axios.request({
       url: `${PROD_URL}/account/accountType`,
@@ -65,6 +64,10 @@ export function userExists(email){
 }
 
 export function isLoggedIn(flag){
+
+  if (!flag){
+    cookie.remove('access_token');
+  }
   
   return {
     type: IS_LOGGED_IN,

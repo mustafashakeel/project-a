@@ -35,21 +35,6 @@ class PersonalInfoContent extends React.Component {
 
     this.props.proccessPayment(booking.lease.id, paymentDetails);
   }
-
-  componentWillReceiveProps(nextProps) {
-    // // user is logged in and booking was leased
-    // if(nextProps.booking.lease !== null && this.props.renderLogin){
-    //   this.props.isLoggedIn(true);
-    //   this.props.getIntakeForms(nextProps.booking.lease.id);
-    // }
-
-    // // when payments is successful
-    // if(nextProps.booking.isPaid && !nextProps.booking.isBooked){
-    //   this.props.bookAppointment(nextProps.booking.lease.id);
-    // }
-  }
-
-
   render() {
     const {t} = this.props;
     return (

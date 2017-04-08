@@ -145,21 +145,32 @@ export function saveIntakeForm(formObj){
 export function leaseBooking(props){
 
   return dispatch => {
+
+    let headers = {};
     if (cookie && cookie.load('access_token')) {
-      const headers = {
+       headers = {
         'Authorization': `Bearer  ${cookie.load('access_token')}`
       }
     }
-    
-    const request = axios.post(`${ROOT_URL}/booking/lease`, props);  
+
+
+
+    // const request = axios.post(`${ROOT_URL}/booking/lease`, props);  
+    const request = axios.request({
+        url: 'http://demo1743653.mockable.io/lease',
+        method: 'post',
+        data: props,
+        headers
+    });
+
     dispatch(showLoading());
 
     request.then((response) => {
+      dispatch(isLoggedIn(true));
       dispatch({
           type: LEASE_BOOKING,
           payload: response
       });
-      dispatch(isLoggedIn(true));
       dispatch(getIntakeForms(response.id));
       dispatch(hideLoading());
     });  

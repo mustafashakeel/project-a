@@ -7,12 +7,15 @@ import { fetchUser, loginAsGuest, signupUser, userExists, loginUser } from '../.
 
 import validator from 'validator';
 import { checkFields } from '../../../../utils';
+import FacebookLogin from 'react-facebook-login';
 
 import TextField from 'react-md/lib/TextFields';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
 import FadeInOut from '../../../common/fade_in_out/FadeInOut';
 
 import './Credentials.scss'; 
+
+const facebookAppId = '1270547073052193';
 
 function mapStateToProps(state) {
   return {
@@ -143,6 +146,9 @@ class Credentials extends React.Component {
     this.setState({ fields: fieldsState.fields });
     return fieldsState;
   }
+  responseFacebook(response){
+    console.log(response);
+  }
 
   render() {
     const {t} = this.props;
@@ -212,6 +218,13 @@ class Credentials extends React.Component {
                 </div>
             </FadeInOut>
 
+            {/* <FacebookLogin
+              appId={facebookAppId}
+              autoLoad={true}
+              fields="first_name,last_name,gender,email,picture"
+              callback={this.responseFacebook}
+              cssClass="my-facebook-button-class"
+            />*/}
 
         </div>
       </div>
