@@ -28,10 +28,9 @@ export function fetchBiz(businessId){
     dispatch(showLoading());
     request
     .then((result) => {
-      console.log(result);
       if (result.data.locations.length == 1){
         dispatch(setBookingLocation(result.data.locations[0]));
-      }
+      }      
       dispatch(hideLoading());
     });
 
@@ -81,10 +80,9 @@ export function fetchProviders(businessId, locationId, offeringId){
   };
 }
 
-export function fetchAvailabilities(){
+export function fetchAvailabilities(timezone){
   return (dispatch, getState) => {
     const {booking, business, ui} = getState();
-    // const request = axios.get(`${MOCK_URL}/availability`);
     const params = {
           businessId: business.info.id,
           locationId: booking.location.id,
@@ -93,8 +91,6 @@ export function fetchAvailabilities(){
           numberOfDays: 31,
           startDate: ui.calendarMonth.format('YYYY-MM-DD')
         }
-    // params.numberOfDays = 30;
-    // params.startDate = moment().format('YYYY-MM-DD');
     
     const request = axios.request({
       url:`${PROD_URL}/business/availabilities/`, 
@@ -102,12 +98,17 @@ export function fetchAvailabilities(){
       params: params
     });
 
+    const actualTimezone = (booking.userTimezone !== "")? booking.userTimezone : booking.bizTimezone;
+
     dispatch(showLoading());
-    return dispatch({
-      type: GET_AVAILABILITIES,
-      payload: request
-    })
-    .then(() => {
+    request.then((response) => {
+      dispatch({
+        type: GET_AVAILABILITIES,
+        payload: {
+          response,
+          timezone: actualTimezone
+        }
+      })
       dispatch(hideLoading());
     });
   };

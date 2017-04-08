@@ -1,7 +1,8 @@
 import axios from 'axios';
+import timezones from '../reducers/mocks/timezones';
+
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { addErrorMsg } from './ui';
-
 import { isLoggedIn } from './users'
 
 export const SET_BOOKING_TIME = 'SET_BOOKING_TIME';
@@ -20,6 +21,8 @@ export const SAVE_INTAKE_FORM = 'SAVE_INTAKE_FORM';
 export const LEASE_BOOKING = 'LEASE_BOOKING';
 export const BOOK_APPOINTMENT = 'BOOK_APPOINTMENT';
 export const TEST_ACTION = 'TEST_ACTION';
+export const SET_BIZ_TIMEZONE = 'SET_BIZ_TIMEZONE';
+export const SET_USER_TIMEZONE = 'SET_USER_TIMEZONE';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 const STRIPE_CHARGE_URL = "http://express-stripe.herokuapp.com/charge";
@@ -30,7 +33,7 @@ export function setBookingTime(timestamp){
     payload: {
       timestamp: timestamp
     }
-  }
+  };
 }
 
 export function appointmentBooked(flag){
@@ -39,16 +42,29 @@ export function appointmentBooked(flag){
     payload: {
       booked: flag
     }
-  }
+  };
 }
 
 export function setBookingLocation(locationObj){
-  return {
-    type: SET_BOOKING_LOCATION,
-    payload: {
-      location: locationObj
-    }
-  }
+  return dispatch => {
+    dispatch({
+      type: SET_BOOKING_LOCATION,
+      payload: {
+        location: locationObj
+      }
+    });
+
+    const bizTimezone = timezones.find((timezone) => {
+      return timezone.TimeZoneInfoId == locationObj.timeZone;
+    });
+
+    dispatch({
+      type: SET_BIZ_TIMEZONE,
+      payload: {
+        bizTimezone
+      }
+    });
+  };
 }
 
 export function setBookingService(serviceObj){
@@ -57,7 +73,7 @@ export function setBookingService(serviceObj){
     payload: {
       service: serviceObj
     }
-  }
+  };
 }
 
 export function setBookingProvider(providerObj){
@@ -66,7 +82,7 @@ export function setBookingProvider(providerObj){
     payload: {
       provider: providerObj
     }
-  }
+  };
 }
 
 export function setBookingDependant(dependant){
@@ -75,7 +91,7 @@ export function setBookingDependant(dependant){
     payload: {
       dependant: dependant
     }
-  }
+  };
 }
 
 export function setPaymentsDetails(result){
@@ -84,7 +100,7 @@ export function setPaymentsDetails(result){
     payload: {
       token: result.token
     }
-  }
+  };
 }
 
 export function setReminderOpts(key, val){
@@ -94,7 +110,7 @@ export function setReminderOpts(key, val){
       key: key,
       val: val
     }
-  }
+  };
 }
 
 export function setGrantTotal(total){
@@ -103,7 +119,7 @@ export function setGrantTotal(total){
     payload: {
       total: total
     }
-  }
+  };
 }
 
 
@@ -122,7 +138,7 @@ export function saveIntakeForm(formObj){
     payload: {
       formObj: formObj
     }
-  }
+  };
 }
 
 export function leaseBooking(props){
@@ -168,29 +184,11 @@ export function bookAppointment(bookingId, paymentDetails){
     return dispatch({
       type: BOOK_APPOINTMENT,
       payload: request
-    })
+    });
     
   };
 }
 
-/*
-export function fetchBiz(bizId){
-  const request = axios.get(`${ROOT_URL}/business/:businessId`);
-
-  return dispatch => {
-    dispatch(showLoading());
-    return dispatch({
-      type: GET_BIZ_INFO,
-      payload: request.then((result)=>{
-        console.log(result);
-        dispatch(fetchProviders()).then(() =>{
-          dispatch(hideLoading());        
-         }); 
-      })
-    })
-  }
-}
-*/
 
 export function proccessPayment(bookingId, paymentDetails){
   return dispatch => {
@@ -217,5 +215,13 @@ export function proccessPayment(bookingId, paymentDetails){
         dispatch(addErrorMsg("There was an error.", "Retry"))
       })
   }
+}
 
+export function setUserTimezone(utc){
+  return {
+    type: SET_USER_TIMEZONE,
+    payload: {
+      userTimezone: utc
+    }
+  };
 }

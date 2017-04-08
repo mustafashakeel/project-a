@@ -1,5 +1,6 @@
 import validator from 'validator';
 import deepmerge from 'deepmerge'
+import moment from 'moment';
 export function checkFields(fields){
   let valid = 0;
   let required = 0;
@@ -77,8 +78,9 @@ export function getProvidersFromAvailabilities(availabilities){
 }
 
 
-export function parseAvailabilities(availabilities){
-  if (!availabilities){
+export function parseAvailabilities(availabilities, timezone){
+  console.log(availabilities)
+  if (!availabilities || availabilities.length === 0){
     return [];
   }
 
@@ -87,14 +89,20 @@ export function parseAvailabilities(availabilities){
   availabilities.forEach((provider) => {
     provider.availabilities.forEach((availabilities) => {
       const newTimeSlots = [];
-
-      availabilities.timeSlots.forEach((timeslot)=>{
+      const startDate = availabilities.startDate;
+      
+      availabilities.timeSlots.forEach((timeslot) => {
         newTimeSlots.push({
-          "time": timeslot,
+          "time": moment(startDate + " " + timeslot),
           "provider" : [provider.providerId]
-        })
-      })
-      availabilities.timeSlots = newTimeSlots;
+        });
+      });
+
+      if (availabilities.timeSlots.length > 0){
+        availabilities.startDate = moment(startDate + " " + availabilities.timeSlots[0]);
+        availabilities.timeSlots = newTimeSlots;
+      }
+
     });
 
     availabilitiesArray.push(provider.availabilities)

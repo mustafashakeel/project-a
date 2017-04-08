@@ -49,6 +49,7 @@ export default function (state = INITIAL_STATE , action){
 
     case CHANGE_MONTH_CALENDAR:
       return { ...state, calendarMonth: action.payload.newMonth }
+
     default:
       return state;
 

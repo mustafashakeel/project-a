@@ -16,6 +16,8 @@ import { getURLParameter }  from './utils';
 
 import './index.scss';
 
+const createStoreWithMiddleware = applyMiddleware(promise, thunk)(createStore);
+
 const settings = {
   position: 'right',
   // businessID: getURLParameter('businessID')
