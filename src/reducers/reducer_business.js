@@ -25,9 +25,15 @@ export default function (state = INITIAL_STATE , action){
       return { ...state , services: groupOfferingsByCat(action.payload.data)}
     case GET_BIZ_PROVIDERS:
       const providers = action.payload.data;
+      const anyProvider = {
+        providerId: '',
+        selectLabel: 'Any Provider',
+        fullName: 'Any Provider'        
+      }
       providers.map((provider)=>{
         provider.selectLabel = provider.fullName + " - Next available date: " + provider.nextAvailableTime;
       })
+      providers.push(anyProvider);
       return { ...state , providers }
     case GET_AVAILABILITIES:
       return { ...state , availabilities: parseAvailabilities(action.payload.response.data, action.payload.timezone)}

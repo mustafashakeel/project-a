@@ -67,8 +67,18 @@ export function fetchLocationServices(businessId, locationId){
 }
 
 export function fetchProviders(businessId, locationId, offeringId){
+  const params = {
+    businessId,
+    locationId,
+    offeringId
+  };
   return dispatch => {
-    const request = axios.get(`${ROOT_URL}/business/providers/:businessId/:locationId/:offeringId`);
+    const request = axios.request({
+      url: `${PROD_URL}/business/providers/`,
+      method: 'get',
+      params: params
+    });
+    
     dispatch(showLoading());
     return dispatch({
       type: GET_BIZ_PROVIDERS,

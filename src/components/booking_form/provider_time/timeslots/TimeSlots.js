@@ -27,7 +27,7 @@ export class TimeSlots extends React.Component {
 
     return this.props.selectedDateObject.timeSlots.map((slot, key) =>
       <li key={key} onClick={this.props.onSelected.bind(null, slot)}>
-        {slot.time.clone().utcOffset(timezone).format("h:mm A")}
+        {moment(slot.time).utcOffset(timezone).format("h:mm A")}
       </li>
     )
   }

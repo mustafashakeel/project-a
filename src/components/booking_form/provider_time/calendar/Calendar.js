@@ -36,7 +36,7 @@ export class Calendar extends React.Component {
   isValidDate(current){
     const timezone = (this.props.booking.userTimezone !== '')? this.props.booking.userTimezone.utc : '';
     return this.props.availabilities.some((availabilityDate) => {
-      return availabilityDate.timeSlots.length > 0 && (current.format('YYYY-MM-DD') === availabilityDate.startDate.utcOffset(timezone).format('YYYY-MM-DD'))
+      return availabilityDate.timeSlots.length > 0 && (current.format('YYYY-MM-DD') === moment(availabilityDate.startDate).utcOffset(timezone).format('YYYY-MM-DD'))
     })
   }
 
@@ -53,7 +53,7 @@ export class Calendar extends React.Component {
 
   renderDay(props, currentDate, selectedDate) {
     let theDay = this.props.availabilities.find((day) => {
-      return day.startDate == currentDate.format('YYYY-MM-DD');
+      return moment(day.startDate).format('YYYY-MM-DD') === currentDate.format('YYYY-MM-DD');
     });
 
     return (
@@ -65,7 +65,7 @@ export class Calendar extends React.Component {
   }
 
   onSelectedTimeSlot = (slot) => {
-    this.props.setBookingTime(slot.time);
+    this.props.setBookingTime(moment(slot.time));
     this.props.onSlotSelected();
   }
 

@@ -79,7 +79,6 @@ export function getProvidersFromAvailabilities(availabilities){
 
 
 export function parseAvailabilities(availabilities, timezone){
-  console.log(availabilities)
   if (!availabilities || availabilities.length === 0){
     return [];
   }
@@ -87,31 +86,30 @@ export function parseAvailabilities(availabilities, timezone){
   let availabilitiesArray = [];
 
   availabilities.forEach((provider) => {
-    provider.availabilities.forEach((availabilities) => {
+    provider.availabilities.forEach((availabilities, index) => {
       const newTimeSlots = [];
       const startDate = availabilities.startDate;
       
       availabilities.timeSlots.forEach((timeslot) => {
         newTimeSlots.push({
-          "time": moment(startDate + " " + timeslot),
+          "time": startDate + " " + timeslot,
           "provider" : [provider.providerId]
         });
       });
 
-      if (availabilities.timeSlots.length > 0){
-        availabilities.startDate = moment(startDate + " " + availabilities.timeSlots[0]);
-        availabilities.timeSlots = newTimeSlots;
+      if (provider.availabilities[index].timeSlots.length > 0){
+        provider.availabilities[index].startDate = startDate + " " + availabilities.timeSlots[0];
+        provider.availabilities[index].timeSlots = newTimeSlots;
       }
 
     });
 
-    availabilitiesArray.push(provider.availabilities)
+    availabilitiesArray.push(provider.availabilities);
   })
   if (availabilitiesArray.length > 1) {
     return deepmerge.all(availabilitiesArray);
   }else{
     return availabilitiesArray[0];    
   }
-
 
 }
