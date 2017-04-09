@@ -12,7 +12,8 @@ export default class ListCategory extends React.Component {
   getClasses = () => {
     return classNames({
       ServiceMenuCategory: true,
-      isActive: this.state.isOpen
+      isActive: this.state.isOpen,
+      ["cat_" + this.props.id]: true
     })
   }
 

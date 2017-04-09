@@ -1,18 +1,21 @@
 import validator from 'validator';
-
+import deepmerge from 'deepmerge'
+import moment from 'moment';
 export function checkFields(fields){
-  let valid = 1;
+  let valid = 0;
+  let required = 0;
   let keysArray = Object.keys(fields);
   keysArray.forEach(function(key) {
     if(fields[key].required){
       const emptyField = validator.isEmpty(fields[key].value)
       fields[key].error = emptyField;
       valid = (!emptyField) ? valid + 1 : valid;
+      required++;
     }
   });
   return { 
     fields, 
-    valid: valid === keysArray.length 
+    valid: valid === required 
   }
 }
 
@@ -23,8 +26,14 @@ export function getURLParameter(name) {
 export function groupOfferingsByCat(services){
   var categoriesIndexed = [];
   var categories = [];
+  var uncategorized = {
+    id: 'uncategorized',
+    cat_name: "Misc",
+    children: []
+  };
 
   services.forEach(function(service) {
+    if (service.categories.length > 0 ) {
       service.categories.forEach(function(category) {
           if(!categoriesIndexed[category.id]) {
               categoriesIndexed[category.id] = {
@@ -36,9 +45,13 @@ export function groupOfferingsByCat(services){
           }
           categoriesIndexed[category.id].children.push(service);
       });
+    } else {
+      uncategorized.children.push(service);
+      // console.log(service);
+    }
   });
 
-  return categories;
+  return categories.concat(uncategorized);
 }
 
 export function getProvidersFromAvailabilities(availabilities){
@@ -62,4 +75,41 @@ export function getProvidersFromAvailabilities(availabilities){
   });
 
   return providers;
+}
+
+
+export function parseAvailabilities(availabilities, timezone){
+  if (!availabilities || availabilities.length === 0){
+    return [];
+  }
+
+  let availabilitiesArray = [];
+
+  availabilities.forEach((provider) => {
+    provider.availabilities.forEach((availabilities, index) => {
+      const newTimeSlots = [];
+      const startDate = availabilities.startDate;
+      
+      availabilities.timeSlots.forEach((timeslot) => {
+        newTimeSlots.push({
+          "time": startDate + " " + timeslot,
+          "provider" : [provider.providerId]
+        });
+      });
+
+      if (provider.availabilities[index].timeSlots.length > 0){
+        provider.availabilities[index].startDate = startDate + " " + availabilities.timeSlots[0];
+        provider.availabilities[index].timeSlots = newTimeSlots;
+      }
+
+    });
+
+    availabilitiesArray.push(provider.availabilities);
+  })
+  if (availabilitiesArray.length > 1) {
+    return deepmerge.all(availabilitiesArray);
+  }else{
+    return availabilitiesArray[0];    
+  }
+
 }

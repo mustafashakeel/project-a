@@ -3,16 +3,19 @@ import _ from 'underscore';
 
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchUser, loginAsGuest, signupUser } from '../../../../actions/index';
+import { fetchUser, loginAsGuest, signupUser, userExists, loginUser } from '../../../../actions/index';
 
 import validator from 'validator';
 import { checkFields } from '../../../../utils';
+import FacebookLogin from 'react-facebook-login';
 
 import TextField from 'react-md/lib/TextFields';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
 import FadeInOut from '../../../common/fade_in_out/FadeInOut';
 
 import './Credentials.scss'; 
+
+const facebookAppId = '1270547073052193';
 
 function mapStateToProps(state) {
   return {
@@ -77,12 +80,16 @@ class Credentials extends React.Component {
   }
 
   onChangeEmail(email){
-    // _.throttle(() => {
-      this.props.fetchUser(email);
-      this.setState({
-        isValidEmail: validator.isEmail(email)
-      })      
-    // }, 2000);
+    const isValidEmail = validator.isEmail(email)
+    this.props.fetchUser(email);
+    this.setState({
+      isValidEmail: isValidEmail
+    })      
+
+    var self = this;
+    if (isValidEmail) {      
+      _.throttle(this.props.userExists(email), 100);
+    }
   }
 
   onChangeFields(key, value) {
@@ -91,9 +98,37 @@ class Credentials extends React.Component {
     this.setState({ fields: state});
   }
 
-  loginEvent() {
-    const leaseObj = this.leaseObj();
-    this.props.loginAsGuest(leaseObj);
+  loginAsGuestEvent() {
+    const fields = this.state.fields;
+    const validationFields = {
+      ...fields,
+      firstName: {...fields.firstName, required: true},
+      lastName: {...fields.lastName, required: true},
+      password: {...fields.password, required: false}
+    }
+
+    const fieldsState = this.validFields(validationFields);
+    if (fieldsState.valid){
+      const leaseObj = this.leaseObj();
+      this.props.loginAsGuest(leaseObj);
+    }
+  }
+
+  loginAsUserEvent() {
+    const fields = this.state.fields;
+    const validationFields = {
+      ...fields,
+      firstName: {...fields.firstName, required: false},
+      lastName: {...fields.lastName, required: false},
+      password: {...fields.password, required: true}
+    }
+
+    const fieldsState = this.validFields(validationFields);
+    if (fieldsState.valid){
+      const leaseObj = this.leaseObj();
+      //change for final login as user
+      this.props.loginUser(fieldsState.fields, leaseObj);
+    }
   }
 
   leaseObj(){
@@ -106,25 +141,13 @@ class Credentials extends React.Component {
     };
   }
 
-  createAccountEvent()  {
-
-    if(!this.state.creatingNewAccount ){
-      // Showing new user fields
-      this.setState({ creatingNewAccount: true });
-    }else{
-      // Creating new account
-      const fieldsCopy = this.state.fields;
-      const fieldsState = checkFields(fieldsCopy)      
-      this.setState({ fields: fieldsState.fields });
-
-      if (fieldsState.valid){
-        console.log("Creating account");
-        const leaseObj = this.leaseObj();
-
-        this.props.signupUser(fieldsState.fields, leaseObj);
-      }
-
-    }
+  validFields(fieldsCopy){
+    const fieldsState = checkFields(fieldsCopy)      
+    this.setState({ fields: fieldsState.fields });
+    return fieldsState;
+  }
+  responseFacebook(response){
+    console.log(response);
   }
 
   render() {
@@ -141,9 +164,9 @@ class Credentials extends React.Component {
             { ...this.state.fields.email}
             />
 
-            <FadeInOut show={this.state.isValidEmail || this.props.user.isUser} scroll={false}>
+            <FadeInOut show={this.state.isValidEmail } scroll={false}>
                 <div>
-                  <FadeInOut show={this.state.creatingNewAccount} scroll={false}>
+                  <FadeInOut show={!this.props.user.isUser} scroll={false}>
                     <div>
                       <TextField 
                         placeholder={t('application.user_info.login_fields.firstName.placeholder')} 
@@ -171,7 +194,7 @@ class Credentials extends React.Component {
                     </div>
                   </FadeInOut>
 
-                  {(this.props.user.isUser || this.state.creatingNewAccount) && 
+                  {this.props.user.isUser  && 
                     <TextField 
                           type="password" 
                           onChange={this.onChangeFields.bind(this, 'password')} 
@@ -179,23 +202,29 @@ class Credentials extends React.Component {
                           { ...this.state.fields.password} />
                   }
 
-                  {!this.props.user.isUser &&
-                    <button 
-                      className="yocaleButton"
-                      onClick={this.createAccountEvent.bind(this)}
-                    >{t('application.user_info.create_account')}</button>
-                  }
+                  {!this.props.user.isUser ? (
+                      <button 
+                        className="yocaleButton"
+                        onClick={this.loginAsGuestEvent.bind(this)}
+                      >{t('application.user_info.continue_as_guest')}</button>
 
-                  {!this.state.creatingNewAccount &&
-                    <button 
-                      className="yocaleButton"
-                      onClick={this.loginEvent.bind(this)}
-                    >{(this.props.user.isUser)? t('application.user_info.continue') : t('application.user_info.continue_as_guest')}</button>
-                  }
+                      ) : (
+                       <button 
+                        className="yocaleButton"
+                        onClick={this.loginAsUserEvent.bind(this)}
+                      >{t('application.user_info.continue')}</button>
+                  )}
                   
                 </div>
             </FadeInOut>
 
+            {/* <FacebookLogin
+              appId={facebookAppId}
+              autoLoad={true}
+              fields="first_name,last_name,gender,email,picture"
+              callback={this.responseFacebook}
+              cssClass="my-facebook-button-class"
+            />*/}
 
         </div>
       </div>
@@ -205,5 +234,5 @@ class Credentials extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { fetchUser, loginAsGuest, signupUser }
+  { fetchUser, loginAsGuest, signupUser, userExists, loginUser }
 )(translate()(Credentials))

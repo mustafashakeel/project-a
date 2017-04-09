@@ -9,6 +9,7 @@ import { isLoggedIn, proccessPayment } from '../../../actions'
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
 import AppointmentReminder from './appointment_reminder/AppointmentReminder';
+import BookingNote from './info_stepper/booking_note/BookingNote';
 
 import './PersonalInfoContent.scss';
 
@@ -34,21 +35,6 @@ class PersonalInfoContent extends React.Component {
 
     this.props.proccessPayment(booking.lease.id, paymentDetails);
   }
-
-  componentWillReceiveProps(nextProps) {
-    // // user is logged in and booking was leased
-    // if(nextProps.booking.lease !== null && this.props.renderLogin){
-    //   this.props.isLoggedIn(true);
-    //   this.props.getIntakeForms(nextProps.booking.lease.id);
-    // }
-
-    // // when payments is successful
-    // if(nextProps.booking.isPaid && !nextProps.booking.isBooked){
-    //   this.props.bookAppointment(nextProps.booking.lease.id);
-    // }
-  }
-
-
   render() {
     const {t} = this.props;
     return (
@@ -58,7 +44,7 @@ class PersonalInfoContent extends React.Component {
         :
         <div>
           <InfoStepper />
-          <AppointmentReminder />
+          <BookingNote />
           <button 
             className="bookAppointmentBtn"
             onClick={this.bookAppointment.bind(this)}

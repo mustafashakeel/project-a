@@ -13,7 +13,9 @@ import {
   SAVE_INTAKE_FORM,
   LEASE_BOOKING,
   IS_LOGGED_IN,
-  BOOK_APPOINTMENT
+  BOOK_APPOINTMENT,
+  SET_BIZ_TIMEZONE,
+  SET_USER_TIMEZONE
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -27,7 +29,7 @@ const INITIAL_STATE = {
     source: [],
     completed: [],
   },
-  provider: {},
+  provider: { id: "" },
   timestamp: null,
   dependant: "",
   payment: {},
@@ -38,7 +40,9 @@ const INITIAL_STATE = {
     phoneNumber: "",
     timeReminder : 10,
     minHourReminder : "Minutes"
-  }  
+  },
+  bizTimezone: '',
+  userTimezone: ''  
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -106,7 +110,11 @@ export default function (state = INITIAL_STATE , action){
       if (action.payload.isLoggedIn == false){
         return { ...state, lease: null}
       }
+    case SET_BIZ_TIMEZONE:
+      return { ...state, bizTimezone: action.payload.bizTimezone}
 
+    case SET_USER_TIMEZONE:
+      return { ...state, userTimezone: action.payload.userTimezone}
 
     default:
       return state;

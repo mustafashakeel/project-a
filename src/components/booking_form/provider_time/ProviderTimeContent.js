@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchAvailabilities, setBookingProvider, fetchProviders } from '../../../actions/index';
+import { fetchAvailabilities, setBookingProvider, fetchProviders, setUserTimezone } from '../../../actions/index';
+import timezones from '../../../reducers/mocks/timezones';
 
-import Calendar from './calendar/Calendar'
+import FadeInOut from '../../common/fade_in_out/FadeInOut';
+import Calendar from './calendar/Calendar';
 
 import SelectField from 'react-md/lib/SelectFields';
 import Avatar from 'react-md/lib/Avatars';
@@ -21,11 +23,11 @@ function mapStateToProps(state) {
 
 export class ProviderTimeContent extends React.Component {
 
-  onChangeProvider = (newValue, newValueIndex) => {
+  onChangeProvider(newValue, newValueIndex){
     this.props.setBookingProvider(this.props.business.providers[newValueIndex]);
   }
 
-  providerList = () => {
+  providerList(){
     return this.props.business.providers.map((provider, index) => {
       return {
         ...provider,
@@ -34,10 +36,20 @@ export class ProviderTimeContent extends React.Component {
     });
   }
 
+  onChangeTimezone(newValue, newValueIndex){
+    this.props.setUserTimezone(timezones[newValueIndex]);
+
+    if( this.props.booking.provider.providerId){
+      this.props.fetchAvailabilities();
+      this.child.resetSelectedDate();
+    }
+
+  }
+
   componentWillReceiveProps(nextProps) {
-    const { business, booking } = this.props;
+    const { business, booking } = nextProps;
     if (nextProps.currentTab === 1 ) {
-      if (Object.keys(nextProps.availabilities).length === 0){
+      if (booking.provider.providerId !== this.props.booking.provider.providerId){
         this.props.fetchAvailabilities();
       }
       if (nextProps.business.providers.length === 0){
@@ -47,23 +59,45 @@ export class ProviderTimeContent extends React.Component {
   }
 
   render() {
-    const { t, booking } = this.props;
+    const { t, booking, business } = this.props;
     return (
       <div className="ProviderTimeContent">
-        <SelectField
-          id="selectProvider"
-          placeholder={t('application.provider_time.select_provider')}
-          position={SelectField.Positions.BELOW}
-          menuItems={this.providerList()}
-          itemLabel="fullName"
-          itemValue="fullName"
-          value={booking.provider.fullName}
-          onChange={this.onChangeProvider.bind(this)}
-          className="dropdownSelect"
-          iconChildren="keyboard_arrow_down"
-        />
-
-        <Calendar onSlotSelected={this.props.onFinish}/>
+        { business.info.allowLocalizedTime &&
+          <div className="TimeZoneSelector">
+            <SelectField
+              id="TimeZoneSelec"
+              placeholder="Select your timezone"
+              position={SelectField.Positions.BELOW}
+              menuItems={timezones}
+              itemLabel="DisplayName"
+              itemValue="TimeZoneInfoId"
+              value={booking.userTimezone.TimeZoneInfoId}
+              onChange={this.onChangeTimezone.bind(this)}
+              className="dropdownSelect"
+              iconChildren="keyboard_arrow_down"
+            />
+          </div>
+        }
+        <FadeInOut show={!business.info.allowLocalizedTime || booking.userTimezone !== ""} scroll={false}>
+          <div className="ProviderSelector">
+            <FadeInOut className="ProviderSelectedPicture" show={booking.provider.picture} scroll={false}>
+              <Avatar src={booking.provider.picture} alt={booking.provider.fullName} /> 
+            </FadeInOut>
+            <SelectField
+              id="selectProvider"
+              placeholder={t('application.provider_time.select_provider')}
+              position={SelectField.Positions.BELOW}
+              menuItems={this.providerList()}
+              itemLabel="selectLabel"
+              itemValue="selectLabel"
+              value={booking.provider.selectLabel}
+              onChange={this.onChangeProvider.bind(this)}
+              className="dropdownSelect"
+              iconChildren="keyboard_arrow_down"
+            />
+          </div>
+        </FadeInOut>
+        <Calendar onRef={ref => (this.child = ref)} onSlotSelected={this.props.onFinish}/>
       </div>
 
     );
@@ -72,5 +106,5 @@ export class ProviderTimeContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {fetchAvailabilities, setBookingProvider, fetchProviders}
+  {fetchAvailabilities, setBookingProvider, fetchProviders, setUserTimezone}
 )(translate()(ProviderTimeContent))

@@ -6,4 +6,23 @@
     margin-top: 5px;
     width: 30px !important;
   }
+
+
+  .ProviderSelector, .TimeZoneSelector{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+
+    .ProviderSelectedPicture{
+      // position: absolute;
+      margin-top: -10px;
+      margin-left: 20px;
+    }
+    .dropdownSelect{
+      margin-left: 20px;
+      margin-right: 20px;
+      width: 100%;
+    }
+  }
 }

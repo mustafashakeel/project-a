@@ -5,9 +5,7 @@ import {
   GET_AVAILABILITIES
 } from '../actions/index';
 
-import business from './mocks/business';
-import services from './mocks/services';
-// import providers from './mocks/providers';
+import {parseAvailabilities} from '../utils'
 
 import { groupOfferingsByCat, getProvidersFromAvailabilities } from '../utils';
 
@@ -15,7 +13,7 @@ const INITIAL_STATE = {
   info: {},
   services: [],
   providers: [],
-  availabilities: {}
+  availabilities: []
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -24,12 +22,21 @@ export default function (state = INITIAL_STATE , action){
 
       return { ...state , info: action.payload.data }
     case GET_BIZ_SERVICES:
-      // return { ...state , services: groupOfferingsByCat(action.payload.data)}
-      return { ...state , services: groupOfferingsByCat(services)}
+      return { ...state , services: groupOfferingsByCat(action.payload.data)}
     case GET_BIZ_PROVIDERS:
-      return { ...state , providers: action.payload.data }
+      const providers = action.payload.data;
+      const anyProvider = {
+        providerId: '',
+        selectLabel: 'Any Provider',
+        fullName: 'Any Provider'        
+      }
+      providers.map((provider)=>{
+        provider.selectLabel = provider.fullName + " - Next available date: " + provider.nextAvailableTime;
+      })
+      providers.push(anyProvider);
+      return { ...state , providers }
     case GET_AVAILABILITIES:
-      return { ...state , availabilities: action.payload.data}
+      return { ...state , availabilities: parseAvailabilities(action.payload.response.data, action.payload.timezone)}
     default:
       return state;
   }

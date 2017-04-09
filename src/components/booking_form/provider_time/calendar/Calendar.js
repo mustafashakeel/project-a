@@ -1,9 +1,11 @@
 import React from 'react';
+import {findDOMNode} from 'react-dom';
+
 import { connect } from 'react-redux';
-import moment from 'moment-timezone';
+import moment from 'moment';
 import _ from 'underscore';
 
-import { setBookingTime, fetchAvailabilities } from '../../../../actions/index';
+import { setBookingTime, fetchAvailabilities, changeMonthCalendar } from '../../../../actions/index';
 
 import Datetime from 'react-datetime';
 import FadeInOut from '../../../common/fade_in_out/FadeInOut';
@@ -28,80 +30,93 @@ export class Calendar extends React.Component {
 
   constructor(props) {
     super(props);
-    // var names = Object.keys(moment.tz._zones)
-    //     .map(function(k) { return moment.tz._zones[k].split('|')[0]; })
-    //     .filter(function(z) { return z.indexOf('/') >= 0; })
-    //     .sort();
-    // console.log(names);
   }
 
-  isValidDate = (current) => {
-    return this.state.filteredDates.some((availabilityDate) => {
-      return current.isSame( moment(availabilityDate._date), 'day' )
+  isValidDate(current){
+    const timezone = (this.props.booking.userTimezone !== '')? this.props.booking.userTimezone.utc : '';
+    return this.props.availabilities.some((availabilityDate) => {
+      return availabilityDate.timeSlots.length > 0 && (current.format('YYYY-MM-DD') === moment(availabilityDate.startDate).utcOffset(timezone).format('YYYY-MM-DD'))
     })
   }
 
-  getRandColors = () => {
-    const colors = ["red", "green", "yellow"];
-    const rand = Math.floor((Math.random() * 3) );
-    return colors[rand];
+  getStatusColor(dayObj){
+    if (!dayObj || dayObj.timeSlots.length === 0){
+      return;
+    }
+    if (dayObj.timeSlots.length > 5){
+      return 'green';
+    }else{
+      return 'red';
+    }
   }
 
-  renderDay = (props, currentDate, selectedDate) => {
+  renderDay(props, currentDate, selectedDate) {
+    let theDay = this.props.availabilities.find((day) => {
+      return moment(day.startDate).format('YYYY-MM-DD') === currentDate.format('YYYY-MM-DD');
+    });
+
     return (
       <td {...props} >
-        <span className={"circleAvailability " + this.getRandColors()}></span>
+        <span className={"circleAvailability " + this.getStatusColor(theDay)}></span>
         { currentDate.date() }
       </td>
       );
   }
 
   onSelectedTimeSlot = (slot) => {
-    this.props.booking.timestamp.set({
-        'hour': slot.hour(),
-        'minutes': slot.minutes()
-    });
-    this.props.setBookingTime(this.props.booking.timestamp);
+    this.props.setBookingTime(moment(slot.time));
     this.props.onSlotSelected();
   }
 
   onChangeDate = (selectedDate) => {
-    const selectedDateObject = this.props.availabilities._days.find((availabilityDate) => {
-      return moment(availabilityDate._date).day() === selectedDate.day()
+    const selectedDateObject = this.props.availabilities.find((availabilityDate) => {
+      return moment(availabilityDate.startDate).format('YYYY-MM-DD') === selectedDate.format('YYYY-MM-DD')
     })
     this.setState({selectedDateObject})
     this.props.setBookingTime(selectedDate)
-  }
-
-  filterDatesByProvider(providerId) {
-    const filteredDates = _.filter(this.props.availabilities._days, (day) => {
-      return day._schedules[0]._providers.some((provider) => {
-        return providerId === provider.Id;
-      });
-    })
-
-    this.setState({filteredDates})
-
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.booking.provider && this.props.booking.provider.providerId !== nextProps.booking.provider.providerId){
       this.setState({selectedDateObject: null})
     }
-    this.filterDatesByProvider(nextProps.booking.provider.providerId);
+  }
+
+  componentDidMount() {
+    this.props.onRef(this)
+  }
+  componentWillUnmount() {
+    this.props.onRef(undefined)
+  }
+
+  clickCalendar(self, e){
+    const clickedElementClass = self.target.parentElement.className;
+    if (clickedElementClass === 'rdtNext'){
+      this.props.changeMonthCalendar('add', 1);
+      this.resetSelectedDate()
+    }else if (clickedElementClass === 'rdtPrev'){
+      this.props.changeMonthCalendar('subtract', 1);
+      this.resetSelectedDate()
+    }
+  }
+
+  resetSelectedDate(){
+    this.setState({selectedDateObject: null})
   }
 
   render() {
     return (
-      <div>
-        <FadeInOut show={this.props.booking.provider.fullName}>
+      <div >
+        <FadeInOut className="fades" show={this.props.booking.provider.fullName}>
+          <div onClick={this.clickCalendar.bind(this)} >
           <Datetime
               input={false}
               timeFormat={false}
               onChange={this.onChangeDate.bind(this)}
               isValidDate={this.isValidDate.bind(this)}
-              renderDay={this.renderDay}
+              renderDay={this.renderDay.bind(this)}
             />
+            </div>
         </FadeInOut>  
         <FadeInOut show={this.state.selectedDateObject !== null}>
           <TimeSlots selectedDateObject={this.state.selectedDateObject} onSelected={this.onSelectedTimeSlot.bind(this)} />
@@ -113,5 +128,5 @@ export class Calendar extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {setBookingTime, fetchAvailabilities}
+  {setBookingTime, fetchAvailabilities, changeMonthCalendar}
 )(Calendar)

@@ -8,6 +8,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import SingleForm from './SingleForm'
 
 import './IntakeForm.scss';
+// import './materialFormStyle.scss';
 
 function mapStateToProps(state) {
   return {
@@ -65,7 +66,7 @@ export class IntakeForm extends React.Component {
             {this.mapFormNames()}
           </div>
           <div className="formContent">
-            {/*this.mapFormsContent() */}
+            {this.mapFormsContent() }
           </div>
           {this.state.isDone && 
             <button className="doneIntakeFormBtn" onClick={this.props.onSave}>Done</button>  
