@@ -13,6 +13,7 @@ export const IS_LOGGED_IN  = 'IS_LOGGED_IN';
 export const LOGIN_AS_GUEST = 'LOGIN_AS_GUEST';
 export const LOGIN_AS_USER = 'LOGIN_AS_USER';
 export const IS_REGISTERED_USER = 'IS_REGISTERED_USER';
+export const FORGOT_PASSWORD_SENT = 'FORGOT_PASSWORD_SENT';
 
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
@@ -153,6 +154,37 @@ export function loginAsGuest(booking){
       type: LOGIN_AS_GUEST
     });
     dispatch(leaseBooking(booking));
+  };
+}
+
+export function recoverPasswordSent(sent){
+  return {
+    type: FORGOT_PASSWORD_SENT,
+    payload: {
+      sent:sent
+    }
+  } 
+}
+
+export function recoverPassword(){
+  return (dispatch, getState) => {
+    const email = getState().user.credentials.email;
+
+    const request = najax({
+      url:`${PROD_URL}/account/forgotpassword`,
+      method: 'post',
+      data: { email: email }
+    });
+
+    dispatch(showLoading());
+    request
+    .success(() =>{
+      dispatch(recoverPasswordSent(true));
+    })
+    .error((error) => {
+      dispatch(hideLoading());
+      dispatch(addErrorMsg(error.message || 'There was an error'));
+    });
   };
 }
 
