@@ -79,37 +79,41 @@ export function getProvidersFromAvailabilities(availabilities){
 
 
 export function parseAvailabilities(availabilities, timezone){
-  if (!availabilities || availabilities.length === 0){
+  if (!availabilities || availabilities.length === 0 || availabilities === null){
     return [];
   }
 
   let availabilitiesArray = [];
 
   availabilities.forEach((provider) => {
-    provider.availabilities.forEach((availabilities, index) => {
-      const newTimeSlots = [];
-      const startDate = availabilities.startDate;
-      
-      availabilities.timeSlots.forEach((timeslot) => {
-        newTimeSlots.push({
-          "time": startDate + " " + timeslot,
-          "provider" : [provider.providerId]
+    if (provider.availabilities !== null) {
+      provider.availabilities.forEach((availabilities, index) => {
+        const newTimeSlots = [];
+        const startDate = availabilities.startDate;
+        
+        availabilities.timeSlots.forEach((timeslot) => {
+          newTimeSlots.push({
+            "time": startDate + " " + timeslot,
+            "provider" : [provider.providerId]
+          });
         });
+
+        if (provider.availabilities[index].timeSlots.length > 0){
+          provider.availabilities[index].startDate = startDate + " " + availabilities.timeSlots[0];
+          provider.availabilities[index].timeSlots = newTimeSlots;
+        }
+
       });
 
-      if (provider.availabilities[index].timeSlots.length > 0){
-        provider.availabilities[index].startDate = startDate + " " + availabilities.timeSlots[0];
-        provider.availabilities[index].timeSlots = newTimeSlots;
-      }
-
-    });
-
-    availabilitiesArray.push(provider.availabilities);
-  })
+      availabilitiesArray.push(provider.availabilities);
+    }
+  });
   if (availabilitiesArray.length > 1) {
     return deepmerge.all(availabilitiesArray);
-  }else{
+  }else if(availabilitiesArray.length){
     return availabilitiesArray[0];    
+  }else{
+    return []
   }
 
 }

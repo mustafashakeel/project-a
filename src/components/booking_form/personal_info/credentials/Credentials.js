@@ -8,6 +8,7 @@ import { fetchUser, loginAsGuest, signupUser, userExists, loginUser } from '../.
 import validator from 'validator';
 import { checkFields } from '../../../../utils';
 import FacebookLogin from 'react-facebook-login';
+import ForgotPassword from './forgot_password/ForgotPassword';
 
 import TextField from 'react-md/lib/TextFields';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
@@ -195,11 +196,15 @@ class Credentials extends React.Component {
                   </FadeInOut>
 
                   {this.props.user.isUser  && 
-                    <TextField 
-                          type="password" 
-                          onChange={this.onChangeFields.bind(this, 'password')} 
-                          placeholder={(this.props.user.isUser)? t('application.user_info.login_fields.password.placeholder') : t('application.user_info.login_fields.newPassword.placeholder')}
-                          { ...this.state.fields.password} />
+                    <div>
+                      <TextField 
+                            type="password" 
+                            onChange={this.onChangeFields.bind(this, 'password')} 
+                            placeholder={(this.props.user.isUser)? t('application.user_info.login_fields.password.placeholder') : t('application.user_info.login_fields.newPassword.placeholder')}
+                            { ...this.state.fields.password} />
+                      <ForgotPassword />                          
+                    </div>
+
                   }
 
                   {!this.props.user.isUser ? (
@@ -213,6 +218,7 @@ class Credentials extends React.Component {
                         className="yocaleButton"
                         onClick={this.loginAsUserEvent.bind(this)}
                       >{t('application.user_info.continue')}</button>
+                        
                   )}
                   
                 </div>
