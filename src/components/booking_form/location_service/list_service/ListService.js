@@ -43,8 +43,7 @@ class ListService extends React.Component {
                 className="info"
                 onMouseEnter={this.onHoverIcon.bind(this, "service_icon", true)}
                 onMouseLeave={this.onHoverIcon.bind(this, "service_icon", false)}
-              >info_outline</FontIcon>
-              <FontIcon>label_outline</FontIcon>
+              >info_outline</FontIcon>              
             </div>
 
           </div>
