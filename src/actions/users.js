@@ -45,19 +45,28 @@ export function userExists(email){
       if ( response.data.accountType === 'Yocale'){
         dispatch({
             type: IS_REGISTERED_USER,
-            payload: true
+            payload: {
+              email: email,
+              isRegistered: true
+            }
         });
       }else{
         dispatch({
             type: IS_REGISTERED_USER,
-            payload: false
+            payload: {
+              email: email,
+              isRegistered: false
+            }
         });
       }
     })
     .catch((error) => {
       dispatch({
           type: IS_REGISTERED_USER,
-          payload: false
+          payload: {
+            email: email,
+            isRegistered: false
+          }
       });
     });  
 

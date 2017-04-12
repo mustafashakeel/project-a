@@ -19,7 +19,7 @@ const INITIAL_STATE = {
     sendSms: ''
   },
   isLoggedIn: false,
-  isUser: false,
+  isUser: null,
   isNewUser: false,
   recoverPasswordSent: false
 };
@@ -27,12 +27,12 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE , action){
   switch(action.type){
 
-    case FETCH_USER:
-      const credentials = {
-        email: action.payload.credentials.email
-      }
-      return { ...state, credentials: credentials }
-     ;
+    // case FETCH_USER:
+    //   let credentials = {
+    //     email: action.payload.credentials.email
+    //   }
+    //   return { ...state, credentials: credentials }
+    //  ;
 
     case IS_LOGGED_IN:
       if (action.payload.isLoggedIn){
@@ -44,7 +44,10 @@ export default function (state = INITIAL_STATE , action){
     case GET_CURRENT_USER:
       return state;      
     case IS_REGISTERED_USER:
-      return {...state, isUser: action.payload}
+      const credentials = state.credentials;
+      credentials.email = action.payload.email
+      
+      return {...state, isUser: action.payload.isRegistered, credentials}
     case LOGIN_AS_GUEST:
       return {...state, isNewUser: true, isUser: false}
     case LOGIN_AS_USER:

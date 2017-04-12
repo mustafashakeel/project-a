@@ -3,7 +3,7 @@ import _ from 'underscore';
 
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchUser, loginAsGuest, signupUser, userExists, loginUser } from '../../../../actions/index';
+import { loginAsGuest, signupUser, userExists, loginUser } from '../../../../actions/index';
 
 import validator from 'validator';
 import { checkFields } from '../../../../utils';
@@ -17,6 +17,7 @@ import FadeInOut from '../../../common/fade_in_out/FadeInOut';
 import './Credentials.scss'; 
 
 const facebookAppId = '1270547073052193';
+let timer = null;
 
 function mapStateToProps(state) {
   return {
@@ -80,16 +81,19 @@ class Credentials extends React.Component {
     }
   }
 
-  onChangeEmail(email){
-    const isValidEmail = validator.isEmail(email)
-    this.props.fetchUser(email);
-    this.setState({
-      isValidEmail: isValidEmail
-    })      
+  typewatch(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  }
 
-    var self = this;
+  emailExist(){
+    const email = this.state.fields.email.value;
+    const isValidEmail = validator.isEmail(email)
+    // this.setState({
+    //   isValidEmail: isValidEmail
+    // });
     if (isValidEmail) {      
-      _.throttle(this.props.userExists(email), 100);
+      this.props.userExists(email);
     }
   }
 
@@ -160,14 +164,14 @@ class Credentials extends React.Component {
           <TextField 
             id="credentialsEmail"
             placeholder="Email *"
-            onChange={this.onChangeEmail.bind(this)} 
-            value={this.props.user.credentials.email}
+            onChange={this.onChangeFields.bind(this, 'email')}
+            onKeyUp={this.typewatch.bind(this, this.emailExist.bind(this), 500)}
             { ...this.state.fields.email}
             />
 
-            <FadeInOut show={this.state.isValidEmail } scroll={false}>
+            <FadeInOut show={this.props.user.isUser !== null } scroll={false}>
                 <div>
-                  <FadeInOut show={!this.props.user.isUser} scroll={false}>
+                  {!this.props.user.isUser &&
                     <div>
                       <TextField 
                         placeholder={t('application.user_info.login_fields.firstName.placeholder')} 
@@ -193,7 +197,7 @@ class Credentials extends React.Component {
                         value={this.state.fields.sendSMS}
                       />                      
                     </div>
-                  </FadeInOut>
+                  }
 
                   {this.props.user.isUser  && 
                     <div>
@@ -240,5 +244,5 @@ class Credentials extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { fetchUser, loginAsGuest, signupUser, userExists, loginUser }
+  { loginAsGuest, signupUser, userExists, loginUser }
 )(translate()(Credentials))
