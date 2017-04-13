@@ -29,8 +29,9 @@ const INITIAL_STATE = {
     source: [],
     completed: [],
   },
-  provider: { id: "" },
+  provider: { providerId: null },
   timestamp: null,
+  providersInSlot: null,
   dependant: "",
   payment: {},
   grantTotal: 0,
@@ -49,7 +50,7 @@ export default function (state = INITIAL_STATE , action){
   switch(action.type){
 
     case SET_BOOKING_TIME:
-      return { ...state, timestamp: action.payload.timestamp };
+      return { ...state, timestamp: action.payload.timestamp, providersInSlot: action.payload.providers };
 
     case SET_BOOKING_STATUS:
       return { ...state, isBooked: action.payload.booked };

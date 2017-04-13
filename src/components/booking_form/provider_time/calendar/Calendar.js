@@ -64,7 +64,8 @@ export class Calendar extends React.Component {
   }
 
   onSelectedTimeSlot = (slot) => {
-    this.props.setBookingTime(moment(slot.time));
+    console.log(slot);
+    this.props.setBookingTime(moment(slot.time), slot.providers);
     this.props.onSlotSelected();
   }
 

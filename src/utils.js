@@ -94,7 +94,7 @@ export function parseAvailabilities(availabilities, timezone){
         availabilities.timeSlots.forEach((timeslot) => {
           newTimeSlots.push({
             "time": startDate + " " + timeslot,
-            "provider" : [provider.providerId]
+            "providers" : [provider.providerId]
           });
         });
 

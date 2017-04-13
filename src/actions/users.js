@@ -41,7 +41,9 @@ export function userExists(email){
       method: 'get',
       params: { email: email }
     });
+    dispatch(showLoading());
     request.then((response) => {
+      dispatch(hideLoading());
       if ( response.data.accountType === 'Yocale'){
         dispatch({
             type: IS_REGISTERED_USER,
@@ -68,6 +70,7 @@ export function userExists(email){
             isRegistered: false
           }
       });
+      dispatch(hideLoading());
     });  
 
   };
