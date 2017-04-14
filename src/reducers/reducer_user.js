@@ -5,7 +5,8 @@ import {
   LOGIN_AS_GUEST,
   LOGIN_AS_USER,
   IS_REGISTERED_USER,
-  FORGOT_PASSWORD_SENT
+  FORGOT_PASSWORD_SENT,
+  GET_USER_LOCATIONS
 } 
 from '../actions/index';
 
@@ -21,7 +22,8 @@ const INITIAL_STATE = {
   isLoggedIn: false,
   isUser: null,
   isNewUser: false,
-  recoverPasswordSent: false
+  recoverPasswordSent: false,
+  userLocations: []
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -54,6 +56,8 @@ export default function (state = INITIAL_STATE , action){
       return {...state, isNewUser: false, isUser:true}
     case FORGOT_PASSWORD_SENT:
       return { ...state, recoverPasswordSent: action.payload.sent}
+    case GET_USER_LOCATIONS:
+      return { ...state, userLocations: JSON.parse(action.payload.locations)}
     default:
       return state;
 

@@ -13,6 +13,8 @@ import LoginInfo from './login_info/LoginInfo';
 import IntakeForm from './intake_form/IntakeForm';
 import PaymentCC from './payment_cc/PaymentCC';
 import ProvidersInSlot from './providers_in_slot/ProvidersInSlot';
+import OnSiteLocation from './onsite_location/OnSiteLocation';
+
 
 import './InfoStepper.scss';
 
@@ -63,12 +65,21 @@ export class InfoStepper extends React.Component {
           </Step>
           {this.state.renderProviders &&
           <Step
-            completed={false}
+            completed={true}
             stepLine>
             <h4>Select a provider</h4>
             <ProvidersInSlot />
           </Step>
           }
+          {booking.location.locationType == "On-Site" &&
+          <Step
+            completed={booking.clientLocation.fullAddress !== ""}
+            stepLine>
+            <h4>Select an address</h4>
+            <OnSiteLocation />
+          </Step>
+          }
+
           <Step
             completed={this.state.intakeFormTaken}
             stepLine >

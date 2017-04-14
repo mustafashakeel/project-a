@@ -14,6 +14,7 @@ export const LOGIN_AS_GUEST = 'LOGIN_AS_GUEST';
 export const LOGIN_AS_USER = 'LOGIN_AS_USER';
 export const IS_REGISTERED_USER = 'IS_REGISTERED_USER';
 export const FORGOT_PASSWORD_SENT = 'FORGOT_PASSWORD_SENT';
+export const GET_USER_LOCATIONS = 'GET_USER_LOCATIONS';
 
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
@@ -178,20 +179,29 @@ export function recoverPasswordSent(sent){
   } 
 }
 
-export function recoverPassword(){
-  return (dispatch, getState) => {
-    const email = getState().user.credentials.email;
-
+export function getUserLocations(){
+  return (dispatch) => {
+    let headers = {};
+    if (cookie && cookie.load('access_token')) {
+       headers = {
+        'Authorization': `Bearer  ${cookie.load('access_token')}`
+      }
+    }
     const request = najax({
-      url:`${PROD_URL}/account/forgotpassword`,
-      method: 'post',
-      data: { email: email }
+      url:`${PROD_URL}/booking/customerOnsiteLocations`,
+      method: 'get',
+      headers
     });
 
     dispatch(showLoading());
     request
-    .success(() =>{
-      dispatch(recoverPasswordSent(true));
+    .success((response) =>{
+      dispatch({
+        type: GET_USER_LOCATIONS,
+        payload: {
+          locations: response
+        }
+      });
     })
     .error((error) => {
       dispatch(hideLoading());
@@ -199,4 +209,7 @@ export function recoverPassword(){
     });
   };
 }
+
+
+
 

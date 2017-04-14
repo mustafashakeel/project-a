@@ -24,6 +24,7 @@ export const BOOK_APPOINTMENT = 'BOOK_APPOINTMENT';
 export const TEST_ACTION = 'TEST_ACTION';
 export const SET_BIZ_TIMEZONE = 'SET_BIZ_TIMEZONE';
 export const SET_USER_TIMEZONE = 'SET_USER_TIMEZONE';
+export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 const STRIPE_CHARGE_URL = "http://express-stripe.herokuapp.com/charge";
@@ -240,6 +241,15 @@ export function setUserTimezone(utc){
     type: SET_USER_TIMEZONE,
     payload: {
       userTimezone: utc
+    }
+  };
+}
+
+export function setUserLocation(location){
+  return {
+    type: SET_USER_LOCATION,
+    payload: {
+      location
     }
   };
 }

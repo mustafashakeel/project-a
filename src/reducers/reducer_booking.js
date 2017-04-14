@@ -15,7 +15,8 @@ import {
   IS_LOGGED_IN,
   BOOK_APPOINTMENT,
   SET_BIZ_TIMEZONE,
-  SET_USER_TIMEZONE
+  SET_USER_TIMEZONE,
+  SET_USER_LOCATION
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -43,7 +44,12 @@ const INITIAL_STATE = {
     minHourReminder : "Minutes"
   },
   bizTimezone: '',
-  userTimezone: ''  
+  userTimezone: '',
+  clientLocation: {
+    fullAddress: "",
+    latitude: "",
+    longitude: ""
+  }
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -116,6 +122,9 @@ export default function (state = INITIAL_STATE , action){
 
     case SET_USER_TIMEZONE:
       return { ...state, userTimezone: action.payload.userTimezone}
+
+    case SET_USER_LOCATION:
+      return { ...state, clientLocation: action.payload.location}
 
     default:
       return state;

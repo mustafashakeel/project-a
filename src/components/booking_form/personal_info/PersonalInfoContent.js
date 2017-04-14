@@ -11,6 +11,7 @@ import InfoStepper from './info_stepper/InfoStepper';
 import AppointmentReminder from './appointment_reminder/AppointmentReminder';
 import BookingNote from './info_stepper/booking_note/BookingNote';
 
+
 import './PersonalInfoContent.scss';
 
 function mapStateToProps(state) {
@@ -38,19 +39,19 @@ class PersonalInfoContent extends React.Component {
   render() {
     const {t} = this.props;
     return (
-      <div className="PersonalInfoContent">
+      <div className="PersonalInfoContent">      
       {this.props.renderLogin ?
         <Credentials/>
         :
         <div>
           <InfoStepper />
           <BookingNote />
-          <button 
+          {/*<button 
             className="bookAppointmentBtn"
             onClick={this.bookAppointment.bind(this)}
             >
             {t('application.user_info.book_my_appointment')}
-          </button>
+          </button> */}
         </div>
       }
         
