@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { 
   SET_BOOKING_TIME,
   SET_BOOKING_STATUS,
@@ -8,8 +9,7 @@ import {
   SET_PAYMENT_DETAILS,
   SET_REMINDER_OPTS,
   SET_GRANT_TOTAL,
-  SET_PAYMENT_STATUS,
-  GET_INTAKE_FORMS,
+  SET_PAYMENT_STATUS,  
   SAVE_INTAKE_FORM,
   LEASE_BOOKING,
   IS_LOGGED_IN,
@@ -87,30 +87,30 @@ export default function (state = INITIAL_STATE , action){
       reminder[action.payload.key] = action.payload.val;
       return { ...state, reminder: reminder };
 
-    case GET_INTAKE_FORMS:
-      var intake_forms = { 
-        ...state.intake_forms,
-        source: action.payload.data
-      }
-      return { ...state, intake_forms: intake_forms }
-
     case SAVE_INTAKE_FORM:
       const newObj = action.payload.formObj;
-      const newCompleted = state.intake_forms.completed;
-      newCompleted[newObj.id] = newObj.data;
+      const intake_forms = state.intake_forms;
 
-      var intake_forms = {
-        ...state.intake_forms,
-        completed: newCompleted
-      }
+      _.remove(intake_forms.completed, function(form) {
+        return form.id == newObj.id;
+      });
+      intake_forms.completed.push({
+        id: newObj.id,
+        formName: newObj.formName,
+        formData: newObj.data
+      })
 
       return { ...state, intake_forms: intake_forms }
 
     case LEASE_BOOKING:
-      return { ...state, lease: action.payload.data}
+      var intake_forms = { 
+        ...state.intake_forms,
+        source: action.payload.clientForms
+      }
+      return { ...state, lease: action.payload.data, intake_forms: intake_forms}
 
     case BOOK_APPOINTMENT:
-      return { ...state, booked_summary: action.payload.data}
+      return { ...state, booked_summary: action.payload}
 
     case IS_LOGGED_IN:
       // from users action

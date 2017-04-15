@@ -19,7 +19,7 @@ class SingleForm extends React.Component {
   }
 
   createMarkup(){
-    return {__html: this.props.form.html}
+    return {__html: this.props.form.formHtml}
   }
 
   submitForm(e){
@@ -48,7 +48,11 @@ class SingleForm extends React.Component {
         }
         
     }
-    return { id: this.props.form.id, data : obj };
+    return { 
+      id: this.props.form.id,
+      formName: this.props.form.formName,
+      data : obj 
+    };
   }
 
   setFormValues(){

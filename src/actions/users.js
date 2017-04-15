@@ -98,7 +98,7 @@ export function getCurrentUser(){
   }
 }
 
-export function signupUser(user, booking){
+export function signupUser(user){
   const values = {
     email: user.email.value,
     password: user.password.value,
@@ -112,7 +112,7 @@ export function signupUser(user, booking){
     dispatch(showLoading());
     request
     .then(() =>{
-      dispatch(leaseBooking(booking));
+      dispatch(leaseBooking());
     })
     .error((error) => {
       dispatch(hideLoading());
@@ -121,7 +121,7 @@ export function signupUser(user, booking){
   };
 }
 
-export function loginUser(fields, booking){  
+export function loginUser(fields){  
 
   return dispatch => {
     const data = {
@@ -148,7 +148,7 @@ export function loginUser(fields, booking){
         dispatch({ 
           type: LOGIN_AS_USER
         });
-        dispatch(leaseBooking(booking));
+        dispatch(leaseBooking());
       }else {
         dispatch(addErrorMsg("Invalid user or password", "Retry"));
       }

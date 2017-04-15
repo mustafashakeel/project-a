@@ -11,6 +11,7 @@ import Step from '../../../common/stepper/Step';
 
 import LoginInfo from './login_info/LoginInfo';
 import IntakeForm from './intake_form/IntakeForm';
+import TakenForms from './intake_form/TakenForms';
 import PaymentCC from './payment_cc/PaymentCC';
 import ProvidersInSlot from './providers_in_slot/ProvidersInSlot';
 import OnSiteLocation from './onsite_location/OnSiteLocation';
@@ -85,22 +86,28 @@ export class InfoStepper extends React.Component {
             stepLine >
             <h4>{t('application.user_info.intake_form')}</h4>
             <div className="stepContent">
-              <p>
-                {t('application.user_info.intake_form_copy')} 
-                <span 
-                className="linkIntakeForm" 
-                onClick={this.toggleIntakeForm.bind(this)}
-                >{t('application.user_info.fill_out_intake')}.</span>
-              </p>
-              <Dialog
-                aria-describedby="accessibleContent"
-                id="intakeForm"
-                visible={this.state.intakeFormOpen}
-                focusOnMount={false}
-                modal >
-                <IntakeForm id="accessibleContent" onSave={this.intakeFormSave}/>
-              </Dialog>
-            </div>
+              {!this.state.intakeFormTaken ?
+                <div>
+                  <p>
+                    {t('application.user_info.intake_form_copy')} 
+                    <span 
+                    className="linkIntakeForm" 
+                    onClick={this.toggleIntakeForm.bind(this)}
+                    >{t('application.user_info.fill_out_intake')}.</span>
+                  </p>
+                  <Dialog
+                    aria-describedby="accessibleContent"
+                    id="intakeForm"
+                    visible={this.state.intakeFormOpen}
+                    focusOnMount={false}
+                    modal >
+                    <IntakeForm id="accessibleContent" onSave={this.intakeFormSave}/>
+                  </Dialog>
+                </div>
+                :
+                <TakenForms />
+              }
+              </div>
           </Step>
           <Step
             completed={false} >

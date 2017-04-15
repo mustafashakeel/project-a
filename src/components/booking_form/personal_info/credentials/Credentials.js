@@ -114,8 +114,7 @@ class Credentials extends React.Component {
 
     const fieldsState = this.validFields(validationFields);
     if (fieldsState.valid){
-      const leaseObj = this.leaseObj();
-      this.props.loginAsGuest(leaseObj);
+      this.props.loginAsGuest();
     }
   }
 
@@ -130,21 +129,20 @@ class Credentials extends React.Component {
 
     const fieldsState = this.validFields(validationFields);
     if (fieldsState.valid){
-      const leaseObj = this.leaseObj();
       //change for final login as user
-      this.props.loginUser(fieldsState.fields, leaseObj);
+      this.props.loginUser(fieldsState.fields);
     }
   }
 
-  leaseObj(){
-    const {booking} = this.props;
-    return {
-      providerId: booking.provider.Id,
-      locationId: booking.location.id,
-      offeringId: booking.service.offeringId,
-      starDateTime: booking.timestamp.format()
-    };
-  }
+  // leaseObj(){
+  //   const {booking} = this.props;
+  //   return {
+  //     providerId: booking.provider.Id,
+  //     locationId: booking.location.id,
+  //     offeringId: booking.service.offeringId,
+  //     starDateTime: booking.timestamp.format()
+  //   };
+  // }
 
   validFields(fieldsCopy){
     const fieldsState = checkFields(fieldsCopy)      

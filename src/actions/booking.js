@@ -1,4 +1,5 @@
 import axios from 'axios';
+import najax from 'najax';
 import cookie from 'react-cookie';
 import timezones from '../reducers/mocks/timezones';
 
@@ -27,6 +28,7 @@ export const SET_USER_TIMEZONE = 'SET_USER_TIMEZONE';
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
+const PROD_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
 const STRIPE_CHARGE_URL = "http://express-stripe.herokuapp.com/charge";
 
 export function setBookingTime(timestamp, providers){
@@ -144,9 +146,18 @@ export function saveIntakeForm(formObj){
   };
 }
 
-export function leaseBooking(props){
+export function leaseBooking(){
 
-  return dispatch => {
+  return (dispatch, getState) => {
+    const {booking} = getState();
+
+    const data = {
+      ProviderId: booking.provider.providerId,
+      LocationId: booking.location.id,
+      OfferingId: booking.service.offeringId,
+      StarDateTime: booking.timestamp.format(),
+      EndDateTime: booking.timestamp.add(booking.service.duration, 'm').clone().format()
+    };
 
     let headers = {};
     if (cookie && cookie.load('access_token')) {
@@ -155,26 +166,30 @@ export function leaseBooking(props){
       }
     }
 
-
-
-    // const request = axios.post(`${ROOT_URL}/booking/lease`, props);  
-    const request = axios.request({
+    const request = najax({
+        // url: `${PROD_URL}/booking/leaseAppointment`,
         url: 'http://demo1743653.mockable.io/lease',
-        method: 'post',
-        data: props,
+        type: 'POST',
+        crossOrigin: false,
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        data: data,
         headers
     });
 
     dispatch(showLoading());
 
-    request.then((response) => {
+    request.success((response) => {
       dispatch(isLoggedIn(true));
       dispatch({
           type: LEASE_BOOKING,
           payload: response
       });
-      dispatch(getIntakeForms(response.id));
       dispatch(hideLoading());
+    }).
+    error((error) => {
+      dispatch(hideLoading());
+      dispatch(addErrorMsg("There was an error. Please try again", "Retry"));
     });  
 
   

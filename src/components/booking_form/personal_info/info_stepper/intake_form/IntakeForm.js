@@ -48,7 +48,7 @@ export class IntakeForm extends React.Component {
       return <h3 
         key={index} 
         onClick={this.changeForm.bind(this, index)} 
-        className={(this.state.activeForm == index)? "active" : ""}>{form.name}</h3>
+        className={(this.state.activeForm == index)? "active" : ""}>{form.formName}</h3>
     })
   }
 
