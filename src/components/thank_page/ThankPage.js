@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import BookingSummary from './booking_summary/BookingSummary';
-import ConfirmationEmail from './confirmation_email/ConfirmationEmail';
+import UpdatePassword from './update_password/UpdatePassword';
 
 import './ThankPage.scss';
 
@@ -14,26 +14,28 @@ function mapStateToProps(state) {
 
 export class ThankPage extends React.Component {
   state = {
-    showSummary: false
+    showSummary: true
+  }
+
+  componentWillMount() {
+    if (this.props.user.setNewPassword){
+      this.setState({ showSummary: false})
+    }
   }
 
   render() {
-    const {business, booking} = this.props;
-    console.log(this.props.user.isNewUser);
-    console.log(this.state.showSummary);
+    const {user} = this.props;
     return (
       <div className="ThankPage">
-        {(this.props.user.isNewUser && !this.state.showSummary) &&
+        {!this.state.showSummary || user.passwordUpdated ?
           <div>
-            <ConfirmationEmail/>
+            <UpdatePassword/>
             <button 
               className="continueBtn"
               onClick={() => this.setState({showSummary: true})}
             >Continue</button>
           </div>
-        }
-
-        {this.state.showSummary &&
+        :
           <BookingSummary/>
         }
         

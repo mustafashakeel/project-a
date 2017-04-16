@@ -16,7 +16,6 @@ import ProviderTimeContent from './provider_time/ProviderTimeContent';
 import ServiceDetails from './location_service/service_details/ServiceDetails';
 
 import YocaleTooltip from '../common/yocale_tooltip/YocaleTooltip';
-import ErrorMessage from '../common/error_message/ErrorMessage';
 
 import LoadingBar from 'react-redux-loading-bar'
 
@@ -114,7 +113,6 @@ class BookingForm extends React.Component {
         <YocaleTooltip>
           <ServiceDetails />
         </YocaleTooltip>
-        <ErrorMessage />
       </div>          
     );
   }

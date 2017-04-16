@@ -15,6 +15,8 @@ export const LOGIN_AS_USER = 'LOGIN_AS_USER';
 export const IS_REGISTERED_USER = 'IS_REGISTERED_USER';
 export const FORGOT_PASSWORD_SENT = 'FORGOT_PASSWORD_SENT';
 export const GET_USER_LOCATIONS = 'GET_USER_LOCATIONS';
+export const UPDATED_PASSWORD = 'UPDATED_PASSWORD';
+export const SET_PASSWORD = 'SET_PASSWORD';
 
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
@@ -161,12 +163,45 @@ export function loginUser(fields){
   };
 }
 
-export function loginAsGuest(booking){
+export function loginAsGuest(fields){
   return dispatch => {
-    dispatch({ 
-      type: LOGIN_AS_GUEST
+
+    const data = {
+      email: fields.email.value,
+      firstName: fields.firstName.value,
+      lastName: fields.lastName.value,
+      phone: fields.phoneNumber.value
+    };
+    
+    const request = najax({
+        url: `${PROD_URL}/account/registerGuest`,
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        data: data,
+        dataType: "json"
     });
-    dispatch(leaseBooking(booking));
+
+    dispatch(showLoading());
+    request.success((response) =>{
+      if (response.password){
+        const loginData = {
+          email: fields.email,
+          password: {
+            value: response.password          
+          }
+        };
+
+        dispatch(loginUser(loginData)) ;
+        dispatch({ type: LOGIN_AS_GUEST });
+        dispatch({ type: SET_PASSWORD, payload: { password: response.password} });
+      }
+    }).
+    error((error) => {
+      dispatch(hideLoading());
+      dispatch(addErrorMsg(error.message, "Retry"));
+    })
+
+    
   };
 }
 
@@ -189,7 +224,7 @@ export function getUserLocations(){
     }
     const request = najax({
       url:`${PROD_URL}/booking/customerOnsiteLocations`,
-      method: 'get',
+      type: 'get',
       headers
     });
 
@@ -206,6 +241,45 @@ export function getUserLocations(){
     .error((error) => {
       dispatch(hideLoading());
       dispatch(addErrorMsg(error.message || 'There was an error'));
+    });
+  };
+}
+
+export function updateUserPassword(password){
+  return (dispatch, getState) => {
+    let headers = {};
+    if (cookie && cookie.load('access_token')) {
+       headers = {
+        'Authorization': `Bearer  ${cookie.load('access_token')}`
+      }
+    }
+
+    const { user } = getState();
+
+    const request = najax({
+      url:`${PROD_URL}/account/changePassword/`,
+      type: 'post',
+      data: {
+        oldPassword: user.credentials.password,
+        newPassword: password
+      },
+      headers
+    });
+
+    dispatch(showLoading());
+    request
+    .success((response) =>{
+      dispatch({
+        type: UPDATED_PASSWORD,
+        payload: {
+          passwordUpdated: true
+        }
+      });
+    })
+    .error((error) => {
+      const response = JSON.parse(error.responseText);
+      dispatch(hideLoading());
+      dispatch(addErrorMsg(response.message, "Retry"));
     });
   };
 }

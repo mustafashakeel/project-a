@@ -6,7 +6,9 @@ import {
   LOGIN_AS_USER,
   IS_REGISTERED_USER,
   FORGOT_PASSWORD_SENT,
-  GET_USER_LOCATIONS
+  GET_USER_LOCATIONS,
+  UPDATED_PASSWORD,
+  SET_PASSWORD
 } 
 from '../actions/index';
 
@@ -22,6 +24,8 @@ const INITIAL_STATE = {
   isLoggedIn: false,
   isUser: null,
   isNewUser: false,
+  setNewPassword: false,
+  passwordUpdated : false,
   recoverPasswordSent: false,
   userLocations: []
 };
@@ -29,12 +33,15 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE , action){
   switch(action.type){
 
-    // case FETCH_USER:
-    //   let credentials = {
-    //     email: action.payload.credentials.email
-    //   }
-    //   return { ...state, credentials: credentials }
-    //  ;
+    case SET_PASSWORD:
+      var credentials = state.credentials;
+      credentials.password = action.payload.password;
+      
+      return { ...state, credentials: credentials }
+     ;
+
+    case UPDATED_PASSWORD:
+      return { ...state, passwordUpdated: action.payload.passwordUpdated }
 
     case IS_LOGGED_IN:
       if (action.payload.isLoggedIn){
@@ -46,12 +53,12 @@ export default function (state = INITIAL_STATE , action){
     case GET_CURRENT_USER:
       return state;      
     case IS_REGISTERED_USER:
-      const credentials = state.credentials;
+      var credentials = state.credentials;
       credentials.email = action.payload.email
       
       return {...state, isUser: action.payload.isRegistered, credentials}
     case LOGIN_AS_GUEST:
-      return {...state, isNewUser: true, isUser: false}
+      return {...state, setNewPassword: true}
     case LOGIN_AS_USER:
       return {...state, isNewUser: false, isUser:true}
     case FORGOT_PASSWORD_SENT:

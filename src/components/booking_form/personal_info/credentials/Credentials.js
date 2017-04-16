@@ -89,11 +89,19 @@ class Credentials extends React.Component {
   emailExist(){
     const email = this.state.fields.email.value;
     const isValidEmail = validator.isEmail(email)
-    // this.setState({
-    //   isValidEmail: isValidEmail
-    // });
-    if (isValidEmail) {      
+    this.setState({
+      isValidEmail: isValidEmail
+    });
+    let fields = this.state.fields;
+    if (isValidEmail) {     
+      fields = this.state.fields;
+      fields.email.error = false;
+      this.setState({ fields: fields }) 
       this.props.userExists(email);
+    }else{
+      fields = this.state.fields;
+      fields.email.error = true;
+      this.setState({ fields: fields })
     }
   }
 
@@ -109,12 +117,13 @@ class Credentials extends React.Component {
       ...fields,
       firstName: {...fields.firstName, required: true},
       lastName: {...fields.lastName, required: true},
-      password: {...fields.password, required: false}
+      password: {...fields.lastName, required: false},
     }
 
     const fieldsState = this.validFields(validationFields);
-    if (fieldsState.valid){
-      this.props.loginAsGuest();
+
+    if (fieldsState.valid && this.state.isValidEmail){
+      this.props.loginAsGuest(fieldsState.fields);
     }
   }
 
@@ -128,6 +137,7 @@ class Credentials extends React.Component {
     }
 
     const fieldsState = this.validFields(validationFields);
+
     if (fieldsState.valid){
       //change for final login as user
       this.props.loginUser(fieldsState.fields);
