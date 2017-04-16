@@ -26,6 +26,7 @@ export const TEST_ACTION = 'TEST_ACTION';
 export const SET_BIZ_TIMEZONE = 'SET_BIZ_TIMEZONE';
 export const SET_USER_TIMEZONE = 'SET_USER_TIMEZONE';
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
+export const ALLOW_CONFIRMED_BOOKING = 'ALLOW_CONFIRMED_BOOKING';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 const PROD_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
@@ -183,7 +184,9 @@ export function leaseBooking(){
       dispatch(isLoggedIn(true));
       dispatch({
           type: LEASE_BOOKING,
-          payload: response
+          payload: {
+            data: response
+          }
       });
       dispatch(hideLoading());
     }).
@@ -206,19 +209,20 @@ export function bookingIsPaid(flag){
   };
 }
 
-export function bookAppointment(bookingId, paymentDetails){
+export function bookAppointment(){
 
-  return dispatch => {
-    const request = axios.post(`${ROOT_URL}/booking/Confirm`, { bookingId });
-    request.then(() => {
-      dispatch(hideLoading());
-    });
+  return (dispatch, getState) => {
+    const {booking} = getState();
+    // const request = axios.post(`${ROOT_URL}/booking/Confirm`, { bookingId });
+    // request.then(() => {
+    //   dispatch(hideLoading());
+    // });
 
-    dispatch(showLoading());
-    return dispatch({
-      type: BOOK_APPOINTMENT,
-      payload: request
-    });
+    // dispatch(showLoading());
+    // return dispatch({
+    //   type: BOOK_APPOINTMENT,
+    //   payload: request
+    // });
     
   };
 }
@@ -265,6 +269,15 @@ export function setUserLocation(location){
     type: SET_USER_LOCATION,
     payload: {
       location
+    }
+  };
+}
+
+export function allowConfirmedBooking(allow){
+  return {
+    type: ALLOW_CONFIRMED_BOOKING,
+    payload: {
+      allowConfirmedBooking: allow
     }
   };
 }

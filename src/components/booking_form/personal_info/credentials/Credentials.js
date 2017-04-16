@@ -144,16 +144,6 @@ class Credentials extends React.Component {
     }
   }
 
-  // leaseObj(){
-  //   const {booking} = this.props;
-  //   return {
-  //     providerId: booking.provider.Id,
-  //     locationId: booking.location.id,
-  //     offeringId: booking.service.offeringId,
-  //     starDateTime: booking.timestamp.format()
-  //   };
-  // }
-
   validFields(fieldsCopy){
     const fieldsState = checkFields(fieldsCopy)      
     this.setState({ fields: fieldsState.fields });

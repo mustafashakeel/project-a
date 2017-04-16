@@ -13,7 +13,11 @@ export class BookingSummary extends React.Component {
     const {business, booking} = this.props;
     return (
       <div>
-        <h4>Your booking is confirmed! An email has been sent to you.</h4>
+        {booking.allowConfirmedBooking ?
+          <h4>Your booking is confirmed! An email has been sent to you.</h4>
+          :
+          <h4>Appointment has been requested, you will receive an email when {business.name} has confirmed this appointment.</h4>
+        }
         <div className="appointmentInfo">
           <div className="bizName">{business.name}</div>
           <div className="bizAddress">{booking.location.address}</div>

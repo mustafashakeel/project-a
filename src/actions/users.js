@@ -125,7 +125,8 @@ export function signupUser(user){
 
 export function loginUser(fields){  
 
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { booking } = getState();
     const data = {
       client_id: "0b531646fc4849309332e06670be0357",
       client_secret: "rzx2bLL-BWV9tB4BqjeJBWfazEouLBsW6NqVS8ixX-Y",
@@ -150,7 +151,12 @@ export function loginUser(fields){
         dispatch({ 
           type: LOGIN_AS_USER
         });
-        dispatch(leaseBooking());
+        if (booking.allowConfirmedBooking){
+          dispatch(leaseBooking());
+        }else{
+          dispatch(isLoggedIn(true));
+          dispatch(hideLoading());
+        }
       }else {
         dispatch(addErrorMsg("Invalid user or password", "Retry"));
       }

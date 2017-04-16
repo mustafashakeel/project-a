@@ -16,7 +16,8 @@ import {
   BOOK_APPOINTMENT,
   SET_BIZ_TIMEZONE,
   SET_USER_TIMEZONE,
-  SET_USER_LOCATION
+  SET_USER_LOCATION,
+  ALLOW_CONFIRMED_BOOKING
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -49,7 +50,8 @@ const INITIAL_STATE = {
     fullAddress: "",
     latitude: "",
     longitude: ""
-  }
+  },
+  allowConfirmedBooking: null
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -105,7 +107,7 @@ export default function (state = INITIAL_STATE , action){
     case LEASE_BOOKING:
       var intake_forms = { 
         ...state.intake_forms,
-        source: action.payload.clientForms
+        source: action.payload.data.clientForms
       }
       return { ...state, lease: action.payload.data, intake_forms: intake_forms}
 
@@ -125,6 +127,9 @@ export default function (state = INITIAL_STATE , action){
 
     case SET_USER_LOCATION:
       return { ...state, clientLocation: action.payload.location}
+
+    case ALLOW_CONFIRMED_BOOKING:
+      return { ...state, allowConfirmedBooking: action.payload.allowConfirmedBooking}
 
     default:
       return state;

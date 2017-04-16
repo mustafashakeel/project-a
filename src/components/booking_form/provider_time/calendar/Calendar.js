@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import _ from 'underscore';
 
-import { setBookingTime, fetchAvailabilities, changeMonthCalendar } from '../../../../actions/index';
+import { setBookingTime, fetchAvailabilities, changeMonthCalendar, allowConfirmedBooking } from '../../../../actions/index';
 
 import Datetime from 'react-datetime';
 import FadeInOut from '../../../common/fade_in_out/FadeInOut';
@@ -64,7 +64,6 @@ export class Calendar extends React.Component {
   }
 
   onSelectedTimeSlot = (slot) => {
-    console.log(slot);
     this.props.setBookingTime(moment(slot.time), slot.providers);
     this.props.onSlotSelected();
   }
@@ -74,6 +73,7 @@ export class Calendar extends React.Component {
       return moment(availabilityDate.startDate).format('YYYY-MM-DD') === selectedDate.format('YYYY-MM-DD')
     })
     this.setState({selectedDateObject})
+    this.props.allowConfirmedBooking(selectedDateObject.allowConfirmedBookings)
     this.props.setBookingTime(selectedDate)
   }
 
@@ -129,5 +129,5 @@ export class Calendar extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {setBookingTime, fetchAvailabilities, changeMonthCalendar}
+  {setBookingTime, fetchAvailabilities, changeMonthCalendar, allowConfirmedBooking}
 )(Calendar)

@@ -74,48 +74,52 @@ export class InfoStepper extends React.Component {
           }
           {booking.location.locationType == "On-Site" &&
           <Step
-            completed={booking.clientLocation.fullAddress !== ""}
+            completed={booking.clientLocation && booking.clientLocation.fullAddress !== ""}
             stepLine>
             <h4>Select an address</h4>
             <OnSiteLocation />
           </Step>
           }
-
-          <Step
-            completed={this.state.intakeFormTaken}
-            stepLine >
-            <h4>{t('application.user_info.intake_form')}</h4>
-            <div className="stepContent">
-              {!this.state.intakeFormTaken ?
-                <div>
-                  <p>
-                    {t('application.user_info.intake_form_copy')} 
-                    <span 
-                    className="linkIntakeForm" 
-                    onClick={this.toggleIntakeForm.bind(this)}
-                    >{t('application.user_info.fill_out_intake')}.</span>
-                  </p>
-                  <Dialog
-                    aria-describedby="accessibleContent"
-                    id="intakeForm"
-                    visible={this.state.intakeFormOpen}
-                    focusOnMount={false}
-                    modal >
-                    <IntakeForm id="accessibleContent" onSave={this.intakeFormSave}/>
-                  </Dialog>
+          {booking.allowConfirmedBooking &&  
+            <div>
+              <Step
+                completed={this.state.intakeFormTaken}
+                stepLine >
+                <h4>{t('application.user_info.intake_form')}</h4>
+                <div className="stepContent">
+                  {!this.state.intakeFormTaken ?
+                    <div>
+                      <p>
+                        {t('application.user_info.intake_form_copy')} 
+                        <span 
+                        className="linkIntakeForm" 
+                        onClick={this.toggleIntakeForm.bind(this)}
+                        >{t('application.user_info.fill_out_intake')}.</span>
+                      </p>
+                      <Dialog
+                        aria-describedby="accessibleContent"
+                        id="intakeForm"
+                        visible={this.state.intakeFormOpen}
+                        focusOnMount={false}
+                        modal >
+                        <IntakeForm id="accessibleContent" onSave={this.intakeFormSave}/>
+                      </Dialog>
+                    </div>
+                    :
+                    <TakenForms />
+                  }
+                  </div>
+              </Step>
+              <Step
+                completed={false} >
+                <h4>{t('application.user_info.payment')}</h4>
+                <div className="stepContentBorder">
+                  <PaymentCC />            
                 </div>
-                :
-                <TakenForms />
-              }
-              </div>
-          </Step>
-          <Step
-            completed={false} >
-            <h4>{t('application.user_info.payment')}</h4>
-            <div className="stepContentBorder">
-              <PaymentCC />            
+              </Step>
             </div>
-          </Step>
+          }
+
         </Stepper>
     );
   }

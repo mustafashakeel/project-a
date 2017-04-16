@@ -27,34 +27,64 @@ class PersonalInfoContent extends React.Component {
 
   bookAppointment(){
     const {booking, user} = this.props;
-    const paymentDetails = {
-      email: user.credentials.email,
-      source: booking.payment.id,
-      amount: (booking.grantTotal * 100),
-      description: booking.service.name
+    const data = {
+      "BookingId": booking.lease.bookingId,
+      "PaymentToken": "",
+      "paymentRequirementInfo": booking.lease.paymentRequirementInfo,
+      "ClientLocation": booking.clientLocation,
+      "ClientForms": booking.intake_forms.completed,
+      "SaveCreditCard": "true",
+      "PaymentCustomerDetailId": "1"
     };
+    console.log(data);
+  }
 
-    this.props.proccessPayment(booking.lease.id, paymentDetails);
+  requestAppointment(){
+    const {booking} = this.props;
+    const data = {
+      starDateTime: booking.timestamp.format(),
+      providerId: booking.provider.providerId,
+      locationId: booking.location.id,
+      offeringId: booking.service.offeringId,
+      "comments": "",
+      "clientLocation": booking.lease.clientLocation
+    };
+    console.log(data);
   }
   render() {
-    const {t} = this.props;
+    const {t, booking} = this.props;
     return (
-      <div className="PersonalInfoContent">      
-      {this.props.renderLogin ?
-        <Credentials/>
-        :
-        <div>
-          <InfoStepper />
-          <BookingNote />
-          {/*<button 
+      <div>
+        <div className="PersonalInfoContent">      
+        {this.props.renderLogin ?
+          <Credentials/>
+          :
+          <div>
+            <InfoStepper />
+            <BookingNote />
+          </div>        
+        }        
+        </div>
+
+      {!this.props.renderLogin &&
+        <div className="bookingButton">
+        {booking.allowConfirmedBooking ?
+          <button 
             className="bookAppointmentBtn"
             onClick={this.bookAppointment.bind(this)}
             >
             {t('application.user_info.book_my_appointment')}
-          </button> */}
+          </button> 
+        :
+          <button 
+            className="bookAppointmentBtn"
+            onClick={this.requestAppointment.bind(this)}
+            >
+            Request appointment
+          </button>
+        }
         </div>
       }
-        
       </div>
     );
   }
