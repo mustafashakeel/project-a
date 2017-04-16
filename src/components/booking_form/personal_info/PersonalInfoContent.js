@@ -17,8 +17,7 @@ import './PersonalInfoContent.scss';
 function mapStateToProps(state) {
   return {
     renderLogin: !state.user.isLoggedIn,
-    booking: state.booking,
-    user: state.user
+    booking: state.booking
   };
 }
 
@@ -26,7 +25,7 @@ function mapStateToProps(state) {
 class PersonalInfoContent extends React.Component {
 
   bookAppointment(){
-    const {booking, user} = this.props;
+    const {booking} = this.props;
     const data = {
       "BookingId": booking.lease.bookingId,
       "PaymentToken": "",
@@ -61,7 +60,9 @@ class PersonalInfoContent extends React.Component {
           :
           <div>
             <InfoStepper />
-            <BookingNote />
+            {booking.provider.bookingCommentIsRequired &&
+              <BookingNote />
+            }
           </div>        
         }        
         </div>

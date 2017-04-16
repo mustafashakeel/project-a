@@ -17,7 +17,8 @@ import {
   SET_BIZ_TIMEZONE,
   SET_USER_TIMEZONE,
   SET_USER_LOCATION,
-  ALLOW_CONFIRMED_BOOKING
+  ALLOW_CONFIRMED_BOOKING,
+  SET_PROVIDER_MESSAGE
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -51,7 +52,8 @@ const INITIAL_STATE = {
     latitude: "",
     longitude: ""
   },
-  allowConfirmedBooking: null
+  allowConfirmedBooking: null,
+  providerMessage: ''
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -130,6 +132,9 @@ export default function (state = INITIAL_STATE , action){
 
     case ALLOW_CONFIRMED_BOOKING:
       return { ...state, allowConfirmedBooking: action.payload.allowConfirmedBooking}
+
+    case SET_PROVIDER_MESSAGE:
+      return { ...state, providerMessage: action.payload.message}
 
     default:
       return state;

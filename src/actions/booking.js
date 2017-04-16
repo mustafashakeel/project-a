@@ -27,6 +27,7 @@ export const SET_BIZ_TIMEZONE = 'SET_BIZ_TIMEZONE';
 export const SET_USER_TIMEZONE = 'SET_USER_TIMEZONE';
 export const SET_USER_LOCATION = 'SET_USER_LOCATION';
 export const ALLOW_CONFIRMED_BOOKING = 'ALLOW_CONFIRMED_BOOKING';
+export const SET_PROVIDER_MESSAGE = 'SET_PROVIDER_MESSAGE';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 const PROD_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
@@ -278,6 +279,15 @@ export function allowConfirmedBooking(allow){
     type: ALLOW_CONFIRMED_BOOKING,
     payload: {
       allowConfirmedBooking: allow
+    }
+  };
+}
+
+export function setProviderMessage(message){
+  return {
+    type: SET_PROVIDER_MESSAGE,
+    payload: {
+      message
     }
   };
 }
