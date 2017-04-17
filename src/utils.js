@@ -1,6 +1,7 @@
 import validator from 'validator';
 import deepmerge from 'deepmerge'
 import moment from 'moment';
+
 export function checkFields(fields){
   let valid = 0;
   let required = 0;
@@ -94,7 +95,7 @@ export function parseAvailabilities(availabilities, timezone){
         availabilities.timeSlots.forEach((timeslot) => {
           newTimeSlots.push({
             "time": startDate + " " + timeslot,
-            "provider" : [provider.providerId]
+            "providers" : [provider.providerId]
           });
         });
 
@@ -117,3 +118,24 @@ export function parseAvailabilities(availabilities, timezone){
   }
 
 }
+
+export const isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i);
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    }
+};

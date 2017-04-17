@@ -4,6 +4,7 @@ import { translate } from 'react-i18next';
 import { setGrantTotal} from '../../../../../actions';
 
 import StripeForm from './stripe/StripeForm';
+import SavedCards from './SavedCards';
 
 import './PaymentCC.scss';
 
@@ -19,48 +20,57 @@ export class PaymentCC extends React.Component {
     paymentDetails : false
   }
 
-  priceItems = []
+  // priceItems = []
 
-  renderPriceItem(){
-    return this.priceItems.map((item, index)=>{
-      return <p key={index}><span>{item.name}: </span> <span>${item.amount.toFixed(2)}</span></p>
-    });
-  }
+  // renderPriceItem(){
+  //   return this.priceItems.map((item, index)=>{
+  //     return <p key={index}><span>{item.name}: </span> <span>${item.amount.toFixed(2)}</span></p>
+  //   });
+  // }
 
-  getTotal(){
-    if (this.props.booking.grantTotal === 0){
-      let total = 0;
-      this.priceItems.forEach((item)=>{
-        total = total + item.amount;
-      });
-      this.props.setGrantTotal(total.toFixed(2));
-    }    
-  }
+  // getTotal(){
+  //   if (this.props.booking.grantTotal === 0){
+  //     let total = 0;
+  //     this.priceItems.forEach((item)=>{
+  //       total = total + item.amount;
+  //     });
+  //     this.props.setGrantTotal(total.toFixed(2));
+  //   }    
+  // }
 
-  componentWillMount() {
-      const price = this.props.booking.service.price
-      this.priceItems.push({name:"Subtotal", amount: price})
-    if (this.props.booking.location.tax) {
-      const taxes = this.props.booking.location.tax;
-      taxes.map((tax)=>{
-        const taxPrice = ((price * tax.rate) / 100);
-        this.priceItems.push({name: tax.name + "(" + tax.rate + "%)", amount: taxPrice})
-      });
-    }
-    this.getTotal();
+  // componentWillMount() {
+  //     const price = this.props.booking.service.price
+  //     this.priceItems.push({name:"Subtotal", amount: price})
+  //   if (this.props.booking.location.tax) {
+  //     const taxes = this.props.booking.location.tax;
+  //     taxes.map((tax)=>{
+  //       const taxPrice = ((price * tax.rate) / 100);
+  //       this.priceItems.push({name: tax.name + "(" + tax.rate + "%)", amount: taxPrice})
+  //     });
+  //   }
+  //   this.getTotal();
 
-  }
+  // }
 
   render() {
     const {t, booking, business} = this.props;
-
+    const payment = booking.lease.paymentInfoModel;
     return (
       <div className="Payment">
         <div>  
           <p><strong>{booking.service.name}</strong></p>
           <div className="priceSummary">
-            {this.renderPriceItem()}   
-            <p><span>Total:</span> <span>${booking.grantTotal}</span></p>          
+            <p><span>Price:</span> <span>${booking.lease.paymentInfoModel.price}</span></p> 
+            {payment.tax1 !== 0 &&
+              <p><span>{payment.tax1Name} ({payment.tax1Rate}%)</span> <span>${payment.tax1}</span></p> 
+            }
+            {payment.tax2 !== 0 &&
+              <p><span>{payment.tax2Name} ({payment.tax2Rate}%)</span> <span>${payment.tax2}</span></p> 
+            }
+            {payment.other !== 0 &&
+              <p><span>{payment.otherName} ({payment.otherRate}%)</span> <span>${payment.other}</span></p> 
+            }
+            <p><span>Total:</span> <span>${payment.totalAmount}</span></p>          
           </div>
 
           {!this.state.paymentDetails && booking.payment.card == null && 
@@ -73,15 +83,17 @@ export class PaymentCC extends React.Component {
           }
 
         </div>
+
+
             
         {this.state.paymentDetails && 
-          <StripeForm onSave={()=>this.setState({paymentDetails: false})}/>
+          <SavedCards />
         }
 
-        {booking.payment.card && !this.state.paymentDetails &&
+        {/*booking.payment && !this.state.paymentDetails &&
           <div>
             <p>
-              {booking.payment.card.brand} **************{booking.payment.card.last4}
+              {booking.payment.cardType} **************{booking.payment.cardLastFour}
               <span 
                 className="pointer editPayment" 
                 onClick={()=>this.setState({paymentDetails: !this.state.paymentDetails})}
@@ -89,7 +101,7 @@ export class PaymentCC extends React.Component {
             </p>
 
           </div>
-        }
+        */}
     
     </div>
     );

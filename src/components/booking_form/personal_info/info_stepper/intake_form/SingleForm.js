@@ -19,7 +19,7 @@ class SingleForm extends React.Component {
   }
 
   createMarkup(){
-    return {__html: this.props.form.html}
+    return {__html: this.props.form.formHtml}
   }
 
   submitForm(e){
@@ -34,7 +34,8 @@ class SingleForm extends React.Component {
     var elements = this.refs.theForm.elements;
     var obj ={};
     for(var i = 0 ; i < elements.length ; i++){
-        var item = elements.item(i);
+      var item = elements.item(i);
+      if(item.id !== ""){
         switch(item.type){
           case "checkbox":
             obj[item.id] = item.checked;
@@ -46,9 +47,14 @@ class SingleForm extends React.Component {
             obj[item.id] = item.value;
           break;
         }
+      }
         
     }
-    return { id: this.props.form.id, data : obj };
+    return { 
+      id: this.props.form.id,
+      formName: this.props.form.formName,
+      data : obj 
+    };
   }
 
   setFormValues(){

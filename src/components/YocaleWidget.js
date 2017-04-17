@@ -5,6 +5,8 @@ import {appointmentBooked} from '../actions/index';
 
 import BookingForm from './booking_form/BookingForm';
 import ThankPage from './thank_page/ThankPage';
+import ErrorMessage from './common/error_message/ErrorMessage';
+
 
 
 function mapStateToProps(state) {
@@ -16,11 +18,7 @@ function mapStateToProps(state) {
 
 export class YocaleWidget extends React.Component {
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.bookedSummary.status){
-      this.props.appointmentBooked(true);
-    }
-  }
+
 
   render() {
     return (
@@ -30,6 +28,7 @@ export class YocaleWidget extends React.Component {
           :
           <ThankPage />
         }
+        <ErrorMessage />
       </div>
     );
   }

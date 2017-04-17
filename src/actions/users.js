@@ -14,6 +14,9 @@ export const LOGIN_AS_GUEST = 'LOGIN_AS_GUEST';
 export const LOGIN_AS_USER = 'LOGIN_AS_USER';
 export const IS_REGISTERED_USER = 'IS_REGISTERED_USER';
 export const FORGOT_PASSWORD_SENT = 'FORGOT_PASSWORD_SENT';
+export const GET_USER_LOCATIONS = 'GET_USER_LOCATIONS';
+export const UPDATED_PASSWORD = 'UPDATED_PASSWORD';
+export const SET_PASSWORD = 'SET_PASSWORD';
 
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
@@ -41,24 +44,36 @@ export function userExists(email){
       method: 'get',
       params: { email: email }
     });
+    dispatch(showLoading());
     request.then((response) => {
+      dispatch(hideLoading());
       if ( response.data.accountType === 'Yocale'){
         dispatch({
             type: IS_REGISTERED_USER,
-            payload: true
+            payload: {
+              email: email,
+              isRegistered: true
+            }
         });
       }else{
         dispatch({
             type: IS_REGISTERED_USER,
-            payload: false
+            payload: {
+              email: email,
+              isRegistered: false
+            }
         });
       }
     })
     .catch((error) => {
       dispatch({
           type: IS_REGISTERED_USER,
-          payload: false
+          payload: {
+            email: email,
+            isRegistered: false
+          }
       });
+      dispatch(hideLoading());
     });  
 
   };
@@ -85,7 +100,7 @@ export function getCurrentUser(){
   }
 }
 
-export function signupUser(user, booking){
+export function signupUser(user){
   const values = {
     email: user.email.value,
     password: user.password.value,
@@ -99,7 +114,7 @@ export function signupUser(user, booking){
     dispatch(showLoading());
     request
     .then(() =>{
-      dispatch(leaseBooking(booking));
+      dispatch(leaseBooking());
     })
     .error((error) => {
       dispatch(hideLoading());
@@ -108,9 +123,10 @@ export function signupUser(user, booking){
   };
 }
 
-export function loginUser(fields, booking){  
+export function loginUser(fields){  
 
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { booking } = getState();
     const data = {
       client_id: "0b531646fc4849309332e06670be0357",
       client_secret: "rzx2bLL-BWV9tB4BqjeJBWfazEouLBsW6NqVS8ixX-Y",
@@ -135,7 +151,12 @@ export function loginUser(fields, booking){
         dispatch({ 
           type: LOGIN_AS_USER
         });
-        dispatch(leaseBooking(booking));
+        if (booking.allowConfirmedBooking){
+          dispatch(leaseBooking());
+        }else{
+          dispatch(isLoggedIn(true));
+          dispatch(hideLoading());
+        }
       }else {
         dispatch(addErrorMsg("Invalid user or password", "Retry"));
       }
@@ -148,12 +169,45 @@ export function loginUser(fields, booking){
   };
 }
 
-export function loginAsGuest(booking){
+export function loginAsGuest(fields){
   return dispatch => {
-    dispatch({ 
-      type: LOGIN_AS_GUEST
+
+    const data = {
+      email: fields.email.value,
+      firstName: fields.firstName.value,
+      lastName: fields.lastName.value,
+      phone: fields.phoneNumber.value
+    };
+    
+    const request = najax({
+        url: `${PROD_URL}/account/registerGuest`,
+        contentType: "application/x-www-form-urlencoded",
+        type: "POST",
+        data: data,
+        dataType: "json"
     });
-    dispatch(leaseBooking(booking));
+
+    dispatch(showLoading());
+    request.success((response) =>{
+      if (response.password){
+        const loginData = {
+          email: fields.email,
+          password: {
+            value: response.password          
+          }
+        };
+
+        dispatch(loginUser(loginData)) ;
+        dispatch({ type: LOGIN_AS_GUEST });
+        dispatch({ type: SET_PASSWORD, payload: { password: response.password} });
+      }
+    }).
+    error((error) => {
+      dispatch(hideLoading());
+      dispatch(addErrorMsg(error.message, "Retry"));
+    })
+
+    
   };
 }
 
@@ -166,25 +220,76 @@ export function recoverPasswordSent(sent){
   } 
 }
 
-export function recoverPassword(){
-  return (dispatch, getState) => {
-    const email = getState().user.credentials.email;
-
+export function getUserLocations(){
+  return (dispatch) => {
+    let headers = {};
+    if (cookie && cookie.load('access_token')) {
+       headers = {
+        'Authorization': `Bearer  ${cookie.load('access_token')}`
+      }
+    }
     const request = najax({
-      url:`${PROD_URL}/account/forgotpassword`,
-      method: 'post',
-      data: { email: email }
+      url:`${PROD_URL}/booking/customerOnsiteLocations`,
+      type: 'get',
+      headers
     });
 
-    dispatch(showLoading());
+    // dispatch(showLoading());
     request
-    .success(() =>{
-      dispatch(recoverPasswordSent(true));
+    .success((response) =>{
+      dispatch({
+        type: GET_USER_LOCATIONS,
+        payload: {
+          locations: response
+        }
+      });
     })
     .error((error) => {
-      dispatch(hideLoading());
+      // dispatch(hideLoading());
       dispatch(addErrorMsg(error.message || 'There was an error'));
     });
   };
 }
+
+export function updateUserPassword(password){
+  return (dispatch, getState) => {
+    let headers = {};
+    if (cookie && cookie.load('access_token')) {
+       headers = {
+        'Authorization': `Bearer  ${cookie.load('access_token')}`
+      }
+    }
+
+    const { user } = getState();
+
+    const request = najax({
+      url:`${PROD_URL}/account/changePassword/`,
+      type: 'post',
+      data: {
+        oldPassword: user.credentials.password,
+        newPassword: password
+      },
+      headers
+    });
+
+    dispatch(showLoading());
+    request
+    .success((response) =>{
+      dispatch({
+        type: UPDATED_PASSWORD,
+        payload: {
+          passwordUpdated: true
+        }
+      });
+    })
+    .error((error) => {
+      const response = JSON.parse(error.responseText);
+      dispatch(hideLoading());
+      dispatch(addErrorMsg(response.message, "Retry"));
+    });
+  };
+}
+
+
+
 

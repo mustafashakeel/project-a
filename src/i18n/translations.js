@@ -37,7 +37,7 @@ var translations = {
           "login_fields":{
             email:{
               placeholder: "Email *",
-              error: "Please complete."
+              error: "Please enter a valid email."
             },
             firstName:{
               placeholder: "First name *",

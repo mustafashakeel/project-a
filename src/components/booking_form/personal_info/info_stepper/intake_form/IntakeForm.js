@@ -8,7 +8,7 @@ import SelectField from 'react-md/lib/SelectFields';
 import SingleForm from './SingleForm'
 
 import './IntakeForm.scss';
-// import './materialFormStyle.scss';
+import './materialPureCss.scss';
 
 function mapStateToProps(state) {
   return {
@@ -48,7 +48,7 @@ export class IntakeForm extends React.Component {
       return <h3 
         key={index} 
         onClick={this.changeForm.bind(this, index)} 
-        className={(this.state.activeForm == index)? "active" : ""}>{form.name}</h3>
+        className={(this.state.activeForm == index)? "active" : ""}>{form.formName}</h3>
     })
   }
 

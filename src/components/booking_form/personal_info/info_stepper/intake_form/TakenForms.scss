@@ -1,0 +1,24 @@
+@import '../../../../../styles/vars';
+
+.TakenForms{
+  .takenForm{
+    border: 1px solid #dedede;
+    padding: 7px 10px;
+    margin-bottom: 10px;
+    position: relative;
+    p {
+      margin: 0;
+      padding: 0 !important;
+    }
+    .md-icon{
+      color: $yocaleOrange;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      font-size: 12px;
+      border: 1px solid $yocaleOrange;
+      border-radius: 20px;
+      padding: 3px;
+    }
+  }
+}

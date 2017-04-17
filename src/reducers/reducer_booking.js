@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { 
   SET_BOOKING_TIME,
   SET_BOOKING_STATUS,
@@ -8,14 +9,16 @@ import {
   SET_PAYMENT_DETAILS,
   SET_REMINDER_OPTS,
   SET_GRANT_TOTAL,
-  SET_PAYMENT_STATUS,
-  GET_INTAKE_FORMS,
+  SET_PAYMENT_STATUS,  
   SAVE_INTAKE_FORM,
   LEASE_BOOKING,
   IS_LOGGED_IN,
   BOOK_APPOINTMENT,
   SET_BIZ_TIMEZONE,
-  SET_USER_TIMEZONE
+  SET_USER_TIMEZONE,
+  SET_USER_LOCATION,
+  ALLOW_CONFIRMED_BOOKING,
+  SET_PROVIDER_MESSAGE
 } from '../actions/index';
 
 const INITIAL_STATE = {
@@ -29,8 +32,9 @@ const INITIAL_STATE = {
     source: [],
     completed: [],
   },
-  provider: { id: "" },
+  provider: { providerId: null },
   timestamp: null,
+  providersInSlot: null,
   dependant: "",
   payment: {},
   grantTotal: 0,
@@ -42,14 +46,21 @@ const INITIAL_STATE = {
     minHourReminder : "Minutes"
   },
   bizTimezone: '',
-  userTimezone: ''  
+  userTimezone: '',
+  clientLocation: {
+    fullAddress: "",
+    latitude: "",
+    longitude: ""
+  },
+  allowConfirmedBooking: null,
+  providerMessage: ''
 };
 
 export default function (state = INITIAL_STATE , action){
   switch(action.type){
 
     case SET_BOOKING_TIME:
-      return { ...state, timestamp: action.payload.timestamp };
+      return { ...state, timestamp: action.payload.timestamp, providersInSlot: action.payload.providers };
 
     case SET_BOOKING_STATUS:
       return { ...state, isBooked: action.payload.booked };
@@ -70,7 +81,7 @@ export default function (state = INITIAL_STATE , action){
       return { ...state, dependant: action.payload.dependant };
 
     case SET_PAYMENT_DETAILS:
-      return { ...state, payment: action.payload.token };
+      return { ...state, payment: action.payload.card };
 
     case SET_GRANT_TOTAL:
       return { ...state, grantTotal: action.payload.total } 
@@ -80,30 +91,30 @@ export default function (state = INITIAL_STATE , action){
       reminder[action.payload.key] = action.payload.val;
       return { ...state, reminder: reminder };
 
-    case GET_INTAKE_FORMS:
-      var intake_forms = { 
-        ...state.intake_forms,
-        source: action.payload.data
-      }
-      return { ...state, intake_forms: intake_forms }
-
     case SAVE_INTAKE_FORM:
       const newObj = action.payload.formObj;
-      const newCompleted = state.intake_forms.completed;
-      newCompleted[newObj.id] = newObj.data;
+      const intake_forms = state.intake_forms;
 
-      var intake_forms = {
-        ...state.intake_forms,
-        completed: newCompleted
-      }
+      _.remove(intake_forms.completed, function(form) {
+        return form.id == newObj.id;
+      });
+      intake_forms.completed.push({
+        id: newObj.id,
+        formName: newObj.formName,
+        formData: newObj.data
+      })
 
       return { ...state, intake_forms: intake_forms }
 
     case LEASE_BOOKING:
-      return { ...state, lease: action.payload.data}
+      var intake_forms = { 
+        ...state.intake_forms,
+        source: action.payload.data.clientForms
+      }
+      return { ...state, lease: action.payload.data, intake_forms: intake_forms}
 
     case BOOK_APPOINTMENT:
-      return { ...state, booked_summary: action.payload.data}
+      return { ...state, booked_summary: action.payload}
 
     case IS_LOGGED_IN:
       // from users action
@@ -115,6 +126,15 @@ export default function (state = INITIAL_STATE , action){
 
     case SET_USER_TIMEZONE:
       return { ...state, userTimezone: action.payload.userTimezone}
+
+    case SET_USER_LOCATION:
+      return { ...state, clientLocation: action.payload.location}
+
+    case ALLOW_CONFIRMED_BOOKING:
+      return { ...state, allowConfirmedBooking: action.payload.allowConfirmedBooking}
+
+    case SET_PROVIDER_MESSAGE:
+      return { ...state, providerMessage: action.payload.message}
 
     default:
       return state;

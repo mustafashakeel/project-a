@@ -4,20 +4,20 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import { isLoggedIn, proccessPayment } from '../../../actions'
+import { isLoggedIn, proccessPayment, bookAppointment } from '../../../actions'
 
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
 import AppointmentReminder from './appointment_reminder/AppointmentReminder';
 import BookingNote from './info_stepper/booking_note/BookingNote';
 
+
 import './PersonalInfoContent.scss';
 
 function mapStateToProps(state) {
   return {
     renderLogin: !state.user.isLoggedIn,
-    booking: state.booking,
-    user: state.user
+    booking: state.booking
   };
 }
 
@@ -25,35 +25,71 @@ function mapStateToProps(state) {
 class PersonalInfoContent extends React.Component {
 
   bookAppointment(){
-    const {booking, user} = this.props;
-    const paymentDetails = {
-      email: user.credentials.email,
-      source: booking.payment.id,
-      amount: (booking.grantTotal * 100),
-      description: booking.service.name
+    const {booking} = this.props;
+    const token = (booking.payment.token)? booking.payment.token.id : "";
+    const data = {
+      "BookingId": booking.lease.bookingId.toString(),
+      "PaymentToken": token,
+      "paymentRequirementInfo": booking.lease.paymentRequirementInfo,
+      "ClientLocation": booking.clientLocation,
+      "ClientForms": booking.intake_forms.completed,
+      "SaveCreditCard": "true",
+      "PaymentCustomerDetailId": booking.payment.paymentCustomerId
     };
 
-    this.props.proccessPayment(booking.lease.id, paymentDetails);
+    console.log(data);
+    this.props.bookAppointment(data);
+  }
+
+  requestAppointment(){
+    const {booking} = this.props;
+    const data = {
+      starDateTime: booking.timestamp.format(),
+      providerId: booking.provider.providerId,
+      locationId: booking.location.id,
+      offeringId: booking.service.offeringId,
+      comments: booking.providerMessage,
+      clientLocation: booking.lease.clientLocation
+    };
+    console.log(data);
+    this.props.bookAppointment(data, true);
   }
   render() {
-    const {t} = this.props;
+    const {t, booking} = this.props;
     return (
-      <div className="PersonalInfoContent">
-      {this.props.renderLogin ?
-        <Credentials/>
-        :
-        <div>
-          <InfoStepper />
-          <BookingNote />
+      <div>
+        <div className="PersonalInfoContent">      
+        {this.props.renderLogin ?
+          <Credentials/>
+          :
+          <div>
+            <InfoStepper />
+            {booking.provider.bookingCommentIsRequired &&
+              <BookingNote />
+            }
+          </div>        
+        }        
+        </div>
+
+      {!this.props.renderLogin &&
+        <div className="bookingButton">
+        {booking.allowConfirmedBooking ?
           <button 
             className="bookAppointmentBtn"
             onClick={this.bookAppointment.bind(this)}
             >
             {t('application.user_info.book_my_appointment')}
+          </button> 
+        :
+          <button 
+            className="bookAppointmentBtn"
+            onClick={this.requestAppointment.bind(this)}
+            >
+            Request appointment
           </button>
+        }
         </div>
       }
-        
       </div>
     );
   }
@@ -61,5 +97,5 @@ class PersonalInfoContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn, proccessPayment }
+  { isLoggedIn, proccessPayment, bookAppointment }
 )(translate()(PersonalInfoContent))

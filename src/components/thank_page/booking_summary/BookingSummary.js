@@ -13,8 +13,12 @@ export class BookingSummary extends React.Component {
     const {business, booking} = this.props;
     return (
       <div>
-        <h4>Your booking is confirmed! An email has been sent to you.</h4>
-        {/*<div className="appointmentInfo">
+        {booking.allowConfirmedBooking ?
+          <h4>Your booking is confirmed! An email has been sent to you.</h4>
+          :
+          <h4>Appointment has been requested, you will receive an email when {business.name} has confirmed this appointment.</h4>
+        }
+        <div className="appointmentInfo">
           <div className="bizName">{business.name}</div>
           <div className="bizAddress">{booking.location.address}</div>
           <div className="serviceName">{booking.service.name}</div>
@@ -23,7 +27,7 @@ export class BookingSummary extends React.Component {
           <div className="bookingDate">{booking.timestamp.format("dddd, MMMM Do YYYY")}</div>
           <div className="yocaleButton addToCalendar">Add to Calendar</div>
           <div className="viewEditYocale">View or Edit Appointment on Yocale</div>
-        </div>*/}
+        </div>
 
         <div className="moreServices">
           

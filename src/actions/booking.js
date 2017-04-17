@@ -1,6 +1,8 @@
 import axios from 'axios';
+import najax from 'najax';
 import cookie from 'react-cookie';
 import timezones from '../reducers/mocks/timezones';
+import { isMobile } from '../utils';
 
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { addErrorMsg } from './ui';
@@ -24,15 +26,20 @@ export const BOOK_APPOINTMENT = 'BOOK_APPOINTMENT';
 export const TEST_ACTION = 'TEST_ACTION';
 export const SET_BIZ_TIMEZONE = 'SET_BIZ_TIMEZONE';
 export const SET_USER_TIMEZONE = 'SET_USER_TIMEZONE';
+export const SET_USER_LOCATION = 'SET_USER_LOCATION';
+export const ALLOW_CONFIRMED_BOOKING = 'ALLOW_CONFIRMED_BOOKING';
+export const SET_PROVIDER_MESSAGE = 'SET_PROVIDER_MESSAGE';
 
 const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
+const PROD_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
 const STRIPE_CHARGE_URL = "http://express-stripe.herokuapp.com/charge";
 
-export function setBookingTime(timestamp){
+export function setBookingTime(timestamp, providers){
   return {
     type: SET_BOOKING_TIME,
     payload: {
-      timestamp: timestamp
+      timestamp: timestamp,
+      providers: providers
     }
   };
 }
@@ -95,11 +102,11 @@ export function setBookingDependant(dependant){
   };
 }
 
-export function setPaymentsDetails(result){
+export function setPaymentsDetails(card){
   return {
     type: SET_PAYMENT_DETAILS,
     payload: {
-      token: result.token
+      card: card
     }
   };
 }
@@ -142,9 +149,20 @@ export function saveIntakeForm(formObj){
   };
 }
 
-export function leaseBooking(props){
+export function leaseBooking(){
 
-  return dispatch => {
+  return (dispatch, getState) => {
+    const {booking} = getState();
+
+    const data = {
+      ProviderId: booking.provider.providerId.toString(),
+      LocationId: booking.location.id.toString(),
+      OfferingId: booking.service.offeringId.toString(),
+      StartDateTime: booking.timestamp.format('YYYY-MM-DD HH:mm:ss.SSSSSSS'),
+      EndDateTime: booking.timestamp.add(booking.service.duration, 'm').clone().format('YYYY-MM-DD HH:mm:ss.SSSSSSS'),
+      deviceType: (isMobile.any())? 2 : 1
+    };
+    console.log(data);
 
     let headers = {};
     if (cookie && cookie.load('access_token')) {
@@ -153,26 +171,38 @@ export function leaseBooking(props){
       }
     }
 
-
-
-    // const request = axios.post(`${ROOT_URL}/booking/lease`, props);  
-    const request = axios.request({
-        url: 'http://demo1743653.mockable.io/lease',
-        method: 'post',
-        data: props,
-        headers
+    const request = najax({
+        url: `${PROD_URL}/booking/leaseAppointment`,
+        // url: 'http://demo1743653.mockable.io/lease',
+        type: 'POST',
+        contentType: "application/json",
+        dataType: "json",
+        data: data,
+        headers: headers
     });
 
-    dispatch(showLoading());
+    // dispatch(showLoading());
 
-    request.then((response) => {
-      dispatch(isLoggedIn(true));
+    request.success((response) => {
       dispatch({
           type: LEASE_BOOKING,
-          payload: response
+          payload: {
+            data: response
+          }
       });
-      dispatch(getIntakeForms(response.id));
+      dispatch(isLoggedIn(true));
       dispatch(hideLoading());
+    })
+    .error((error) => {
+      let msg;
+      if (typeof error.responseText == "object"){
+        const response = JSON.parse(error.responseText);
+        msg = response.message
+      }else{
+        msg = error.responseText;
+      }
+      dispatch(hideLoading());
+      dispatch(addErrorMsg(msg, "Retry"));
     });  
 
   
@@ -189,22 +219,49 @@ export function bookingIsPaid(flag){
   };
 }
 
-export function bookAppointment(bookingId, paymentDetails){
+export function bookAppointment(data, isRequest = false){
 
   return dispatch => {
-    const request = axios.post(`${ROOT_URL}/booking/Confirm`, { bookingId });
-    request.then(() => {
-      dispatch(hideLoading());
-    });
+
+    let headers = {};
+    if (cookie && cookie.load('access_token')) {
+       headers = {
+        'Authorization': `Bearer  ${cookie.load('access_token')}`
+      }
+    }
+
+    const url= (!isRequest)? 'bookAppointment' : 'requestAppointment';
 
     dispatch(showLoading());
-    return dispatch({
-      type: BOOK_APPOINTMENT,
-      payload: request
+    const request = najax({
+        url: `${PROD_URL}/booking/${url}`,
+        type: 'POST',
+        contentType: "application/json",
+        dataType: "json",
+        data: data,
+        headers
+    });
+
+    request.success((response) =>{
+      dispatch(appointmentBooked(true));
+      dispatch(hideLoading());
+    })
+    .error((error) => {
+      if (error.status === 200){
+        dispatch(appointmentBooked(true));
+        dispatch(hideLoading());
+      }else{
+        let msg;    
+        const response = JSON.parse(error.responseText);
+        msg = response.message;   
+        dispatch(hideLoading());
+        dispatch(addErrorMsg(msg, "Retry"));
+      }
     });
     
   };
 }
+
 
 
 export function proccessPayment(bookingId, paymentDetails){
@@ -239,6 +296,33 @@ export function setUserTimezone(utc){
     type: SET_USER_TIMEZONE,
     payload: {
       userTimezone: utc
+    }
+  };
+}
+
+export function setUserLocation(location){
+  return {
+    type: SET_USER_LOCATION,
+    payload: {
+      location
+    }
+  };
+}
+
+export function allowConfirmedBooking(allow){
+  return {
+    type: ALLOW_CONFIRMED_BOOKING,
+    payload: {
+      allowConfirmedBooking: allow
+    }
+  };
+}
+
+export function setProviderMessage(message){
+  return {
+    type: SET_PROVIDER_MESSAGE,
+    payload: {
+      message
     }
   };
 }
