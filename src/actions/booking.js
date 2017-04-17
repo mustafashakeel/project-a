@@ -155,11 +155,11 @@ export function leaseBooking(){
     const {booking} = getState();
 
     const data = {
-      ProviderId: booking.provider.providerId,
-      LocationId: booking.location.id,
-      OfferingId: booking.service.offeringId,
-      StarDateTime: booking.timestamp.format(),
-      EndDateTime: booking.timestamp.add(booking.service.duration, 'm').clone().format(),
+      ProviderId: booking.provider.providerId.toString(),
+      LocationId: booking.location.id.toString(),
+      OfferingId: booking.service.offeringId.toString(),
+      StartDateTime: booking.timestamp.format('YYYY-MM-DD HH:mm:ss.SSSSSSS'),
+      EndDateTime: booking.timestamp.add(booking.service.duration, 'm').clone().format('YYYY-MM-DD HH:mm:ss.SSSSSSS'),
       deviceType: (isMobile.any())? 2 : 1
     };
     console.log(data);
@@ -175,11 +175,10 @@ export function leaseBooking(){
         url: `${PROD_URL}/booking/leaseAppointment`,
         // url: 'http://demo1743653.mockable.io/lease',
         type: 'POST',
-        crossOrigin: false,
-        contentType: "application/x-www-form-urlencoded",
+        contentType: "application/json",
         dataType: "json",
         data: data,
-        headers
+        headers: headers
     });
 
     // dispatch(showLoading());
@@ -193,10 +192,17 @@ export function leaseBooking(){
       });
       dispatch(isLoggedIn(true));
       dispatch(hideLoading());
-    }).
-    error((error) => {
+    })
+    .error((error) => {
+      let msg;
+      if (typeof error.responseText == "object"){
+        const response = JSON.parse(error.responseText);
+        msg = response.message
+      }else{
+        msg = error.responseText;
+      }
       dispatch(hideLoading());
-      dispatch(addErrorMsg("There was an error. Please try again", "Retry"));
+      dispatch(addErrorMsg(msg, "Retry"));
     });  
 
   
@@ -230,22 +236,27 @@ export function bookAppointment(data, isRequest = false){
     const request = najax({
         url: `${PROD_URL}/booking/${url}`,
         type: 'POST',
-        crossOrigin: false,
-        contentType: "application/x-www-form-urlencoded",
+        contentType: "application/json",
         dataType: "json",
         data: data,
         headers
     });
 
-    request
-    .success((response) =>{
-      dispatch(bookingIsPaid(true));
+    request.success((response) =>{
+      dispatch(appointmentBooked(true));
       dispatch(hideLoading());
     })
     .error((error) => {
-      const response = JSON.parse(error.responseText);
-      dispatch(hideLoading());
-      dispatch(addErrorMsg(response.message, "Retry"));
+      if (error.status === 200){
+        dispatch(appointmentBooked(true));
+        dispatch(hideLoading());
+      }else{
+        let msg;    
+        const response = JSON.parse(error.responseText);
+        msg = response.message;   
+        dispatch(hideLoading());
+        dispatch(addErrorMsg(msg, "Retry"));
+      }
     });
     
   };

@@ -22,12 +22,17 @@ export class ThankPage extends React.Component {
       this.setState({ showSummary: false})
     }
   }
+  componentWillReceiveProps(nextProps) {
+    if(this.props.user.passwordUpdated !== nextProps.user.passwordUpdated && nextProps.user.passwordUpdated === true){
+      this.setState({ showSummary: true})
+    }
+  }
 
   render() {
     const {user} = this.props;
     return (
       <div className="ThankPage">
-        {!this.state.showSummary || user.passwordUpdated ?
+        {!this.state.showSummary ?
           <div>
             <UpdatePassword/>
             <button 

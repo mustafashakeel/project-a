@@ -110,13 +110,15 @@ export class InfoStepper extends React.Component {
                   }
                   </div>
               </Step>
-              <Step
-                completed={false} >
-                <h4>{t('application.user_info.payment')}</h4>
-                <div className="stepContentBorder">
-                  <PaymentCC />            
-                </div>
-              </Step>
+              {booking.lease.paymentRequirementInfo !== null &&
+                <Step
+                  completed={false} >
+                  <h4>{t('application.user_info.payment')}</h4>
+                  <div className="stepContentBorder">
+                    <PaymentCC />            
+                  </div>
+                </Step>
+              }
             </div>
           }
 

@@ -36,6 +36,7 @@ export class UpdatePassword extends React.Component {
         <TextField 
           id="credentialsEmail"
           placeholder="New password *"
+          type="password"
           onChange={this.onChangePassword.bind(this)} 
           value={this.state.password}
           />

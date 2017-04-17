@@ -26,9 +26,10 @@ class PersonalInfoContent extends React.Component {
 
   bookAppointment(){
     const {booking} = this.props;
+    const token = (booking.payment.token)? booking.payment.token.id : "";
     const data = {
-      "BookingId": booking.lease.bookingId,
-      "PaymentToken": booking.payment.token || "",
+      "BookingId": booking.lease.bookingId.toString(),
+      "PaymentToken": token,
       "paymentRequirementInfo": booking.lease.paymentRequirementInfo,
       "ClientLocation": booking.clientLocation,
       "ClientForms": booking.intake_forms.completed,

@@ -34,7 +34,8 @@ class SingleForm extends React.Component {
     var elements = this.refs.theForm.elements;
     var obj ={};
     for(var i = 0 ; i < elements.length ; i++){
-        var item = elements.item(i);
+      var item = elements.item(i);
+      if(item.id !== ""){
         switch(item.type){
           case "checkbox":
             obj[item.id] = item.checked;
@@ -46,6 +47,7 @@ class SingleForm extends React.Component {
             obj[item.id] = item.value;
           break;
         }
+      }
         
     }
     return { 

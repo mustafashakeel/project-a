@@ -18,11 +18,7 @@ function mapStateToProps(state) {
 
 export class YocaleWidget extends React.Component {
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.bookedSummary.status){
-      this.props.appointmentBooked(true);
-    }
-  }
+
 
   render() {
     return (
