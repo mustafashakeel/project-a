@@ -1,0 +1,35 @@
+.savedCards{
+  margin-top: 10px;
+  
+  h4{
+    padding-left: 0px !important;
+  }
+
+  .md-text{
+    font-size: 12px;
+    color: #525252;
+  }
+  .md-selection-control-container{
+    height: auto;
+    margin: 15px 0;
+  }
+
+  .md-btn--icon{
+
+    height: 16px;
+    padding: 0px;
+    width: 25px;
+
+    .md-icon{
+      font-size: 16px;
+    }
+  }
+  .saveCard{
+    margin: 10px auto;
+    padding: 5px 15px;
+  }
+
+  .newCardBtn{
+    font-size: 11px;
+  }
+}

@@ -234,7 +234,7 @@ export function getUserLocations(){
       headers
     });
 
-    dispatch(showLoading());
+    // dispatch(showLoading());
     request
     .success((response) =>{
       dispatch({
@@ -245,7 +245,7 @@ export function getUserLocations(){
       });
     })
     .error((error) => {
-      dispatch(hideLoading());
+      // dispatch(hideLoading());
       dispatch(addErrorMsg(error.message || 'There was an error'));
     });
   };

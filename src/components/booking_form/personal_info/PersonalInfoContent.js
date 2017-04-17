@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import { isLoggedIn, proccessPayment } from '../../../actions'
+import { isLoggedIn, proccessPayment, bookAppointment } from '../../../actions'
 
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
@@ -28,14 +28,16 @@ class PersonalInfoContent extends React.Component {
     const {booking} = this.props;
     const data = {
       "BookingId": booking.lease.bookingId,
-      "PaymentToken": "",
+      "PaymentToken": booking.payment.token || "",
       "paymentRequirementInfo": booking.lease.paymentRequirementInfo,
       "ClientLocation": booking.clientLocation,
       "ClientForms": booking.intake_forms.completed,
       "SaveCreditCard": "true",
-      "PaymentCustomerDetailId": "1"
+      "PaymentCustomerDetailId": booking.payment.paymentCustomerId
     };
+
     console.log(data);
+    this.props.bookAppointment(data);
   }
 
   requestAppointment(){
@@ -45,10 +47,11 @@ class PersonalInfoContent extends React.Component {
       providerId: booking.provider.providerId,
       locationId: booking.location.id,
       offeringId: booking.service.offeringId,
-      "comments": "",
-      "clientLocation": booking.lease.clientLocation
+      comments: booking.providerMessage,
+      clientLocation: booking.lease.clientLocation
     };
     console.log(data);
+    this.props.bookAppointment(data, true);
   }
   render() {
     const {t, booking} = this.props;
@@ -93,5 +96,5 @@ class PersonalInfoContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn, proccessPayment }
+  { isLoggedIn, proccessPayment, bookAppointment }
 )(translate()(PersonalInfoContent))

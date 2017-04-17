@@ -2,6 +2,7 @@ import axios from 'axios';
 import najax from 'najax';
 import cookie from 'react-cookie';
 import timezones from '../reducers/mocks/timezones';
+import { isMobile } from '../utils';
 
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { addErrorMsg } from './ui';
@@ -101,11 +102,11 @@ export function setBookingDependant(dependant){
   };
 }
 
-export function setPaymentsDetails(result){
+export function setPaymentsDetails(card){
   return {
     type: SET_PAYMENT_DETAILS,
     payload: {
-      token: result.token
+      card: card
     }
   };
 }
@@ -158,8 +159,10 @@ export function leaseBooking(){
       LocationId: booking.location.id,
       OfferingId: booking.service.offeringId,
       StarDateTime: booking.timestamp.format(),
-      EndDateTime: booking.timestamp.add(booking.service.duration, 'm').clone().format()
+      EndDateTime: booking.timestamp.add(booking.service.duration, 'm').clone().format(),
+      deviceType: (isMobile.any())? 2 : 1
     };
+    console.log(data);
 
     let headers = {};
     if (cookie && cookie.load('access_token')) {
@@ -169,8 +172,8 @@ export function leaseBooking(){
     }
 
     const request = najax({
-        // url: `${PROD_URL}/booking/leaseAppointment`,
-        url: 'http://demo1743653.mockable.io/lease',
+        url: `${PROD_URL}/booking/leaseAppointment`,
+        // url: 'http://demo1743653.mockable.io/lease',
         type: 'POST',
         crossOrigin: false,
         contentType: "application/x-www-form-urlencoded",
@@ -179,16 +182,16 @@ export function leaseBooking(){
         headers
     });
 
-    dispatch(showLoading());
+    // dispatch(showLoading());
 
     request.success((response) => {
-      dispatch(isLoggedIn(true));
       dispatch({
           type: LEASE_BOOKING,
           payload: {
             data: response
           }
       });
+      dispatch(isLoggedIn(true));
       dispatch(hideLoading());
     }).
     error((error) => {
@@ -210,23 +213,44 @@ export function bookingIsPaid(flag){
   };
 }
 
-export function bookAppointment(){
+export function bookAppointment(data, isRequest = false){
 
-  return (dispatch, getState) => {
-    const {booking} = getState();
-    // const request = axios.post(`${ROOT_URL}/booking/Confirm`, { bookingId });
-    // request.then(() => {
-    //   dispatch(hideLoading());
-    // });
+  return dispatch => {
 
-    // dispatch(showLoading());
-    // return dispatch({
-    //   type: BOOK_APPOINTMENT,
-    //   payload: request
-    // });
+    let headers = {};
+    if (cookie && cookie.load('access_token')) {
+       headers = {
+        'Authorization': `Bearer  ${cookie.load('access_token')}`
+      }
+    }
+
+    const url= (!isRequest)? 'bookAppointment' : 'requestAppointment';
+
+    dispatch(showLoading());
+    const request = najax({
+        url: `${PROD_URL}/booking/${url}`,
+        type: 'POST',
+        crossOrigin: false,
+        contentType: "application/x-www-form-urlencoded",
+        dataType: "json",
+        data: data,
+        headers
+    });
+
+    request
+    .success((response) =>{
+      dispatch(bookingIsPaid(true));
+      dispatch(hideLoading());
+    })
+    .error((error) => {
+      const response = JSON.parse(error.responseText);
+      dispatch(hideLoading());
+      dispatch(addErrorMsg(response.message, "Retry"));
+    });
     
   };
 }
+
 
 
 export function proccessPayment(bookingId, paymentDetails){

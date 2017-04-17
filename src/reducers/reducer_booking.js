@@ -81,7 +81,7 @@ export default function (state = INITIAL_STATE , action){
       return { ...state, dependant: action.payload.dependant };
 
     case SET_PAYMENT_DETAILS:
-      return { ...state, payment: action.payload.token };
+      return { ...state, payment: action.payload.card };
 
     case SET_GRANT_TOTAL:
       return { ...state, grantTotal: action.payload.total } 

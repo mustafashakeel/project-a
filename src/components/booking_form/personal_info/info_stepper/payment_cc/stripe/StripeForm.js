@@ -66,8 +66,8 @@ export class StripeForm extends React.Component {
       if(result.error){
         this.setState({error: true, errorMsg: result.error.message})
       }else{
-        this.props.setPaymentsDetails(result);
-        this.props.onSave();
+        // this.props.setPaymentsDetails(result);
+        this.props.onSave(result);
 
       }
     });
