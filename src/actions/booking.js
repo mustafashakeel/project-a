@@ -4,7 +4,7 @@ import cookie from 'react-cookie';
 import timezones from '../reducers/mocks/timezones';
 import { isMobile } from '../utils';
 
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { showLoading, hideLoading } from './ui';
 import { addErrorMsg } from './ui';
 import { isLoggedIn } from './users'
 
@@ -195,10 +195,9 @@ export function leaseBooking(){
     })
     .error((error) => {
       let msg;
-      if (typeof error.responseText == "object"){
-        const response = JSON.parse(error.responseText);
-        msg = response.message
-      }else{
+      try {
+        msg = JSON.parse(error.responseText);
+      } catch(e) {
         msg = error.responseText;
       }
       dispatch(hideLoading());
@@ -257,7 +256,12 @@ export function bookAppointment(data, isRequest = false){
         dispatch(appointmentBooked(true));
         dispatch(hideLoading());
       }else{
-        let msg = error.responseText;    
+        let msg;
+        try {
+          msg = JSON.parse(error.responseText);
+        } catch(e) {
+          msg = error.responseText;
+        } 
         dispatch(hideLoading());
         dispatch(addErrorMsg(msg, "Retry"));
       }

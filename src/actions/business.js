@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import store from '../reducers';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { showLoading, hideLoading } from './ui';
 import { setBookingLocation } from './booking'
 
 export const GET_BIZ_INFO = "GET_BIZ_INFO";

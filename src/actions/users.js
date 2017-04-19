@@ -2,7 +2,7 @@ import axios from 'axios';
 import najax from 'najax';
 import cookie from 'react-cookie';
 
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { showLoading, hideLoading } from './ui';
 import { leaseBooking, setBookingDependant } from './booking';
 import { addErrorMsg } from './ui';
 

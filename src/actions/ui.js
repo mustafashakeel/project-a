@@ -1,4 +1,4 @@
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
+// import { showLoading, hideLoading } from 'react-redux-loading-bar'
 import { fetchAvailabilities } from './business';
 
 export const UPDATE_TAB  = 'UPDATE_TAB';
@@ -8,6 +8,7 @@ export const SHOW_LOGIN  = 'SHOW_LOGIN';
 export const ADD_ERROR_MSG = 'ADD_ERROR_MSG';
 export const SET_ERROR_MSGS = 'SET_ERROR_MSGS';
 export const CHANGE_MONTH_CALENDAR = 'CHANGE_MONTH_CALENDAR';
+export const SHOW_LOADER = 'SHOW_LOADER';
 
 export function updateTab(indexTab){
   return {
@@ -85,5 +86,18 @@ export function changeMonthCalendar(operator, num){
     });
 
     dispatch(fetchAvailabilities());
+  }
+}
+
+export function showLoading(){
+  return {
+    type: SHOW_LOADER,
+    payload: true
+  }
+}
+export function hideLoading(){
+  return {
+    type: SHOW_LOADER,
+    payload: false
   }
 }
