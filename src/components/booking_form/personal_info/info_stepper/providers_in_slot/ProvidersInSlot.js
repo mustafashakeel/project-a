@@ -28,7 +28,8 @@ export class ProvidersInSlot extends React.Component {
       const findProvider = this.props.business.providers.find((provider) => provider.providerId === providerId );
       providers.push(findProvider);
     })
-    this.selectProvider(providers[0]);
+    const selectedProvider = providers.find((provider) => provider.providerId === this.props.booking.lease.providerId );
+    this.selectProvider(selectedProvider);
     this.setState({ providers });
 
   }

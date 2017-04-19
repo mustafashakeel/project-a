@@ -33,10 +33,11 @@ class PersonalInfoContent extends React.Component {
       "DependentId": booking.dependant.id || "",
       "paymentRequirementInfo": booking.lease.paymentRequirementInfo,
       "ClientLocation": booking.clientLocation,
-      "ClientForms": booking.intake_forms.completed,
+      "ClientForms": (booking.intake_forms.completed.length)? booking.intake_forms.completed: "",
       "comments": booking.providerMessage,
-      "SaveCreditCard": "true",
-      "PaymentCustomerDetailId": booking.payment.paymentCustomerId
+      "SaveCreditCard": (booking.payment.token === "")? false : true,
+      "PaymentCustomerDetailId": booking.payment.paymentCustomerId,
+      "ProviderId": booking.provider.providerId
     };
 
     console.log(data);
@@ -67,9 +68,8 @@ class PersonalInfoContent extends React.Component {
           :
           <div>
             <InfoStepper />
-            {booking.provider.bookingCommentIsRequired &&
-              <BookingNote />
-            }
+            <BookingNote />
+
           </div>        
         }        
         </div>

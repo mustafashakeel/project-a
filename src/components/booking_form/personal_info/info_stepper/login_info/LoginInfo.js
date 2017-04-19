@@ -26,12 +26,6 @@ export class LoginInfo extends React.Component {
     this.props.setBookingDependant(newVal)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const fields = this.state.fields;
-    fields.dependantName.value = nextProps.booking.dependant;
-    this.setState({ fields });
-  }
-
   componentWillUpdate(nextProps, nextState) {
     if(!nextState.bookDependant && this.props.booking.dependant !== ''){
       this.props.setBookingDependant('')
