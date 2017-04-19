@@ -20,38 +20,6 @@ export class PaymentCC extends React.Component {
     paymentDetails : false
   }
 
-  // priceItems = []
-
-  // renderPriceItem(){
-  //   return this.priceItems.map((item, index)=>{
-  //     return <p key={index}><span>{item.name}: </span> <span>${item.amount.toFixed(2)}</span></p>
-  //   });
-  // }
-
-  // getTotal(){
-  //   if (this.props.booking.grantTotal === 0){
-  //     let total = 0;
-  //     this.priceItems.forEach((item)=>{
-  //       total = total + item.amount;
-  //     });
-  //     this.props.setGrantTotal(total.toFixed(2));
-  //   }    
-  // }
-
-  // componentWillMount() {
-  //     const price = this.props.booking.service.price
-  //     this.priceItems.push({name:"Subtotal", amount: price})
-  //   if (this.props.booking.location.tax) {
-  //     const taxes = this.props.booking.location.tax;
-  //     taxes.map((tax)=>{
-  //       const taxPrice = ((price * tax.rate) / 100);
-  //       this.priceItems.push({name: tax.name + "(" + tax.rate + "%)", amount: taxPrice})
-  //     });
-  //   }
-  //   this.getTotal();
-
-  // }
-
   render() {
     const {t, booking, business} = this.props;
     const payment = booking.lease.paymentInfoModel;
@@ -83,25 +51,10 @@ export class PaymentCC extends React.Component {
           }
 
         </div>
-
-
-            
+  
         {this.state.paymentDetails && 
           <SavedCards />
         }
-
-        {/*booking.payment && !this.state.paymentDetails &&
-          <div>
-            <p>
-              {booking.payment.cardType} **************{booking.payment.cardLastFour}
-              <span 
-                className="pointer editPayment" 
-                onClick={()=>this.setState({paymentDetails: !this.state.paymentDetails})}
-              >{t('application.user_info.edit')}</span>
-            </p>
-
-          </div>
-        */}
     
     </div>
     );

@@ -6,7 +6,6 @@ import Radio from 'react-md/lib/SelectionControls/Radio';
 import StripeForm from './stripe/StripeForm';
 import { setPaymentsDetails } from '../../../../../actions/index';
 
-
 import './SavedCards.scss';
 
 function mapStateToProps(state) {
@@ -40,7 +39,6 @@ export class SavedCards extends React.Component {
   }
 
   onChangeCard(selectedCard){
-    console.log(selectedCard)
     this.setState({ selectedCard });
     this.props.setPaymentsDetails(selectedCard);
   }
@@ -60,12 +58,8 @@ export class SavedCards extends React.Component {
   }
 
   componentWillMount() {
-    // if (this.props.booking.lease.customerPaymentDetails !== nextProps.booking.lease.customerPaymentDetails){
       this.setState({cards: this.props.booking.lease.customerPaymentDetails})
-    // }
   }
-
-
 
   render() {
     return (

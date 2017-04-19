@@ -30,6 +30,7 @@ class PersonalInfoContent extends React.Component {
     const data = {
       "BookingId": booking.lease.bookingId.toString(),
       "PaymentToken": token,
+      "DependentId": booking.dependant.id || "",
       "paymentRequirementInfo": booking.lease.paymentRequirementInfo,
       "ClientLocation": booking.clientLocation,
       "ClientForms": booking.intake_forms.completed,
@@ -49,7 +50,8 @@ class PersonalInfoContent extends React.Component {
       locationId: booking.location.id,
       offeringId: booking.service.offeringId,
       comments: booking.providerMessage,
-      clientLocation: booking.lease.clientLocation
+      clientLocation: booking.lease.clientLocation,
+      DependentId: booking.dependant.id || ""
     };
     console.log(data);
     this.props.bookAppointment(data, true);

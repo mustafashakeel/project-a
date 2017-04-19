@@ -7,9 +7,5 @@
     padding-bottom: 0 !important;
   }
 
-  .dependantInput{
-    input {
-      @include contentSize;
-    }
-  }
+  
 }

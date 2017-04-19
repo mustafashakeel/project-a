@@ -1,12 +1,12 @@
-import React from 'react';
+  import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
 import { isLoggedIn, setBookingDependant } from '../../../../../actions/index';
-// import { checkFields } from '../../../../../utils';
 
 import FadeInOut from '../../../../common/fade_in_out/FadeInOut';
 import TextField from 'react-md/lib/TextFields';
+import Dependants from './dependants/Dependants';
 
 import './LoginInfo.scss';
 
@@ -19,14 +19,7 @@ function mapStateToProps(state) {
 
 export class LoginInfo extends React.Component {
   state = {
-    bookDependant: false,
-    fields: {
-      dependantName: {
-        placeholder: "Dependant name",
-        value:'',
-        required: true
-      }
-    }
+    bookDependant: false
   }
 
   onChangeDependant(newVal) {
@@ -66,13 +59,10 @@ export class LoginInfo extends React.Component {
               <span>Book for myself</span>
             }
           </p>
-          <FadeInOut show={this.state.bookDependant} scroll={false}>
-            <TextField 
-              className="dependantInput"
-              onChange={this.onChangeDependant.bind(this)} 
-              { ...this.state.fields.dependantName}
-            />  
-          </FadeInOut>
+
+          {this.state.bookDependant && 
+            <Dependants/>  
+          }
           
         </div>
       </div>

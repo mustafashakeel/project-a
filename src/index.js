@@ -20,8 +20,8 @@ const createStoreWithMiddleware = applyMiddleware(promise, thunk)(createStore);
 
 const settings = {
   position: 'right',
-  // businessID: getURLParameter('businessID')
-  businessID: 3654
+  businessID: getURLParameter('businessID')
+  // businessID: 3654
 };
 
 if (getURLParameter('lang') !== null){

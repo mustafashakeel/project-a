@@ -1,0 +1,63 @@
+@import '../../../../../../styles/vars';
+.Dependants{
+  .newDependant{
+    input {
+      @include contentSize;
+    }
+    input[type=date] { 
+      padding-bottom: 0.5em;
+      border:none;
+      border-bottom: 1px solid lighten(#bdbdbd, 10%);
+      font-size: 1em;
+      color: #525252;
+      background-color: transparent;
+      outline: none;
+      width: 100%;
+   }
+   input[type=date]:active, input[type=date]:focus{
+      border-bottom: 2px solid $yocaleOrange;
+    }
+    input[type=text]:disabled, input[type=number]:disabled, input[type=date]:disabled,  textarea:disabled{
+        background-color: transparent;
+        border-bottom: 1px dotted lighten(#bdbdbd, 10%);
+        color: lighten(#bdbdbd, 10%);
+    }
+  }
+
+  .md-text{
+    @include contentSize;
+    color: #525252;
+  }
+  .md-selection-control-container{
+    height: auto;
+    margin: 15px 0;
+  }
+  .md-text-field-message--inactive {
+    height: 0;
+  }
+
+  .md-selection-control-group{
+    margin: 10px 0 0;
+    padding: 0;
+
+    .md-subheading-1{
+      color: #525252;
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+    .md-selection-control-container{
+      margin: 15px 0px;
+    }
+  }
+
+  .md-btn--icon{
+
+    height: 16px;
+    padding: 0px;
+    width: 25px;
+
+    .md-icon{
+      font-size: 16px;
+    }
+  }
+}
