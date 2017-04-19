@@ -64,6 +64,10 @@ class Credentials extends React.Component {
           error: false,
           errorText: t('application.user_info.login_fields.phoneNumber.error'),
           value: ''
+        },
+        sendSms: {
+          required: false,
+          value: false
         }
       }
     }
@@ -153,6 +157,13 @@ class Credentials extends React.Component {
     console.log(response);
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if(nextState.fields.phoneNumber.value !== "" && nextState.fields.phoneNumber.value.length === 1 && this.state.fields.sendSms.value === false){
+      this.onChangeFields('sendSms', true)
+
+    }
+  }
+
   render() {
     const {t} = this.props;
     return (
@@ -184,15 +195,16 @@ class Credentials extends React.Component {
                         />  
 
                       <TextField 
-                        placeholder={t('application.user_info.login_fields.phoneNumber.placeholder')}                        
+                        placeholder={t('application.user_info.login_fields.phoneNumber.placeholder')}                       
                         onChange={this.onChangeFields.bind(this, 'phoneNumber')} 
                         type="tel"
                         { ...this.state.fields.phoneNumber}/>  
                       <Checkbox
                         id="credentialsPassword"
                         name="credentialsPassword"
-                        label={t('application.user_info.login_fields.enableSms.placeholder')} 
-                        value={this.state.fields.sendSMS}
+                        label={t('application.user_info.login_fields.enableSms.placeholder')}
+                        onChange={this.onChangeFields.bind(this, 'sendSms')}  
+                        checked={this.state.fields.sendSms.value}
                       />                      
                     </div>
                   }
