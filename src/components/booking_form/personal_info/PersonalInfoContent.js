@@ -34,6 +34,7 @@ class PersonalInfoContent extends React.Component {
       "paymentRequirementInfo": booking.lease.paymentRequirementInfo,
       "ClientLocation": booking.clientLocation,
       "ClientForms": booking.intake_forms.completed,
+      "comments": booking.providerMessage,
       "SaveCreditCard": "true",
       "PaymentCustomerDetailId": booking.payment.paymentCustomerId
     };

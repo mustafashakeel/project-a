@@ -221,13 +221,19 @@ export function bookingIsPaid(flag){
 
 export function bookAppointment(data, isRequest = false){
 
-  return dispatch => {
+  return (dispatch, getState) => {
+
+    const {booking} = getState();
 
     let headers = {};
     if (cookie && cookie.load('access_token')) {
        headers = {
         'Authorization': `Bearer  ${cookie.load('access_token')}`
       }
+    }
+    if (booking.provider.bookingCommentIsRequired && data.comments === ""){
+      dispatch(addErrorMsg("Message is required", "Retry"));
+      return;
     }
 
     const url= (!isRequest)? 'bookAppointment' : 'requestAppointment';
