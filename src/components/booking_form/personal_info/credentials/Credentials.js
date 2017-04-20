@@ -208,6 +208,7 @@ class Credentials extends React.Component {
         <div className="innerCredentials">
           <TextField 
             id="credentialsEmail"
+            className="credentialsEmail"
             placeholder="Email *"
             onChange={this.onChangeFields.bind(this, 'email')}
             onKeyUp={this.typewatch.bind(this, this.emailExist.bind(this), 500)}
@@ -218,6 +219,7 @@ class Credentials extends React.Component {
                 <div>
                   {!this.props.user.isUser &&
                     <div>
+                      <p className="createAccountMsg">This appears to be your first booking with this email address on Yocale, provide us with the following</p>
                       <TextField 
                         placeholder={t('application.user_info.login_fields.firstName.placeholder')} 
                         onChange={this.onChangeFields.bind(this, 'firstName')} 
