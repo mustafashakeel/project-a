@@ -23,6 +23,7 @@ const INITIAL_STATE = {
     phoneNumber: '',
     sendSms: ''
   },
+  accountType: '',
   isLoggedIn: false,
   isUser: null,
   isNewUser: false,
@@ -57,9 +58,9 @@ export default function (state = INITIAL_STATE , action){
       return state;      
     case IS_REGISTERED_USER:
       var credentials = state.credentials;
-      credentials.email = action.payload.email
+      credentials.email = action.payload.email;
       
-      return {...state, isUser: action.payload.isRegistered, credentials}
+      return {...state, isUser: action.payload.isRegistered, credentials, accountType: action.payload.accountType}
     case LOGIN_AS_GUEST:
       return {...state, setNewPassword: true}
     case LOGIN_AS_USER:

@@ -45,30 +45,23 @@ export function userExists(email){
     dispatch(showLoading());
     request.then((response) => {
       dispatch(hideLoading());
-      if ( response.data.accountType === 'Yocale'){
-        dispatch({
-            type: IS_REGISTERED_USER,
-            payload: {
-              email: email,
-              isRegistered: true
-            }
-        });
-      }else{
-        dispatch({
-            type: IS_REGISTERED_USER,
-            payload: {
-              email: email,
-              isRegistered: false
-            }
-        });
-      }
+      dispatch({
+          type: IS_REGISTERED_USER,
+          payload: {
+            email: email,
+            isRegistered: true,
+            accountType: response.data.accountType
+          }
+      });
+
     })
     .catch((error) => {
       dispatch({
           type: IS_REGISTERED_USER,
           payload: {
             email: email,
-            isRegistered: false
+            isRegistered: false,
+            accountType: ''
           }
       });
       dispatch(hideLoading());
@@ -207,6 +200,36 @@ export function loginAsGuest(fields){
 
     
   };
+}
+
+export function loginWithSocial(data){
+  return dispatch => {
+    const request = axios.request({
+      url: `${PROD_URL}/account/accountType`,
+      method: 'get',
+      params: { email: data.email }
+    });
+    dispatch(showLoading());
+    request.then((response) => {
+      if (response.accountType === data.provider){
+        const loginData = {
+          email: {
+            value: data.email
+          },
+          password: {
+            value: ''
+          }
+        };
+        dispatch(loginUser(loginData));
+      }
+
+    })
+    .catch((error) => {
+      console.log(`Create user with ${data.provider}`, data);
+      dispatch(hideLoading());
+    });  
+
+  };  
 }
 
 export function recoverPasswordSent(sent){

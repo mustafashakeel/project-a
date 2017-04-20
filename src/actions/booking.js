@@ -194,12 +194,10 @@ export function leaseBooking(){
       dispatch(hideLoading());
     })
     .error((error) => {
-      let msg;
+      let msg = error.responseText;;
       try {
-        msg = JSON.parse(error.responseText);
-      } catch(e) {
-        msg = error.responseText;
-      }
+        msg = JSON.parse(error.responseText).message;
+      } catch(e) {}
       dispatch(hideLoading());
       dispatch(addErrorMsg(msg, "Retry"));
     });  
@@ -256,12 +254,10 @@ export function bookAppointment(data, isRequest = false){
         dispatch(appointmentBooked(true));
         dispatch(hideLoading());
       }else{
-        let msg;
+        let msg = error.responseText;
         try {
           msg = JSON.parse(error.responseText);
-        } catch(e) {
-          msg = error.responseText;
-        } 
+        } catch(e) {} 
         dispatch(hideLoading());
         dispatch(addErrorMsg(msg, "Retry"));
       }
