@@ -17,14 +17,18 @@ export class ThankPage extends React.Component {
     showSummary: true
   }
 
+  showSummary(flag){
+    this.setState({ showSummary: flag})
+  }
+
   componentWillMount() {
     if (this.props.user.setNewPassword){
-      this.setState({ showSummary: false})
+      this.showSummary(false)
     }
   }
   componentWillReceiveProps(nextProps) {
     if(this.props.user.passwordUpdated !== nextProps.user.passwordUpdated && nextProps.user.passwordUpdated === true){
-      this.setState({ showSummary: true})
+      this.showSummary(true)
     }
   }
 
@@ -34,10 +38,10 @@ export class ThankPage extends React.Component {
       <div className="ThankPage">
         {!this.state.showSummary ?
           <div>
-            <UpdatePassword/>
+            <UpdatePassword onSkip={this.showSummary.bind(this,true)}/>
             <button 
               className="continueBtn"
-              onClick={() => this.setState({showSummary: true})}
+              onClick={this.showSummary.bind(this,true)}
             >Continue</button>
           </div>
         :
