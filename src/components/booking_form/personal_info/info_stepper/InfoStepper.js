@@ -127,7 +127,7 @@ export class InfoStepper extends React.Component {
                 <Step
                   completed={false} >
                   <h4>Cancelation Policy</h4>
-                  <div className="stepContentBorder">
+                  <div className="stepContent">
                     <p>{booking.lease.cancellationPolicy}</p>           
                   </div>
                 </Step>

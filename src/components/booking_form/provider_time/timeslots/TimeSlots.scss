@@ -13,6 +13,7 @@
       justify-content: left;
 
       li {
+        position: relative;
         background: $lightGrey;
         color: darken($lightGrey, 50%);
         padding: 5px;
@@ -29,4 +30,32 @@
         }
       }
   }
+
+  .md-icon {
+    font-size: 12px !important;
+    margin-right: 5px;
+  }
+
+  .unconfirmedBookingsMsg{
+    margin-top: 10px;
+    font-size: 12px;
+    padding-left: 10px;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    .md-icon{
+      margin-bottom: 2px;
+    }
+  }
+
+  .slotsAvailable{
+    .md-icon{
+      position: absolute;
+      right: 5px;
+      top:7px;
+      // margin-left: 5px;
+    }
+  }
+
+  
 }

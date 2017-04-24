@@ -14,6 +14,7 @@ const elements = stripe.elements();
 
 var card = elements.create('card', {
   iconStyle: 'solid',
+  hidePostalCode: true,
   style: {
     base: {
       iconColor: '#8898AA',

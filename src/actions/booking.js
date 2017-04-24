@@ -259,7 +259,7 @@ export function bookAppointment(data, isRequest = false){
       }else{
         let msg = error.responseText;
         try {
-          msg = JSON.parse(error.responseText);
+          msg = JSON.parse(error.responseText).message;
         } catch(e) {} 
         dispatch(hideLoading());
         dispatch(addErrorMsg(msg, "Retry"));

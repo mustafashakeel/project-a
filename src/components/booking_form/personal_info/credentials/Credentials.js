@@ -155,6 +155,15 @@ class Credentials extends React.Component {
     }
   }
 
+  loginSocial(){
+    const data = {
+      email: this.state.fields.email,
+      password: { value: "" }
+    };
+
+    this.props.loginUser(data);
+  }
+
   validFields(fieldsCopy){
     const fieldsState = checkFields(fieldsCopy)      
     this.setState({ fields: fieldsState.fields });
@@ -273,13 +282,25 @@ class Credentials extends React.Component {
                           onClick={this.loginAsUserEvent.bind(this)}
                         >{t('application.user_info.continue')}</button>
                       }
+                      {this.props.user.accountType === "Facebook" &&
+                         <button 
+                          className="yocaleButton facebookButton"
+                          onClick={this.loginSocial.bind(this)}
+                        >Continue with Facebook</button>
+                      }
+                      {this.props.user.accountType === "Google" &&
+                         <button 
+                          className="yocaleButton googleButton"
+                          onClick={this.loginSocial.bind(this)}
+                        >Continue with Google</button>
+                      }
                       </div>
                         
                   )}
                   
                 </div>
             </FadeInOut>
-            {!this.props.user.isUser &&
+            {/*!this.props.user.isUser &&
               <div className="socialButtons">
                 <FacebookLogin
                   appId={facebookAppId}
@@ -296,7 +317,7 @@ class Credentials extends React.Component {
                   onFailure={this.responseGoogle.bind(this)}
                   />
               </div>
-            }
+            */}
         </div>
       </div>
     );
