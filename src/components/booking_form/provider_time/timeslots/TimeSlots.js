@@ -24,9 +24,17 @@ export class TimeSlots extends React.Component {
     timezone: ''
   }
 
+  getActiveClassName(slot){
+    slot = moment(slot.time);
+    return classNames({
+      active : this.props.booking.timestamp.hour() === slot.hour() && this.props.booking.timestamp.minutes() === slot.minutes()
+    })
+  }
+
+
   listItems() {
     return this.props.selectedDateObject.timeSlots.map((slot, key) =>
-      <li key={key} onClick={this.props.onSelected.bind(null, slot)}>
+      <li key={key} onClick={this.props.onSelected.bind(null, slot)} className={this.getActiveClassName(slot)}>
         {moment(slot.time).utcOffset(this.state.timezone).format("h:mm A")}
         {!this.props.selectedDateObject.allowConfirmedBookings &&
           <FontIcon>warning</FontIcon>
@@ -41,6 +49,9 @@ export class TimeSlots extends React.Component {
 
   render() {
     const {t} = this.props;
+    if (!this.props.booking.timestamp){
+      return (<div></div>);
+    }
     const cloneTimestamp = this.props.booking.timestamp.clone();
     return (
       <div className="TimeSlots">

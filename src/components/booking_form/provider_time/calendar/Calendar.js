@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import _ from 'underscore';
 
-import { setBookingTime, fetchAvailabilities, changeMonthCalendar, allowConfirmedBooking } from '../../../../actions/index';
+import { setBookingTime, fetchAvailabilities, changeMonthCalendar, allowConfirmedBooking, leaseBooking } from '../../../../actions/index';
 
 import Datetime from 'react-datetime';
 import FadeInOut from '../../../common/fade_in_out/FadeInOut';
@@ -17,7 +17,8 @@ import './Calendar.scss';
 function mapStateToProps(state) {
   return {
     booking: state.booking,
-    availabilities: state.business.availabilities
+    availabilities: state.business.availabilities,
+    isLoggedIn: state.user.isLoggedIn
   };
 }
 
@@ -28,9 +29,6 @@ export class Calendar extends React.Component {
     filteredDates: []
   }
 
-  constructor(props) {
-    super(props);
-  }
 
   isValidDate(current){
     const timezone = (this.props.booking.userTimezone !== '')? this.props.booking.userTimezone.utc : '';
@@ -63,12 +61,15 @@ export class Calendar extends React.Component {
       );
   }
 
-  onSelectedTimeSlot = (slot) => {
+  onSelectedTimeSlot(slot){
     this.props.setBookingTime(moment(slot.time), slot.providers);
     this.props.onSlotSelected();
+    if (this.props.isLoggedIn && this.props.booking.lease !== null){
+      this.props.leaseBooking(true);
+    }
   }
 
-  onChangeDate = (selectedDate) => {
+  onChangeDate(selectedDate){
     const selectedDateObject = this.props.availabilities.find((availabilityDate) => {
       return moment(availabilityDate.startDate).format('YYYY-MM-DD') === selectedDate.format('YYYY-MM-DD')
     })
@@ -129,5 +130,5 @@ export class Calendar extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {setBookingTime, fetchAvailabilities, changeMonthCalendar, allowConfirmedBooking}
+  {setBookingTime, fetchAvailabilities, changeMonthCalendar, allowConfirmedBooking, leaseBooking}
 )(Calendar)

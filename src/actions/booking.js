@@ -149,7 +149,7 @@ export function saveIntakeForm(formObj){
   };
 }
 
-export function leaseBooking(){
+export function leaseBooking(showLoader){
 
   return (dispatch, getState) => {
     const {booking} = getState();
@@ -169,6 +169,10 @@ export function leaseBooking(){
        headers = {
         'Authorization': `Bearer  ${cookie.load('access_token')}`
       }
+    }
+
+    if(showLoader){
+      dispatch(showLoading());
     }
 
     const request = najax({

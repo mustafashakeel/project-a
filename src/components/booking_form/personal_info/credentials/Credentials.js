@@ -150,7 +150,6 @@ class Credentials extends React.Component {
     const fieldsState = this.validFields(validationFields);
 
     if (fieldsState.valid){
-      //change for final login as user
       this.props.loginUser(fieldsState.fields);
     }
   }

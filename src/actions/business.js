@@ -93,6 +93,11 @@ export function fetchProviders(businessId, locationId, offeringId){
 export function fetchAvailabilities(timezone){
   return (dispatch, getState) => {
     const {booking, business, ui} = getState();
+
+    if(!booking.provider.providerId || booking.provider.providerId === null ){
+      return;
+    }
+
     const params = {
           businessId: business.info.id,
           locationId: booking.location.id,

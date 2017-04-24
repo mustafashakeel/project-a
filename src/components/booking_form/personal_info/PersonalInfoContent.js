@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
-import { isLoggedIn, proccessPayment, bookAppointment } from '../../../actions'
+import { isLoggedIn, proccessPayment, bookAppointment, leaseBooking } from '../../../actions'
 
 import Credentials from './credentials/Credentials';
 import InfoStepper from './info_stepper/InfoStepper';
@@ -58,6 +58,8 @@ class PersonalInfoContent extends React.Component {
     console.log(data);
     this.props.bookAppointment(data, true);
   }
+
+
   render() {
     const {t, booking} = this.props;
     return (
@@ -100,5 +102,5 @@ class PersonalInfoContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { isLoggedIn, proccessPayment, bookAppointment }
+  { isLoggedIn, proccessPayment, bookAppointment, leaseBooking }
 )(translate()(PersonalInfoContent))

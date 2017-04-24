@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { fetchAvailabilities, setBookingProvider, fetchProviders, setUserTimezone } from '../../../actions/index';
+import { fetchAvailabilities, setBookingProvider, fetchProviders, setUserTimezone, setBookingTime } from '../../../actions/index';
 import timezones from '../../../reducers/mocks/timezones';
 
 import FadeInOut from '../../common/fade_in_out/FadeInOut';
@@ -48,14 +48,18 @@ export class ProviderTimeContent extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { business, booking } = nextProps;
-    if (nextProps.currentTab === 1 ) {
-      if (booking.provider.providerId !== this.props.booking.provider.providerId){
+      if ( this.props.currentTab === 1 && booking.provider.providerId !== this.props.booking.provider.providerId){
+        this.props.setBookingTime(null);
+        this.child.resetSelectedDate();
         this.props.fetchAvailabilities();
+        
       }
-      if (nextProps.business.providers.length === 0){
+      if (booking.service.offeringId && booking.service.offeringId !== this.props.booking.service.offeringId){
+        if (booking.provider.providerId !== null){
+          this.props.setBookingProvider({});
+        }
         this.props.fetchProviders(business.info.id, booking.location.id, booking.service.offeringId);
       }
-    }
   }
 
   render() {
@@ -106,5 +110,5 @@ export class ProviderTimeContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  {fetchAvailabilities, setBookingProvider, fetchProviders, setUserTimezone}
+  {fetchAvailabilities, setBookingProvider, fetchProviders, setUserTimezone, setBookingTime}
 )(translate()(ProviderTimeContent))
