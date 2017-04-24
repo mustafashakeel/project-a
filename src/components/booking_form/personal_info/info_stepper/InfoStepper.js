@@ -122,6 +122,16 @@ export class InfoStepper extends React.Component {
                   </div>
                 </Step>
               }
+
+              {booking.lease.cancellationPolicy  &&
+                <Step
+                  completed={false} >
+                  <h4>Cancelation Policy</h4>
+                  <div className="stepContentBorder">
+                    <p>{booking.lease.cancellationPolicy}</p>           
+                  </div>
+                </Step>
+              }
             </div>
           }
 

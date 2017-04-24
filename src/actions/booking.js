@@ -6,7 +6,7 @@ import { isMobile } from '../utils';
 
 import { showLoading, hideLoading } from './ui';
 import { addErrorMsg } from './ui';
-import { isLoggedIn } from './users'
+import { isLoggedIn, LOGIN_AS_USER } from './users'
 
 export const SET_BOOKING_TIME = 'SET_BOOKING_TIME';
 export const SET_BOOKING_STATUS = 'SET_BOOKING_STATUS';
@@ -181,9 +181,8 @@ export function leaseBooking(){
         headers: headers
     });
 
-    // dispatch(showLoading());
-
     request.success((response) => {
+      dispatch({ type: LOGIN_AS_USER });
       dispatch({
           type: LEASE_BOOKING,
           payload: {

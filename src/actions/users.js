@@ -139,12 +139,13 @@ export function loginUser(fields){
     request.success((response) =>{
       if (response.access_token){
         cookie.save('access_token', response.access_token);
-        dispatch({ 
-          type: LOGIN_AS_USER
-        });
+        
         if (booking.allowConfirmedBooking){
           dispatch(leaseBooking());
         }else{
+          dispatch({ 
+            type: LOGIN_AS_USER
+          });
           dispatch(isLoggedIn(true));
           dispatch(hideLoading());
         }
