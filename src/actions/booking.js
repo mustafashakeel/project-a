@@ -246,6 +246,10 @@ export function bookAppointment(data, isRequest = false){
     });
 
     request.success((response) =>{
+      dispatch({
+        type: BOOK_APPOINTMENT,
+        payload: response
+      })
       dispatch(appointmentBooked(true));
       dispatch(hideLoading());
     })

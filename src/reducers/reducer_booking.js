@@ -25,7 +25,7 @@ const INITIAL_STATE = {
   lease: null,
   isBooked: false,
   isPaid: false,
-  booked_summary: { status: 0},
+  booked_summary: {},
   location: {},
   service:{},
   intake_forms: {
