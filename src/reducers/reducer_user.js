@@ -8,7 +8,9 @@ import {
   FORGOT_PASSWORD_SENT,
   GET_USER_LOCATIONS,
   UPDATED_PASSWORD,
-  SET_PASSWORD
+  SET_PASSWORD,
+  GET_DEPENDANTS,
+  ADD_DEPENDANT
 } 
 from '../actions/index';
 
@@ -21,13 +23,15 @@ const INITIAL_STATE = {
     phoneNumber: '',
     sendSms: ''
   },
+  accountType: '',
   isLoggedIn: false,
   isUser: null,
   isNewUser: false,
   setNewPassword: false,
   passwordUpdated : false,
   recoverPasswordSent: false,
-  userLocations: []
+  userLocations: [],
+  dependants: []
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -54,9 +58,9 @@ export default function (state = INITIAL_STATE , action){
       return state;      
     case IS_REGISTERED_USER:
       var credentials = state.credentials;
-      credentials.email = action.payload.email
+      credentials.email = action.payload.email;
       
-      return {...state, isUser: action.payload.isRegistered, credentials}
+      return {...state, isUser: action.payload.isRegistered, credentials, accountType: action.payload.accountType}
     case LOGIN_AS_GUEST:
       return {...state, setNewPassword: true}
     case LOGIN_AS_USER:
@@ -64,7 +68,13 @@ export default function (state = INITIAL_STATE , action){
     case FORGOT_PASSWORD_SENT:
       return { ...state, recoverPasswordSent: action.payload.sent}
     case GET_USER_LOCATIONS:
-      return { ...state, userLocations: JSON.parse(action.payload.locations)}
+      return { ...state, userLocations: action.payload.locations}
+    case GET_DEPENDANTS:
+      return { ...state, dependants: action.payload.dependants}
+    case ADD_DEPENDANT:
+      const dependants = state.dependants;
+      dependants.push(action.payload.dependant);
+      return { ...state, dependants}
     default:
       return state;
 

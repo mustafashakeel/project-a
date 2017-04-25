@@ -50,11 +50,18 @@ class BookingForm extends React.Component {
   }
 
   changeTab = (tabIndex) => {
+    const {booking} = this.props;
+    if (tabIndex == 1 && !booking.service.offeringId){
+      return;
+    }
+    if (tabIndex == 2 && (!booking.service.offeringId || booking.timestamp == null)){
+      return;
+    }
     this.props.updateTab(tabIndex);
   }
 
   componentWillReceiveProps(nextProps) {
-    const {booking} = nextProps;
+    const {booking, t} = nextProps;
     const newSteps = this.state;
     if (booking.location.address && booking.service.name){
       newSteps.step1.label = booking.location.address;
@@ -62,6 +69,8 @@ class BookingForm extends React.Component {
     }
     if (booking.timestamp){
       newSteps.step2.label = booking.timestamp.format("dddd MMMM Do");
+    }else{
+      newSteps.step2.label = t('application.steps.step2');
     }
 
     this.setState(newSteps)
@@ -98,6 +107,7 @@ class BookingForm extends React.Component {
           <SwipeableViews
             index={this.props.currentTab}          
             onChangeIndex={this.changeTab}
+            disabled={true}
           >
             <div className="TabContainer">
               <LocationServiceContent onFinish={this.changeTab.bind(this, 1)}/>

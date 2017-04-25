@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import widgetSettings from '../../../widgetSettings';
-import { fetchBiz, fetchLocationServices, setBookingLocation } from '../../../actions/index';
+import { fetchBiz, fetchLocationServices, setBookingLocation, setBookingService } from '../../../actions/index';
 
 import Stepper from '../../common/stepper/Stepper';
 import Step from '../../common/stepper/Step';
@@ -37,6 +37,7 @@ class LocationServiceContent extends React.Component {
     this.setState({
       currentStep: 1
     })
+    this.props.setBookingService({})
   }
 
   componentWillMount() {
@@ -103,5 +104,5 @@ class LocationServiceContent extends React.Component {
 
 export default connect(
   mapStateToProps,
-  { fetchBiz, fetchLocationServices, setBookingLocation }
+  { fetchBiz, fetchLocationServices, setBookingLocation, setBookingService }
 )(translate()(LocationServiceContent))

@@ -82,6 +82,7 @@ export class InfoStepper extends React.Component {
           }
           {booking.allowConfirmedBooking &&  
             <div>
+              {booking.intake_forms.source !== null &&
               <Step
                 completed={this.state.intakeFormTaken}
                 stepLine >
@@ -110,12 +111,24 @@ export class InfoStepper extends React.Component {
                   }
                   </div>
               </Step>
+              }
+
               {booking.lease.paymentRequirementInfo !== null &&
                 <Step
                   completed={false} >
                   <h4>{t('application.user_info.payment')}</h4>
                   <div className="stepContentBorder">
                     <PaymentCC />            
+                  </div>
+                </Step>
+              }
+
+              {booking.lease.cancellationPolicy  &&
+                <Step
+                  completed={false} >
+                  <h4>Cancelation Policy</h4>
+                  <div className="stepContent">
+                    <p>{booking.lease.cancellationPolicy}</p>           
                   </div>
                 </Step>
               }

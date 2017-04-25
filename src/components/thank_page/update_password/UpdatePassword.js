@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { updateUserPassword } from '../../../actions/index';
 import TextField from 'react-md/lib/TextFields';
 
+import './UpdatePassword.scss';
+
 function mapStateToProps(state) {
   return {
     user: state.user,
@@ -26,25 +28,33 @@ export class UpdatePassword extends React.Component {
   render() {
     const {booking} = this.props;
     return (
-      <div>
-        {booking.allowConfirmedBooking ?
-          <h4>Your booking is confirmed</h4>
-          :
-          <h4>Appointment has been requested, you will receive an email when Provider Name has confirmed this appointment.</h4>
-        }
-        <h4>We have created an account for you<br/>Set a password</h4>
-        <TextField 
-          id="credentialsEmail"
-          placeholder="New password *"
-          type="password"
-          onChange={this.onChangePassword.bind(this)} 
-          value={this.state.password}
-          />
+      <div className="UpdatePassword">
+        <div className="container">
+          <p>Set a password if you would like to:</p>
+          <ol>
+            <li>Modify/cancel this appointment in future</li>
+            <li>Keep track of your invoices online for this booking</li>
+            <li>Book your future appointments faster!</li>
+          </ol>
 
-            <button 
-              className="yocaleButton"
-              onClick={this.props.updateUserPassword.bind(this, this.state.password)}
-            >Create password</button>
+          <TextField 
+            id="credentialsEmail"
+            placeholder="New password *"
+            type="password"
+            onChange={this.onChangePassword.bind(this)} 
+            value={this.state.password}
+            />
+            <div className="inlineButtons">
+              <button 
+                className="yocaleButton"
+                onClick={this.props.updateUserPassword.bind(this, this.state.password)}
+              >Create password</button>
+              <button 
+                className="yocaleButton skipButton"
+                onClick={this.props.onSkip}
+              >Skip</button>
+            </div>
+        </div>
       </div>
     );
   }

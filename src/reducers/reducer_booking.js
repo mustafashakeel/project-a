@@ -18,14 +18,14 @@ import {
   SET_USER_TIMEZONE,
   SET_USER_LOCATION,
   ALLOW_CONFIRMED_BOOKING,
-  SET_PROVIDER_MESSAGE
+  SET_PROVIDER_MESSAGE  
 } from '../actions/index';
 
 const INITIAL_STATE = {
   lease: null,
   isBooked: false,
   isPaid: false,
-  booked_summary: { status: 0},
+  booked_summary: {},
   location: {},
   service:{},
   intake_forms: {

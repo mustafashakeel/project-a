@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import store from '../reducers';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { showLoading, hideLoading } from './ui';
 import { setBookingLocation } from './booking'
 
 export const GET_BIZ_INFO = "GET_BIZ_INFO";
@@ -93,6 +93,11 @@ export function fetchProviders(businessId, locationId, offeringId){
 export function fetchAvailabilities(timezone){
   return (dispatch, getState) => {
     const {booking, business, ui} = getState();
+
+    if(!booking.provider.providerId || booking.provider.providerId === null ){
+      return;
+    }
+
     const params = {
           businessId: business.info.id,
           locationId: booking.location.id,

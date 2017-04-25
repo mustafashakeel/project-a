@@ -2,8 +2,8 @@ import axios from 'axios';
 import najax from 'najax';
 import cookie from 'react-cookie';
 
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { leaseBooking } from './booking';
+import { showLoading, hideLoading } from './ui';
+import { leaseBooking, setBookingDependant } from './booking';
 import { addErrorMsg } from './ui';
 
 export const UPDATE_USER_CREDENTIALS = 'UPDATE_USER_CREDENTIALS';
@@ -17,12 +17,10 @@ export const FORGOT_PASSWORD_SENT = 'FORGOT_PASSWORD_SENT';
 export const GET_USER_LOCATIONS = 'GET_USER_LOCATIONS';
 export const UPDATED_PASSWORD = 'UPDATED_PASSWORD';
 export const SET_PASSWORD = 'SET_PASSWORD';
+export const GET_DEPENDANTS = 'GET_DEPENDANTS';
+export const ADD_DEPENDANT = 'ADD_DEPENDANT';
 
-
-const ROOT_URL = "https://private-3f77b9-yocaleapi.apiary-mock.com/v1";
 const PROD_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
-
-// const ROOT_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
 
 export function fetchUser(email){  
 
@@ -47,30 +45,23 @@ export function userExists(email){
     dispatch(showLoading());
     request.then((response) => {
       dispatch(hideLoading());
-      if ( response.data.accountType === 'Yocale'){
-        dispatch({
-            type: IS_REGISTERED_USER,
-            payload: {
-              email: email,
-              isRegistered: true
-            }
-        });
-      }else{
-        dispatch({
-            type: IS_REGISTERED_USER,
-            payload: {
-              email: email,
-              isRegistered: false
-            }
-        });
-      }
+      dispatch({
+          type: IS_REGISTERED_USER,
+          payload: {
+            email: email,
+            isRegistered: true,
+            accountType: response.data.accountType
+          }
+      });
+
     })
     .catch((error) => {
       dispatch({
           type: IS_REGISTERED_USER,
           payload: {
             email: email,
-            isRegistered: false
+            isRegistered: false,
+            accountType: ''
           }
       });
       dispatch(hideLoading());
@@ -148,12 +139,13 @@ export function loginUser(fields){
     request.success((response) =>{
       if (response.access_token){
         cookie.save('access_token', response.access_token);
-        dispatch({ 
-          type: LOGIN_AS_USER
-        });
+        
         if (booking.allowConfirmedBooking){
           dispatch(leaseBooking());
         }else{
+          dispatch({ 
+            type: LOGIN_AS_USER
+          });
           dispatch(isLoggedIn(true));
           dispatch(hideLoading());
         }
@@ -211,6 +203,36 @@ export function loginAsGuest(fields){
   };
 }
 
+export function loginWithSocial(data){
+  return dispatch => {
+    const request = axios.request({
+      url: `${PROD_URL}/account/accountType`,
+      method: 'get',
+      params: { email: data.email }
+    });
+    dispatch(showLoading());
+    request.then((response) => {
+      if (response.accountType === data.provider){
+        const loginData = {
+          email: {
+            value: data.email
+          },
+          password: {
+            value: ''
+          }
+        };
+        dispatch(loginUser(loginData));
+      }
+
+    })
+    .catch((error) => {
+      console.log(`Create user with ${data.provider}`, data);
+      dispatch(hideLoading());
+    });  
+
+  };  
+}
+
 export function recoverPasswordSent(sent){
   return {
     type: FORGOT_PASSWORD_SENT,
@@ -231,6 +253,7 @@ export function getUserLocations(){
     const request = najax({
       url:`${PROD_URL}/booking/customerOnsiteLocations`,
       type: 'get',
+      dataType: 'json',
       headers
     });
 
@@ -245,7 +268,7 @@ export function getUserLocations(){
       });
     })
     .error((error) => {
-      // dispatch(hideLoading());
+      dispatch(hideLoading());
       dispatch(addErrorMsg(error.message || 'There was an error'));
     });
   };
@@ -265,6 +288,7 @@ export function updateUserPassword(password){
     const request = najax({
       url:`${PROD_URL}/account/changePassword/`,
       type: 'post',
+      dataType: 'json',
       data: {
         oldPassword: user.credentials.password,
         newPassword: password
@@ -283,13 +307,86 @@ export function updateUserPassword(password){
       });
     })
     .error((error) => {
-      const response = JSON.parse(error.responseText);
       dispatch(hideLoading());
-      dispatch(addErrorMsg(response.message, "Retry"));
+      dispatch(addErrorMsg(error.message, "Retry"));
     });
   };
 }
 
+export function getDependants(){
+  return (dispatch) => {
+    let headers = {};
+    if (cookie && cookie.load('access_token')) {
+       headers = {
+        'Authorization': `Bearer ${cookie.load('access_token')}`
+        };
+    }
 
+    const request = najax({
+      url:`${PROD_URL}/client/dependents/`,
+      type: 'get',
+      dataType: 'json',
+      headers
+    });
 
+    dispatch(showLoading());
+    request
+    .success((response) =>{
+      dispatch({
+        type: GET_DEPENDANTS,
+        payload: {
+          dependants: response
+        }
+      });
+      dispatch(hideLoading());
+    })
+    .error((error) => {
+      dispatch(hideLoading());
+      dispatch(addErrorMsg('There was an error. Please try again', "Retry"));
+    });
+  };
+}
+
+export function addDependant(fields){
+  return (dispatch) => {
+    let headers = {};
+    if (cookie && cookie.load('access_token')) {
+       headers = {
+        'Authorization': `Bearer ${cookie.load('access_token')}`
+        };
+    }
+
+    const data = {
+      "firstName": fields.firstName.value,
+      "lastName": fields.lastName.value,
+      "dob": fields.dob.value,
+      "gender": fields.gender.value
+    };
+
+    const request = najax({
+      url:`${PROD_URL}/client/dependents/`,
+      type: 'post',
+      dataType: 'json',
+      data: data,
+      headers
+    });
+
+    dispatch(showLoading());
+    request
+    .success((response) =>{
+      dispatch({
+        type: ADD_DEPENDANT,
+        payload: {
+          dependant: response
+        }
+      });
+      dispatch(setBookingDependant(response));
+      dispatch(hideLoading());
+    })
+    .error((error) => {
+      dispatch(hideLoading());
+      dispatch(addErrorMsg('There was an error. Please try again', 'Retry'));
+    });
+  };
+}
 

@@ -17,12 +17,17 @@ export class MenuServices extends React.Component {
   renderParent = () => {
     return this.props.list.map((parent)=>{
       var children = parent.children.map((child) => {
+        if(child.isHidden){
+          return;
+        }
+
         return React.createElement(this.props.childComponent, {
           ...child,
           toggleTooltip: this.props.toggleTooltip,
           key: child.offeringId
         });
       });
+      
       return React.createElement(this.props.parentComponent, {
         ...parent,
         key: parent.id,

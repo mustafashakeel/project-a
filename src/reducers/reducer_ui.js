@@ -6,7 +6,8 @@ import {
   SHOW_LOGIN, 
   ADD_ERROR_MSG, 
   SET_ERROR_MSGS,
-  CHANGE_MONTH_CALENDAR
+  CHANGE_MONTH_CALENDAR,
+  SHOW_LOADER
 } from '../actions/index';
 
 const INITIAL_STATE = { 
@@ -20,7 +21,8 @@ const INITIAL_STATE = {
     toasts: [],
     autohide:true
   },
-  calendarMonth: moment().startOf('month')
+  calendarMonth: moment().startOf('month'),
+  loading: false
 };
 
 export default function (state = INITIAL_STATE , action){
@@ -49,6 +51,8 @@ export default function (state = INITIAL_STATE , action){
 
     case CHANGE_MONTH_CALENDAR:
       return { ...state, calendarMonth: action.payload.newMonth }
+    case SHOW_LOADER:
+      return { ...state, loading: action.payload}
 
     default:
       return state;

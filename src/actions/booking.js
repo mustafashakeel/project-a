@@ -4,9 +4,9 @@ import cookie from 'react-cookie';
 import timezones from '../reducers/mocks/timezones';
 import { isMobile } from '../utils';
 
-import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { showLoading, hideLoading } from './ui';
 import { addErrorMsg } from './ui';
-import { isLoggedIn } from './users'
+import { isLoggedIn, LOGIN_AS_USER } from './users'
 
 export const SET_BOOKING_TIME = 'SET_BOOKING_TIME';
 export const SET_BOOKING_STATUS = 'SET_BOOKING_STATUS';
@@ -149,7 +149,7 @@ export function saveIntakeForm(formObj){
   };
 }
 
-export function leaseBooking(){
+export function leaseBooking(showLoader){
 
   return (dispatch, getState) => {
     const {booking} = getState();
@@ -171,6 +171,10 @@ export function leaseBooking(){
       }
     }
 
+    if(showLoader){
+      dispatch(showLoading());
+    }
+
     const request = najax({
         url: `${PROD_URL}/booking/leaseAppointment`,
         // url: 'http://demo1743653.mockable.io/lease',
@@ -181,9 +185,8 @@ export function leaseBooking(){
         headers: headers
     });
 
-    // dispatch(showLoading());
-
     request.success((response) => {
+      dispatch({ type: LOGIN_AS_USER });
       dispatch({
           type: LEASE_BOOKING,
           payload: {
@@ -194,13 +197,10 @@ export function leaseBooking(){
       dispatch(hideLoading());
     })
     .error((error) => {
-      let msg;
-      if (typeof error.responseText == "object"){
-        const response = JSON.parse(error.responseText);
-        msg = response.message
-      }else{
-        msg = error.responseText;
-      }
+      let msg = error.responseText;;
+      try {
+        msg = JSON.parse(error.responseText).message;
+      } catch(e) {}
       dispatch(hideLoading());
       dispatch(addErrorMsg(msg, "Retry"));
     });  
@@ -221,13 +221,19 @@ export function bookingIsPaid(flag){
 
 export function bookAppointment(data, isRequest = false){
 
-  return dispatch => {
+  return (dispatch, getState) => {
+
+    const {booking} = getState();
 
     let headers = {};
     if (cookie && cookie.load('access_token')) {
        headers = {
         'Authorization': `Bearer  ${cookie.load('access_token')}`
       }
+    }
+    if (booking.provider.bookingCommentIsRequired && data.comments === ""){
+      dispatch(addErrorMsg("Message is required", "Retry"));
+      return;
     }
 
     const url= (!isRequest)? 'bookAppointment' : 'requestAppointment';
@@ -243,6 +249,10 @@ export function bookAppointment(data, isRequest = false){
     });
 
     request.success((response) =>{
+      dispatch({
+        type: BOOK_APPOINTMENT,
+        payload: response
+      })
       dispatch(appointmentBooked(true));
       dispatch(hideLoading());
     })
@@ -251,9 +261,10 @@ export function bookAppointment(data, isRequest = false){
         dispatch(appointmentBooked(true));
         dispatch(hideLoading());
       }else{
-        let msg;    
-        const response = JSON.parse(error.responseText);
-        msg = response.message;   
+        let msg = error.responseText;
+        try {
+          msg = JSON.parse(error.responseText).message;
+        } catch(e) {} 
         dispatch(hideLoading());
         dispatch(addErrorMsg(msg, "Retry"));
       }

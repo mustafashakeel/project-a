@@ -27,7 +27,7 @@ var translations = {
           "book_my_appointment": "Book my appointment",
           "complete_info": "Complete your contact info to confirm your booking!",
           "continue": "Continue",
-          "continue_as_guest": "Continue as Guest",
+          "continue_as_guest": "Continue",
           "create_account": "Create Account",
           "edit": "Edit",
           "enter_payment_info": "Enter your payment information",
