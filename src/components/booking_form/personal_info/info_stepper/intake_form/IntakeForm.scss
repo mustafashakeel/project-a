@@ -4,6 +4,16 @@
   .md-dialog-content{
     height: 100%;
   }
+  .dropdownSelect{
+    margin-top: 10px;
+  }
+  .formStatus{
+    display: block;
+    text-align: center;
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: $grey;
+  }
 
   #numbers{
     display: block;
@@ -29,7 +39,6 @@
 
   .formTitles{
     display: flex;
-    border-bottom: 1px solid $grey;
 
     h3{
       cursor: pointer;
@@ -49,8 +58,17 @@
   }
 
   .SingleForm{
-    padding-top: 15px;
+    // padding-top: 15px;
     display: none;
+
+    .descriptionForm{
+      color: darken($grey, 40%);
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    
 
     &.active{
       display: block;
@@ -67,7 +85,50 @@
 
       .onCompleted{
         display: block;
+        text-align: center;
+        margin: 20px 0;
+        font-size: 18px;
+        color: $yocaleOrange !important;
+        font-weight: bold;
+        i{
+          display: block;
+          font-size: 36px;
+          color: $yocaleOrange !important;
+          border: 3px solid $yocaleOrange;
+          border-radius: 50px;
+          line-height: 1.5em;
+          width:60px;
+          height: 60px;
+          margin: auto;
+          margin-bottom: 10px;
+
+        }
       }
     }
+
+    label{
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    select, input:not([type="checkbox"]), textarea{
+      margin-bottom: 10px;
+      width:100%;
+    }
+
+    p{
+      margin: 10px 0 15px;
+    }
+
+    .checkbox-group{
+      padding: 10px 0;
+      line-height: 2.2em;
+      label{
+        display: inline;
+      }
+    }
+
+
   }
 }
