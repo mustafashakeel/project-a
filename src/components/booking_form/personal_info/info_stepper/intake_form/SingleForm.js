@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-
+import FontIcon from 'react-md/lib/FontIcons';
 import classNames from 'classnames';
 
 import { saveIntakeForm } from '../../../../../actions/index';
@@ -94,11 +94,14 @@ class SingleForm extends React.Component {
     return (
       <div className={this.getClassNames()}>
         <form onSubmit={this.submitForm.bind(this)} ref="theForm">
-          <p>{this.props.form.description}</p>
+          <p className="descriptionForm">{this.props.form.description}</p>
           <div style={{position:'relative'}} dangerouslySetInnerHTML={this.createMarkup()} />
-          <input type="submit" value="Submit"/>
+          <input className="yocaleButton" type="submit" value="Submit"/>
         </form>
-        <div className="onCompleted">Completed</div>
+        <div className="onCompleted">
+          <FontIcon>check</FontIcon>
+          Submitted
+        </div>
       </div>
     );
   }

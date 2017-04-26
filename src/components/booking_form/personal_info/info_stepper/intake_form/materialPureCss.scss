@@ -105,8 +105,8 @@ html, body, input, textarea, keygen, select, button {
     position: relative;
   }
   input[type=checkbox]::before {
-      width: 1.1em; 
-      height: 1.1em; display: inline-block;
+      width: 1.4em; 
+      height: 1.4em; display: inline-block;
       line-height: 0.6em;
       text-indent: -1px;
       text-align: center;
@@ -115,10 +115,13 @@ html, body, input, textarea, keygen, select, button {
       color: $inverse-color;    
       content:''; 
       background-color: $background-color;
+      position: absolute;
+      top: -2px;
+      left: 0;
   }
   input[type=checkbox]:checked::before {
       content:'\2713'; 
-      line-height: 0.9em;
+      line-height: 1em;
       border: 3px solid $primary-color;
       background-color: $primary-color;
   }
