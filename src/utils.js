@@ -94,13 +94,13 @@ export function parseAvailabilities(availabilities, timezone){
         
         availabilities.timeSlots.forEach((timeslot) => {
           newTimeSlots.push({
-            "time": startDate + " " + timeslot,
+            "time": startDate + " " + convertTo24Hour(timeslot),
             "providers" : [provider.providerId]
           });
         });
 
         if (provider.availabilities[index].timeSlots.length > 0){
-          provider.availabilities[index].startDate = startDate + " " + availabilities.timeSlots[0];
+          provider.availabilities[index].startDate = startDate + " " + convertTo24Hour(availabilities.timeSlots[0]);
           provider.availabilities[index].timeSlots = newTimeSlots;
         }
 
@@ -139,3 +139,17 @@ export const isMobile = {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
 };
+
+export function convertTo24Hour(time) {
+    var hours = parseInt(time.substr(0, 2));
+    if(time.indexOf('AM') != -1 && hours == 12) {
+        time = time.replace('12', '0');
+    }
+    if(time.indexOf('PM')  != -1 && hours < 12) {
+        time = time.replace(hours, (hours + 12))
+        if (time[0] == 0){
+          time = time.substr(1,5);
+        }
+    }
+    return time.replace(/(AM|PM)/, '');
+}

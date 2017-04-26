@@ -90,7 +90,7 @@ export function fetchProviders(businessId, locationId, offeringId){
   };
 }
 
-export function fetchAvailabilities(timezone){
+export function fetchAvailabilities(){
   return (dispatch, getState) => {
     const {booking, business, ui} = getState();
 
@@ -113,15 +113,13 @@ export function fetchAvailabilities(timezone){
       params: params
     });
 
-    const actualTimezone = (booking.userTimezone !== "")? booking.userTimezone : booking.bizTimezone;
 
     dispatch(showLoading());
     request.then((response) => {
       dispatch({
         type: GET_AVAILABILITIES,
         payload: {
-          response,
-          timezone: actualTimezone
+          response
         }
       })
       dispatch(hideLoading());

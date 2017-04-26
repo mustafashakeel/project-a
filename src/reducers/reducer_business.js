@@ -36,7 +36,7 @@ export default function (state = INITIAL_STATE , action){
       providers.push(anyProvider);
       return { ...state , providers }
     case GET_AVAILABILITIES:
-      return { ...state , availabilities: parseAvailabilities(action.payload.response.data, action.payload.timezone)}
+      return { ...state , availabilities: parseAvailabilities(action.payload.response.data)}
     default:
       return state;
   }
