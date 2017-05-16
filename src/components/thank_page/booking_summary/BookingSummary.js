@@ -54,7 +54,7 @@ export class BookingSummary extends React.Component {
           <div className="bizAddress">{booking.location.address}</div>
           <div className="serviceName">{booking.service.name}</div>
           <div className="providerName">{booking.provider.name}</div>
-          <div className="bookingTime">{booking.timestamp.format("h:mm a")} - {booking.timestamp.add(booking.service.OfferingDuration, 'm').format("h:mm a")}</div>
+          <div className="bookingTime">{booking.timestamp.format("h:mm a")} - {booking.timestamp.add(booking.service.duration, 'm').format("h:mm a")}</div>
           <div className="bookingDate">{booking.timestamp.format("dddd, MMMM Do YYYY")}</div>
             <SelectField
               id="addToCalendar"
@@ -66,13 +66,13 @@ export class BookingSummary extends React.Component {
               className="dropdownSelect"
               iconChildren="keyboard_arrow_down"
             />
-          
+
           <div className="yocaleButton addToCalendar" onClick={this.openCalendar.bind(this)}>Add to Calendar</div>
           <a className="viewEditYocale" href="https://www.yocale.com/Account/Login?ReturnUrl=%2FUserProfile%2FConsumerAppointments%3FsortBy%3DmostRecent" target="_blank">View or Edit Appointment on Yocale</a>
         </div>
 
         <div className="moreServices">
-          
+
         </div>
       </div>
     );
