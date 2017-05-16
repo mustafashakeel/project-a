@@ -63,6 +63,7 @@ export class Calendar extends React.Component {
 
   onSelectedTimeSlot(slot){
     this.props.setBookingTime(moment(slot.time), slot.providers);
+    this.props.allowConfirmedBooking(slot.allowConfirmedBookings)
     this.props.onSlotSelected();
     if (this.props.isLoggedIn && this.props.booking.lease !== null){
       this.props.leaseBooking(true);
@@ -74,7 +75,6 @@ export class Calendar extends React.Component {
       return moment(availabilityDate.startDate).format('YYYY-MM-DD') === selectedDate.format('YYYY-MM-DD')
     })
     this.setState({selectedDateObject})
-    this.props.allowConfirmedBooking(selectedDateObject.allowConfirmedBookings)
     this.props.setBookingTime(selectedDate)
   }
 
@@ -119,7 +119,7 @@ export class Calendar extends React.Component {
               renderDay={this.renderDay.bind(this)}
             />
             </div>
-        </FadeInOut>  
+        </FadeInOut>
         <FadeInOut show={this.state.selectedDateObject !== null}>
           <TimeSlots selectedDateObject={this.state.selectedDateObject} onSelected={this.onSelectedTimeSlot.bind(this)} />
         </FadeInOut>
