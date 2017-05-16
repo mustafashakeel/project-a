@@ -36,7 +36,7 @@ export class TimeSlots extends React.Component {
     return this.props.selectedDateObject.timeSlots.map((slot, key) =>
       <li key={key} onClick={this.props.onSelected.bind(null, slot)} className={this.getActiveClassName(slot)}>
         {moment(slot.time).utcOffset(this.state.timezone).format("h:mm A")}
-        {!this.props.selectedDateObject.allowConfirmedBookings &&
+        {!slot.allowConfirmedBookings &&
           <FontIcon>warning</FontIcon>
         }
       </li>
@@ -59,6 +59,7 @@ export class TimeSlots extends React.Component {
         <h4>{t('application.provider_time.select_time')}</h4>
         {this.props.booking.timestamp !== "" &&
            cloneTimestamp.utcOffset(this.state.timezone).format("dddd, MMMM Do YYYY")
+           
         }
 
         <div className="slotsAvailableLabel">{t('application.provider_time.slots_available', {count: this.props.selectedDateObject.timeSlots.length})}</div>

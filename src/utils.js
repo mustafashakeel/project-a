@@ -94,13 +94,14 @@ export function parseAvailabilities(availabilities, timezone){
         
         availabilities.timeSlots.forEach((timeslot) => {
           newTimeSlots.push({
-            "time": startDate + " " + convertTo24Hour(timeslot),
+            "time": startDate + " " + convertTo24Hour(timeslot.startTime),
+            "allowConfirmedBookings": timeslot.allowConfirmedBookings,
             "providers" : [provider.providerId]
           });
         });
 
         if (provider.availabilities[index].timeSlots.length > 0){
-          provider.availabilities[index].startDate = startDate + " " + convertTo24Hour(availabilities.timeSlots[0]);
+          provider.availabilities[index].startDate = startDate + " " + convertTo24Hour(availabilities.timeSlots[0].startTime);
           provider.availabilities[index].timeSlots = newTimeSlots;
         }
 
@@ -151,5 +152,5 @@ export function convertTo24Hour(time) {
           time = time.substr(1,5);
         }
     }
-    return time.replace(/(AM|PM)/, '');
+    return time.replace(/( AM| PM)/, '');
 }

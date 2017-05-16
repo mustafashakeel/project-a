@@ -94,7 +94,7 @@ export function fetchAvailabilities(){
   return (dispatch, getState) => {
     const {booking, business, ui} = getState();
 
-    if(!booking.provider.providerId || booking.provider.providerId === null ){
+    if(typeof booking.provider.providerId =="undefined" || booking.provider.providerId === null ){
       return;
     }
 
