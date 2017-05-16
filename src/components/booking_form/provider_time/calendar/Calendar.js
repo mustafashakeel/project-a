@@ -63,7 +63,7 @@ export class Calendar extends React.Component {
 
   onSelectedTimeSlot(slot){
     this.props.setBookingTime(moment(slot.time), slot.providers);
-    this.props.allowConfirmedBooking(slot.allowConfirmedBookings)
+    this.props.allowConfirmedBooking(slot.allowConfirmedBookings);
     this.props.onSlotSelected();
     if (this.props.isLoggedIn && this.props.booking.lease !== null){
       this.props.leaseBooking(true);
