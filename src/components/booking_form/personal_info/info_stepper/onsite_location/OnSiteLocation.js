@@ -65,7 +65,12 @@ export class OnSiteLocation extends React.Component {
     });
   }
 
-  saveAddress(){
+  saveAddress() {
+
+      if (this.state.locations == null) {
+          this.state.locations = [];
+      }
+
     const locations = this.state.locations;
     locations.push(this.state.address)
     this.setState({ 
@@ -100,10 +105,12 @@ export class OnSiteLocation extends React.Component {
     };
 
     return (
+                   
       <div className="OnSiteLocation">
-        <FadeInOut show={this.state.locations.length > 0} scroll={false}>
-          { this.renderLocations() }
-        </FadeInOut>
+
+          {this.state.locations !== null &&
+                this.renderLocations()
+            }
         {!this.state.showNewAddress &&
           <p 
             className="yocaleBlue pointer underline newAddressBtn"
