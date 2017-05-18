@@ -62,6 +62,9 @@ export class Calendar extends React.Component {
   }
 
   onSelectedTimeSlot(slot){
+
+    console.log('selected slot:', slot.time);
+
     this.props.setBookingTime(moment(slot.time), slot.providers);
     this.props.allowConfirmedBooking(slot.allowConfirmedBookings);
     this.props.onSlotSelected();
@@ -71,7 +74,9 @@ export class Calendar extends React.Component {
   }
 
   onChangeDate(selectedDate){
-    const selectedDateObject = this.props.availabilities.find((availabilityDate) => {
+      console.log('changed dats:', selectedDate._d);
+
+      const selectedDateObject = this.props.availabilities.find((availabilityDate) => {
       return moment(availabilityDate.startDate).format('YYYY-MM-DD') === selectedDate.format('YYYY-MM-DD')
     })
     this.setState({selectedDateObject})

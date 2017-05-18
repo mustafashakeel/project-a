@@ -33,9 +33,12 @@ export class TimeSlots extends React.Component {
 
 
   listItems() {
+    // console.log('selectedDateObject:',this.props.selectedDateObject.startDate)
+     const printTime = moment(this.props.selectedDateObject.startDate).format('LT');
     return this.props.selectedDateObject.timeSlots.map((slot, key) =>
       <li key={key} onClick={this.props.onSelected.bind(null, slot)} className={this.getActiveClassName(slot)}>
-        {moment(slot.time).utcOffset(this.state.timezone).format("h:mm A")}
+        {/*{moment(slot.time).utcOffset(this.state.timezone).format("h:mm A")}*/}
+          {moment(slot.time).format("LT")}
         {!slot.allowConfirmedBookings &&
           <FontIcon>warning</FontIcon>
         }
@@ -53,14 +56,24 @@ export class TimeSlots extends React.Component {
       return (<div></div>);
     }
     const cloneTimestamp = this.props.booking.timestamp.clone();
+
+    // console.log('TIME STAMP:',this.props.booking.timestamp._d);
+
+    const selectedDateTime = this.props.booking.timestamp._d;
+    let printDateTime = moment(selectedDateTime).format('dddd, MMMM Do YYYY');
+
+
+
+
     return (
       <div className="TimeSlots">
         
         <h4>{t('application.provider_time.select_time')}</h4>
-        {this.props.booking.timestamp !== "" &&
-           cloneTimestamp.utcOffset(this.state.timezone).format("dddd, MMMM Do YYYY")
-           
-        }
+        {/*{this.props.booking.timestamp !== "" &&*/}
+           {/*cloneTimestamp.utcOffset(this.state.timezone).format("dddd, MMMM Do YYYY")*/}
+
+        {/*}*/}
+        {printDateTime}
 
         <div className="slotsAvailableLabel">{t('application.provider_time.slots_available', {count: this.props.selectedDateObject.timeSlots.length})}</div>
         <p className="unconfirmedBookingsMsg">
