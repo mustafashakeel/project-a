@@ -6,6 +6,7 @@ import {
 } from '../actions/index';
 
 import {parseAvailabilities} from '../utils'
+import moment from 'moment';
 
 import { groupOfferingsByCat, getProvidersFromAvailabilities } from '../utils';
 
@@ -31,7 +32,10 @@ export default function (state = INITIAL_STATE , action){
         fullName: 'Any Provider'        
       }
       providers.map((provider)=>{
-        provider.selectLabel = provider.fullName + " - Next available date: " + provider.nextAvailableTime;
+        // console.log('Available:', moment(provider.nextAvailableTime).format('MMM Do'));
+        // provider.selectLabel = provider.fullName + " - Next available date: " + provider.nextAvailableTime;
+          let availableTime = moment(provider.nextAvailableTime).format('Do MMM');
+          provider.selectLabel = `${provider.fullName} - ${availableTime}`;
       })
       providers.push(anyProvider);
       return { ...state , providers }

@@ -11,6 +11,10 @@ export const CHANGE_MONTH_CALENDAR = 'CHANGE_MONTH_CALENDAR';
 export const SHOW_LOADER = 'SHOW_LOADER';
 
 export function updateTab(indexTab){
+  // console.log('TABINDEX:',indexTab);
+  if (indexTab === 0) {
+    window.location.reload();
+  }
   return {
     type: UPDATE_TAB,
     payload: {
