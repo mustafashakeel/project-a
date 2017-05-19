@@ -162,7 +162,7 @@ export function leaseBooking(showLoader){
       EndDateTime: booking.timestamp.add(booking.service.duration, 'm').clone().format('YYYY-MM-DD HH:mm:ss.SSSSSSS'),
       deviceType: (isMobile.any())? 2 : 1
     };
-    console.log(data);
+    // console.log(data);
 
     let headers = {};
     if (cookie && cookie.load('access_token')) {

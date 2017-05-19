@@ -28,7 +28,7 @@ export class ProviderTimeContent extends React.Component {
   }
 
   providerList(){
-    console.log(this.props.business.providers);
+    // console.log(this.props.business.providers);
     return this.props.business.providers.map((provider, index) => {
       return {
         ...provider,
