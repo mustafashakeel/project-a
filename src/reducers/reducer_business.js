@@ -32,6 +32,7 @@ export default function (state = INITIAL_STATE , action){
         fullName: 'Any Provider'        
       }
       providers.map((provider)=>{
+        console.log('PROVIDER-time', provider)
         // console.log('Available:', moment(provider.nextAvailableTime).format('MMM Do'));
         // provider.selectLabel = provider.fullName + " - Next available date: " + provider.nextAvailableTime;
           let availableTime = moment(provider.nextAvailableTime).format('Do MMM');

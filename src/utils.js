@@ -87,6 +87,8 @@ export function parseAvailabilities(availabilities, timezone){
   let availabilitiesArray = [];
 
   availabilities.forEach((provider) => {
+
+      console.log('PROVIDER:',provider)
     if (provider.availabilities !== null) {
       provider.availabilities.forEach((availabilities, index) => {
         const newTimeSlots = [];
