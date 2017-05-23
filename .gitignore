@@ -16,3 +16,4 @@ npm-debug.log
 /typings
 /obj/Debug
 .idea
+/.vs

@@ -52,7 +52,7 @@ class PersonalInfoContent extends React.Component {
       locationId: booking.location.id,
       offeringId: booking.service.offeringId,
       comments: booking.providerMessage,
-      clientLocation: booking.lease.clientLocation,
+      clientLocation: booking.clientLocation,
       DependentId: booking.dependant.id || ""
     };
     console.log(data);
