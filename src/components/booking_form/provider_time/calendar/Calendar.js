@@ -49,6 +49,8 @@ export class Calendar extends React.Component {
   }
 
   renderDay(props, currentDate, selectedDate) {
+    // console.log('AVA:',this.props.availabilities)
+
     let theDay = this.props.availabilities.find((day) => {
       return moment(day.startDate).format('YYYY-MM-DD') === currentDate.format('YYYY-MM-DD');
     });
@@ -63,7 +65,7 @@ export class Calendar extends React.Component {
 
   onSelectedTimeSlot(slot){
 
-    console.log('selected slot:', slot.time);
+    // console.log('selected slot:', slot.time);
 
     this.props.setBookingTime(moment(slot.time), slot.providers);
     this.props.allowConfirmedBooking(slot.allowConfirmedBookings);
