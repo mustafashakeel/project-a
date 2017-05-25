@@ -15,5 +15,5 @@ build
 npm-debug.log
 /typings
 /obj/Debug
-.idea
+/.idea
 /.vs

@@ -36,7 +36,14 @@ export default function (state = INITIAL_STATE , action){
         // console.log('Available:', moment(provider.nextAvailableTime).format('MMM Do'));
         // provider.selectLabel = provider.fullName + " - Next available date: " + provider.nextAvailableTime;
           let availableTime = moment(provider.nextAvailableTime).format('Do MMM');
-          provider.selectLabel = `${provider.fullName} - ${availableTime}`;
+          if (availableTime === 'Invalid date') {
+              availableTime = 'Not Available!';
+              provider.selectLabel = `${provider.fullName} - ${availableTime}`;
+
+          }
+          else {
+              provider.selectLabel = `${provider.fullName} - Available: ${availableTime}`;
+          }
       })
       providers.push(anyProvider);
       return { ...state , providers }
