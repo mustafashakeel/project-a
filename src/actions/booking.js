@@ -153,7 +153,6 @@ export function leaseBooking(showLoader){
 
   return (dispatch, getState) => {
     const {booking} = getState();
-
     const data = {
       ProviderId: booking.provider.providerId.toString(),
       LocationId: booking.location.id.toString(),
@@ -224,7 +223,6 @@ export function bookAppointment(data, isRequest = false){
   return (dispatch, getState) => {
 
     const {booking} = getState();
-
     let headers = {};
     if (cookie && cookie.load('access_token')) {
        headers = {
@@ -237,6 +235,8 @@ export function bookAppointment(data, isRequest = false){
     }
 
     const url= (!isRequest)? 'bookAppointment' : 'requestAppointment';
+
+    data.deviceType = (isMobile.any()) ? 2 : 1;
 
     dispatch(showLoading());
     const request = najax({

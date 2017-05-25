@@ -47,7 +47,7 @@ class PersonalInfoContent extends React.Component {
   requestAppointment(){
     const {booking} = this.props;
     const data = {
-      starDateTime: booking.timestamp.format(),
+      startDateTime: booking.timestamp.format('YYYY-MM-DD HH:mm:ss'),
       providerId: booking.provider.providerId,
       locationId: booking.location.id,
       offeringId: booking.service.offeringId,
@@ -55,7 +55,6 @@ class PersonalInfoContent extends React.Component {
       clientLocation: booking.clientLocation,
       DependentId: booking.dependant.id || ""
     };
-    console.log(data);
     this.props.bookAppointment(data, true);
   }
 
