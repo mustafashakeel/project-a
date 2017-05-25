@@ -55,7 +55,11 @@ export class BookingSummary extends React.Component {
           <div className="bizAddress">{booking.location.address}</div>
           <div className="serviceName">{booking.service.name}</div>
           <div className="providerName">{booking.provider.name}</div>
-          <div className="bookingTime">{booking.timestamp.subtract(booking.service.duration, 'm').format("h:mm a")} - {booking.timestamp.add(booking.service.duration, 'm').format("h:mm a")}</div>
+          {booking.allowConfirmedBooking ?
+            <div className="bookingTime">{booking.timestamp.subtract(booking.service.duration, 'm').format("h:mm a")} - {booking.timestamp.add(booking.service.duration, 'm').format("h:mm a")}</div>
+            :
+            <div className="bookingTime">{booking.timestamp.format("h:mm a")} - {booking.timestamp.add(booking.service.duration, 'm').format("h:mm a")}</div>
+          }
           <div className="bookingDate">{booking.timestamp.format("dddd, MMMM Do YYYY")}</div>
             <SelectField
               id="addToCalendar"
