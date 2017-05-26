@@ -1,6 +1,6 @@
-import { 
+import {
   GET_BIZ_INFO,
-  GET_BIZ_SERVICES, 
+  GET_BIZ_SERVICES,
   GET_BIZ_PROVIDERS,
   GET_AVAILABILITIES
 } from '../actions/index';
@@ -10,7 +10,7 @@ import moment from 'moment';
 
 import { groupOfferingsByCat, getProvidersFromAvailabilities } from '../utils';
 
-const INITIAL_STATE = { 
+const INITIAL_STATE = {
   info: {},
   services: [],
   providers: [],
@@ -29,21 +29,16 @@ export default function (state = INITIAL_STATE , action){
       const anyProvider = {
         providerId: '',
         selectLabel: 'Any Provider',
-        fullName: 'Any Provider'        
+        fullName: 'Any Provider'
       }
       providers.map((provider)=>{
-        console.log('PROVIDER-time', provider)
-        // console.log('Available:', moment(provider.nextAvailableTime).format('MMM Do'));
-        // provider.selectLabel = provider.fullName + " - Next available date: " + provider.nextAvailableTime;
-          let availableTime = moment(provider.nextAvailableTime).format('Do MMM');
-          if (availableTime === 'Invalid date') {
-              availableTime = 'Not Available!';
-              provider.selectLabel = `${provider.fullName} - ${availableTime}`;
 
+         if (!(provider.nextAvailableTime === "N/A")) {
+            provider.nextAvailableTime = moment(provider.nextAvailableTime, "YYYY-MM-DD HH:mm PM").format('MMM Do');
           }
-          else {
-              provider.selectLabel = `${provider.fullName} - Available: ${availableTime}`;
-          }
+
+         provider.selectLabel = provider.fullName + " - Available: " + provider.nextAvailableTime;
+
       })
       providers.push(anyProvider);
       return { ...state , providers }
