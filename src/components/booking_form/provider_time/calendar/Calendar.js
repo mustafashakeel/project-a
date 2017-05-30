@@ -49,8 +49,6 @@ export class Calendar extends React.Component {
   }
 
   renderDay(props, currentDate, selectedDate) {
-    // console.log('AVA:',this.props.availabilities)
-
     let theDay = this.props.availabilities.find((day) => {
       return moment(day.startDate).format('YYYY-MM-DD') === currentDate.format('YYYY-MM-DD');
     });
@@ -64,21 +62,23 @@ export class Calendar extends React.Component {
   }
 
   onSelectedTimeSlot(slot){
-
-    // console.log('selected slot:', slot.time);
-
     this.props.setBookingTime(moment(slot.time), slot.providers);
     this.props.allowConfirmedBooking(slot.allowConfirmedBookings);
     this.props.onSlotSelected();
-    if (this.props.isLoggedIn && this.props.booking.lease !== null){
-      this.props.leaseBooking(true);
+    // if this is a request, set lease to null
+    if (!(slot.allowConfirmedBookings)) {
+      this.props.booking.lease = null;
+    }
+    else {
+      // taken out, dealt with this in InfoStepper && this.props.booking.lease !== null taken out from error checking
+      if (this.props.isLoggedIn ){
+        this.props.leaseBooking(true);
+      }
     }
   }
 
   onChangeDate(selectedDate){
-      console.log('changed dats:', selectedDate._d);
-
-      const selectedDateObject = this.props.availabilities.find((availabilityDate) => {
+    const selectedDateObject = this.props.availabilities.find((availabilityDate) => {
       return moment(availabilityDate.startDate).format('YYYY-MM-DD') === selectedDate.format('YYYY-MM-DD')
     })
     this.setState({selectedDateObject})

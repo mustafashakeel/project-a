@@ -30,7 +30,8 @@ export class InfoStepper extends React.Component {
   state = {
     intakeFormOpen: false,
     intakeFormTaken: false,
-    renderProviders: false
+    renderProviders: false,
+    leaseFlag: false
   }
 
   toggleIntakeForm = () => {
@@ -55,14 +56,118 @@ export class InfoStepper extends React.Component {
     node.scrollIntoView();
   }
 
+  // function to wait till the API call returns before loading
+  componentWillReceiveProps(nextProps) {
+    console.log("nextProps before setting", nextProps);
+    console.log("type of leaseFlag", typeof nextProps.booking.lease);
+
+    if ( nextProps.booking.lease !== null){
+      // flag true, it is a lease booking
+      this.setState({leaseFlag: true});
+      console.log("leaseFlag changed to false:", this.state.leaseFlag);
+    }else{
+      // indicator for a request
+      this.setState({leaseFlag: false});
+      console.log("leaseFlag changed to true:", this.state.leaseFlag);
+    }
+  }
+
   render() {
     const {t, booking} = this.props;
-    return (
+    console.log("render flag --->",this.state.leaseFlag);
+    // if this is a lease required booking (instant booking)
+    if (this.state.leaseFlag){
+
+      return (
+          <Stepper className="infoStepper">
+            <Step
+              completed={true}
+              stepLine >
+              <LoginInfo />
+            </Step>
+            {this.state.renderProviders &&
+            <Step
+              completed={true}
+              stepLine>
+              <h4>Select a provider</h4>
+              <ProvidersInSlot />
+            </Step>
+            }
+            {booking.location.locationType == "On-Site" &&
+            <Step
+              completed={booking.clientLocation && booking.clientLocation.fullAddress !== ""}
+              stepLine>
+              <h4>Select an address</h4>
+              <OnSiteLocation />
+            </Step>
+            }
+            {booking.allowConfirmedBooking &&
+              <div>
+                {booking.intake_forms.source !== null &&
+                <Step
+                  completed={this.state.intakeFormTaken}
+                  stepLine >
+                  <h4>{t('application.user_info.intake_form')}</h4>
+                  <div className="stepContent">
+                    {!this.state.intakeFormTaken ?
+                      <div>
+                        <p>
+                          {t('application.user_info.intake_form_copy')}
+                          <span
+                          className="linkIntakeForm"
+                          onClick={this.toggleIntakeForm.bind(this)}
+                          >{t('application.user_info.fill_out_intake')}.</span>
+                        </p>
+                        <Dialog
+                          aria-describedby="accessibleContent"
+                          id="intakeForm"
+                          visible={this.state.intakeFormOpen}
+                          focusOnMount={false}
+                          modal >
+                          <IntakeForm id="accessibleContent" onSave={this.intakeFormSave}/>
+                        </Dialog>
+                      </div>
+                      :
+                      <TakenForms />
+                    }
+                    </div>
+                </Step>
+                }
+
+                {booking.lease.paymentRequirementInfo !== null &&
+                  <Step
+                    completed={false} >
+                    <h4>{t('application.user_info.payment')}</h4>
+                    <div className="stepContentBorder">
+                      <PaymentCC />
+                    </div>
+                  </Step>
+                }
+
+                {booking.lease.cancellationPolicy  &&
+                  <Step
+                    completed={false} >
+                    <h4>Cancelation Policy</h4>
+                    <div className="stepContent">
+                      <p>{booking.lease.cancellationPolicy}</p>
+                    </div>
+                  </Step>
+                }
+              </div>
+            }
+
+          </Stepper>
+      );
+    }
+    // if this is a request Appointment
+    else{
+
+      return(
         <Stepper className="infoStepper">
           <Step
             completed={true}
             stepLine >
-            <LoginInfo />            
+            <LoginInfo />
           </Step>
           {this.state.renderProviders &&
           <Step
@@ -80,63 +185,11 @@ export class InfoStepper extends React.Component {
             <OnSiteLocation />
           </Step>
           }
-          {booking.allowConfirmedBooking &&  
-            <div>
-              {booking.intake_forms.source !== null &&
-              <Step
-                completed={this.state.intakeFormTaken}
-                stepLine >
-                <h4>{t('application.user_info.intake_form')}</h4>
-                <div className="stepContent">
-                  {!this.state.intakeFormTaken ?
-                    <div>
-                      <p>
-                        {t('application.user_info.intake_form_copy')} 
-                        <span 
-                        className="linkIntakeForm" 
-                        onClick={this.toggleIntakeForm.bind(this)}
-                        >{t('application.user_info.fill_out_intake')}.</span>
-                      </p>
-                      <Dialog
-                        aria-describedby="accessibleContent"
-                        id="intakeForm"
-                        visible={this.state.intakeFormOpen}
-                        focusOnMount={false}
-                        modal >
-                        <IntakeForm id="accessibleContent" onSave={this.intakeFormSave}/>
-                      </Dialog>
-                    </div>
-                    :
-                    <TakenForms />
-                  }
-                  </div>
-              </Step>
-              }
-
-              {booking.lease.paymentRequirementInfo !== null &&
-                <Step
-                  completed={false} >
-                  <h4>{t('application.user_info.payment')}</h4>
-                  <div className="stepContentBorder">
-                    <PaymentCC />            
-                  </div>
-                </Step>
-              }
-
-              {booking.lease.cancellationPolicy  &&
-                <Step
-                  completed={false} >
-                  <h4>Cancelation Policy</h4>
-                  <div className="stepContent">
-                    <p>{booking.lease.cancellationPolicy}</p>           
-                  </div>
-                </Step>
-              }
-            </div>
-          }
-
+          
         </Stepper>
-    );
+      )
+    }
+
   }
 }
 
