@@ -61,6 +61,8 @@ export class BookingSummary extends React.Component {
             <div className="bookingTime">{booking.timestamp.format("h:mm a")} - {booking.timestamp.add(booking.service.duration, 'm').format("h:mm a")}</div>
           }
           <div className="bookingDate">{booking.timestamp.format("dddd, MMMM Do YYYY")}</div>
+
+          {booking.allowConfirmedBooking &&
             <SelectField
               id="addToCalendar"
               placeholder="Select calendar"
@@ -71,9 +73,17 @@ export class BookingSummary extends React.Component {
               className="dropdownSelect"
               iconChildren="keyboard_arrow_down"
             />
+          }
 
-          <div className="yocaleButton addToCalendar" onClick={this.openCalendar.bind(this)}>Add to Calendar</div>
-          <a className="viewEditYocale" href="https://www.yocale.com/Account/Login?ReturnUrl=%2FUserProfile%2FConsumerAppointments%3FsortBy%3DmostRecent" target="_blank">View or Edit Appointment on Yocale</a>
+          {booking.allowConfirmedBooking &&
+            <div className="yocaleButton addToCalendar" onClick={this.openCalendar.bind(this)}>Add to Calendar</div>
+          }
+
+          {booking.allowConfirmedBooking ?
+            <a className="viewEditYocale" href="https://www.yocale.com/Account/Login?ReturnUrl=%2FUserProfile%2FConsumerAppointments%3FsortBy%3DmostRecent" target="_blank">View or Edit Appointment on Yocale</a>
+            :
+            <a className="viewEditYocale" href="https://www.yocale.com/Account/Login?ReturnUrl=%2FUserProfile%2FConsumerAppointments%3FsortBy%3DmostRecent" target="_blank">View or Edit Appointment request on Yocale</a>
+          }
         </div>
 
         <div className="moreServices">
