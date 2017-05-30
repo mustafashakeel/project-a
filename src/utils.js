@@ -14,9 +14,9 @@ export function checkFields(fields){
       required++;
     }
   });
-  return { 
-    fields, 
-    valid: valid === required 
+  return {
+    fields,
+    valid: valid === required
   }
 }
 
@@ -88,12 +88,11 @@ export function parseAvailabilities(availabilities, timezone){
 
   availabilities.forEach((provider) => {
 
-      console.log('PROVIDER:',provider)
     if (provider.availabilities !== null) {
       provider.availabilities.forEach((availabilities, index) => {
         const newTimeSlots = [];
         const startDate = availabilities.startDate;
-        
+
         availabilities.timeSlots.forEach((timeslot) => {
           newTimeSlots.push({
             "time": startDate + " " + convertTo24Hour(timeslot.startTime),
@@ -115,7 +114,7 @@ export function parseAvailabilities(availabilities, timezone){
   if (availabilitiesArray.length > 1) {
     return deepmerge.all(availabilitiesArray);
   }else if(availabilitiesArray.length){
-    return availabilitiesArray[0];    
+    return availabilitiesArray[0];
   }else{
     return []
   }

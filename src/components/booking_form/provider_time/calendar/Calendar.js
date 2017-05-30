@@ -73,7 +73,7 @@ export class Calendar extends React.Component {
       // taken out, dealt with this in InfoStepper && this.props.booking.lease !== null taken out from error checking
       if (this.props.isLoggedIn ){
         this.props.leaseBooking(true);
-      }
+      } 
     }
   }
 

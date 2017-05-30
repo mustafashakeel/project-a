@@ -58,23 +58,17 @@ export class InfoStepper extends React.Component {
 
   // function to wait till the API call returns before loading
   componentWillReceiveProps(nextProps) {
-    console.log("nextProps before setting", nextProps);
-    console.log("type of leaseFlag", typeof nextProps.booking.lease);
-
     if ( nextProps.booking.lease !== null){
       // flag true, it is a lease booking
       this.setState({leaseFlag: true});
-      console.log("leaseFlag changed to false:", this.state.leaseFlag);
     }else{
       // indicator for a request
       this.setState({leaseFlag: false});
-      console.log("leaseFlag changed to true:", this.state.leaseFlag);
     }
   }
 
   render() {
     const {t, booking} = this.props;
-    console.log("render flag --->",this.state.leaseFlag);
     // if this is a lease required booking (instant booking)
     if (this.state.leaseFlag){
 
@@ -185,7 +179,7 @@ export class InfoStepper extends React.Component {
             <OnSiteLocation />
           </Step>
           }
-          
+
         </Stepper>
       )
     }
