@@ -25,13 +25,12 @@ export class BookingNote extends React.Component {
     const {t, booking} = this.props;
     return (
       <div className="BookingNote">
-        <h4>{t('application.user_info.add_note')}</h4>
-        <p>{booking.provider.bookingCommentDescription}</p>
+        <h4>{(booking.provider.bookingCommentDescription !== null) ? booking.provider.bookingCommentDescription : t('application.user_info.add_note')}</h4>
         <TextField
           id="BookingNote"
           rows={2}
           value={booking.providerMessage}
-          onChange={this.onChangeMessage.bind(this)}
+          onChange={this.onChangeMessage.bind(this) }
           block
           paddedBlock
           className="SelectSimpleBorder"

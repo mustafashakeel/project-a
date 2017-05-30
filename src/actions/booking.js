@@ -229,8 +229,8 @@ export function bookAppointment(data, isRequest = false){
         'Authorization': `Bearer  ${cookie.load('access_token')}`
       }
     }
-    if (booking.provider.bookingCommentIsRequired && data.comments === ""){
-      dispatch(addErrorMsg("Message is required", "Retry"));
+    if (booking.provider.bookingCommentIsRequired && data.comments === "") {
+        dispatch(addErrorMsg((booking.provider.bookingCommentDescription === "" ? "Comment" : booking.provider.bookingCommentDescription) + " Is Required", "Retry"));
       return;
     }
 

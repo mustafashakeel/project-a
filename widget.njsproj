@@ -1,261 +1,228 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <SchemaVersion>2.0</SchemaVersion>
-        <ProjectGuid>{c83e36e7-4d2b-4ea0-a004-e426c75988c9}</ProjectGuid>
-        <ProjectHome />
-        <ProjectView>ShowAllFiles</ProjectView>
-        <StartupFile>server.js</StartupFile>
-        <WorkingDirectory>.</WorkingDirectory>
-        <OutputPath>.</OutputPath>
-        <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-        <TypeScriptSourceMap>true</TypeScriptSourceMap>
-        <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
-        <EnableTypeScript>true</EnableTypeScript>
-        <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-        <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
-    <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
-    <ItemGroup>
-        <Content Include="package.json" />
-        <Content Include="README.md" />
-        <Compile Include="server.js" />
-        <Content Include="build\index.html" />
-        <Content Include="build\favicon.ico" />
-        <Content Include="build\asset-manifest.json" />
-        <Compile Include="config\env.js" />
-        <Compile Include="config\paths.js" />
-        <Compile Include="config\polyfills.js" />
-        <Compile Include="config\webpack.config.dev.js" />
-        <Compile Include="config\webpack.config.prod.js" />
-        <Content Include="public\index.html" />
-        <Content Include="public\favicon.ico" />
-        <Compile Include="scripts\build.js" />
-        <Compile Include="scripts\start.js" />
-        <Compile Include="scripts\test.js" />
-        <Compile Include="src\index.js" />
-        <Compile Include="src\utils.js" />
-        <Compile Include="src\widgetSettings.js" />
-        <TypeScriptCompile Include="typings\index.d.ts" />
-        <Content Include="build\img\facebook-icon.png" />
-        <Content Include="build\img\google-icon.png" />
-        <Content Include="build\img\placeholder_person.png" />
-        <Content Include="build\img\service_placeholder.jpg" />
-        <Content Include="build\img\yocale-loader-small.gif" />
-        <Content Include="build\static\css\main.beb627df.css" />
-        <Compile Include="build\static\js\main.03e5f0bd.js" />
-        <Compile Include="config\jest\cssTransform.js" />
-        <Compile Include="config\jest\fileTransform.js" />
-        <Content Include="public\img\facebook-icon.png" />
-        <Content Include="public\img\google-icon.png" />
-        <Content Include="public\img\placeholder_person.png" />
-        <Content Include="public\img\service_placeholder.jpg" />
-        <Content Include="public\img\yocale-loader-small.gif" />
-        <Compile Include="src\actions\booking.js" />
-        <Compile Include="src\actions\business.js" />
-        <Compile Include="src\actions\index.js" />
-        <Compile Include="src\actions\ui.js" />
-        <Compile Include="src\actions\users.js" />
-        <Compile Include="src\components\YocaleWidget.js" />
-        <Compile Include="src\i18n\i18n.js" />
-        <Compile Include="src\i18n\translations.js" />
-        <Compile Include="src\reducers\index.js" />
-        <Compile Include="src\reducers\reducer_booking.js" />
-        <Compile Include="src\reducers\reducer_business.js" />
-        <Compile Include="src\reducers\reducer_ui.js" />
-        <Compile Include="src\reducers\reducer_user.js" />
-        <Compile Include="src\components\booking_form\BookingForm.js" />
-        <Compile Include="src\components\thank_page\ThankPage.js" />
-        <Compile Include="src\components\booking_form\location_service\LocationServiceContent.js" />
-        <Compile Include="src\components\booking_form\partials\HeaderWidget.js" />
-        <Compile Include="src\components\booking_form\personal_info\PersonalInfoContent.js" />
-        <Compile Include="src\components\booking_form\provider_time\ProviderTimeContent.js" />
-        <Compile Include="src\components\booking_form\location_service\list_category\ListCategory.js" />
-        <Compile Include="src\components\booking_form\location_service\list_service\ListService.js" />
-        <Compile Include="src\components\booking_form\location_service\menu_services\MenuServices.js" />
-        <Compile Include="src\components\booking_form\location_service\service_details\ServiceDetails.js" />
-        <Compile Include="src\components\booking_form\personal_info\appointment_reminder\AppointmentReminder.js" />
-        <Compile Include="src\components\booking_form\personal_info\credentials\Credentials.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\InfoStepper.js" />
-        <Compile Include="src\components\booking_form\personal_info\credentials\forgot_password\ForgotPassword.js" />
-        <Compile Include="src\components\booking_form\personal_info\credentials\google_login\GoogleLogin.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\booking_note\BookingNote.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\intake_form\IntakeForm.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\intake_form\SingleForm.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\intake_form\TakenForms.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\login_info\LoginInfo.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\onsite_location\OnSiteLocation.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\payment_cc\PaymentCC.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\payment_cc\SavedCards.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\providers_in_slot\ProvidersInSlot.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\login_info\dependants\Dependants.js" />
-        <Compile Include="src\components\booking_form\personal_info\info_stepper\payment_cc\stripe\StripeForm.js" />
-        <Compile Include="src\components\booking_form\provider_time\calendar\Calendar.js" />
-        <Compile Include="src\components\booking_form\provider_time\timeslots\TimeSlots.js" />
-        <Compile Include="src\components\common\error_message\ErrorMessage.js" />
-        <Compile Include="src\components\common\fade_in_out\FadeInOut.js" />
-        <Compile Include="src\components\common\stepper\Step.js" />
-        <Compile Include="src\components\common\stepper\Stepper.js" />
-        <Compile Include="src\components\common\tabs_progress\TabHeader.js" />
-        <Compile Include="src\components\common\tabs_progress\TabsProgress.js" />
-        <Compile Include="src\components\common\yocale_loader\YocaleLoader.js" />
-        <Compile Include="src\components\common\yocale_tooltip\YocaleTooltip.js" />
-        <Compile Include="src\components\thank_page\booking_summary\BookingSummary.js" />
-        <Compile Include="src\components\thank_page\update_password\UpdatePassword.js" />
-        <Compile Include="src\reducers\mocks\availabilities.js" />
-        <Compile Include="src\reducers\mocks\business.js" />
-        <Compile Include="src\reducers\mocks\providers.js" />
-        <Compile Include="src\reducers\mocks\services.js" />
-        <Compile Include="src\reducers\mocks\timezones.js" />
-        <Content Include="typings\globals\axios\typings.json" />
-        <TypeScriptCompile Include="typings\globals\axios\index.d.ts" />
-        <Content Include="typings\globals\classnames\typings.json" />
-        <TypeScriptCompile Include="typings\globals\classnames\index.d.ts" />
-        <Content Include="typings\globals\i18next-browser-languagedetector\typings.json" />
-        <TypeScriptCompile Include="typings\globals\i18next-browser-languagedetector\index.d.ts" />
-        <Content Include="typings\globals\i18next-xhr-backend\typings.json" />
-        <TypeScriptCompile Include="typings\globals\i18next-xhr-backend\index.d.ts" />
-        <Content Include="typings\globals\immutable\typings.json" />
-        <TypeScriptCompile Include="typings\globals\immutable\index.d.ts" />
-        <Content Include="typings\globals\jest\typings.json" />
-        <TypeScriptCompile Include="typings\globals\jest\index.d.ts" />
-        <Content Include="typings\globals\moment\typings.json" />
-        <TypeScriptCompile Include="typings\globals\moment\index.d.ts" />
-        <Content Include="typings\globals\moment-timezone\typings.json" />
-        <TypeScriptCompile Include="typings\globals\moment-timezone\index.d.ts" />
-        <Content Include="typings\globals\node\typings.json" />
-        <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
-        <Content Include="typings\globals\object-assign\typings.json" />
-        <TypeScriptCompile Include="typings\globals\object-assign\index.d.ts" />
-        <Content Include="typings\globals\react-router\typings.json" />
-        <TypeScriptCompile Include="typings\globals\react-router\index.d.ts" />
-        <Content Include="typings\globals\redux\typings.json" />
-        <TypeScriptCompile Include="typings\globals\redux\index.d.ts" />
-        <Content Include="typings\globals\redux-thunk\typings.json" />
-        <TypeScriptCompile Include="typings\globals\redux-thunk\index.d.ts" />
-        <Content Include="typings\globals\underscore\typings.json" />
-        <TypeScriptCompile Include="typings\globals\underscore\index.d.ts" />
-        <Content Include="typings\globals\validator\typings.json" />
-        <TypeScriptCompile Include="typings\globals\validator\index.d.ts" />
-        <Content Include="typings\globals\webpack-dev-server\typings.json" />
-        <TypeScriptCompile Include="typings\globals\webpack-dev-server\index.d.ts" />
-        <Content Include="typings\globals\whatwg-fetch\typings.json" />
-        <TypeScriptCompile Include="typings\globals\whatwg-fetch\index.d.ts" />
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="build" />
-        <Folder Include="build\img" />
-        <Folder Include="build\static" />
-        <Folder Include="build\static\css" />
-        <Folder Include="build\static\js" />
-        <Folder Include="config" />
-        <Folder Include="config\jest" />
-        <Folder Include="public" />
-        <Folder Include="public\img" />
-        <Folder Include="scripts" />
-        <Folder Include="src" />
-        <Folder Include="src\actions" />
-        <Folder Include="src\components" />
-        <Folder Include="src\components\booking_form" />
-        <Folder Include="src\components\booking_form\location_service" />
-        <Folder Include="src\components\booking_form\location_service\list_category" />
-        <Folder Include="src\components\booking_form\location_service\list_service" />
-        <Folder Include="src\components\booking_form\location_service\menu_services" />
-        <Folder Include="src\components\booking_form\location_service\service_details" />
-        <Folder Include="src\components\booking_form\partials" />
-        <Folder Include="src\components\booking_form\personal_info" />
-        <Folder Include="src\components\booking_form\personal_info\appointment_reminder" />
-        <Folder Include="src\components\booking_form\personal_info\credentials" />
-        <Folder Include="src\components\booking_form\personal_info\credentials\forgot_password" />
-        <Folder Include="src\components\booking_form\personal_info\credentials\google_login" />
-        <Folder Include="src\components\booking_form\personal_info\info_stepper" />
-        <Folder Include="src\components\booking_form\personal_info\info_stepper\booking_note" />
-        <Folder Include="src\components\booking_form\personal_info\info_stepper\intake_form" />
-        <Folder Include="src\components\booking_form\personal_info\info_stepper\login_info" />
-        <Folder Include="src\components\booking_form\personal_info\info_stepper\login_info\dependants" />
-        <Folder Include="src\components\booking_form\personal_info\info_stepper\onsite_location" />
-        <Folder Include="src\components\booking_form\personal_info\info_stepper\payment_cc" />
-        <Folder Include="src\components\booking_form\personal_info\info_stepper\payment_cc\stripe" />
-        <Folder Include="src\components\booking_form\personal_info\info_stepper\providers_in_slot" />
-        <Folder Include="src\components\booking_form\provider_time" />
-        <Folder Include="src\components\booking_form\provider_time\calendar" />
-        <Folder Include="src\components\booking_form\provider_time\timeslots" />
-        <Folder Include="src\components\common" />
-        <Folder Include="src\components\common\error_message" />
-        <Folder Include="src\components\common\fade_in_out" />
-        <Folder Include="src\components\common\stepper" />
-        <Folder Include="src\components\common\tabs_progress" />
-        <Folder Include="src\components\common\yocale_loader" />
-        <Folder Include="src\components\common\yocale_tooltip" />
-        <Folder Include="src\components\thank_page" />
-        <Folder Include="src\components\thank_page\booking_summary" />
-        <Folder Include="src\components\thank_page\update_password" />
-        <Folder Include="src\i18n" />
-        <Folder Include="src\reducers" />
-        <Folder Include="src\reducers\mocks" />
-        <Folder Include="src\styles" />
-        <Folder Include="typings" />
-        <Folder Include="typings\globals" />
-        <Folder Include="typings\globals\axios" />
-        <Folder Include="typings\globals\classnames" />
-        <Folder Include="typings\globals\i18next-browser-languagedetector" />
-        <Folder Include="typings\globals\i18next-xhr-backend" />
-        <Folder Include="typings\globals\immutable" />
-        <Folder Include="typings\globals\jest" />
-        <Folder Include="typings\globals\moment" />
-        <Folder Include="typings\globals\moment-timezone" />
-        <Folder Include="typings\globals\node" />
-        <Folder Include="typings\globals\object-assign" />
-        <Folder Include="typings\globals\react-router" />
-        <Folder Include="typings\globals\redux" />
-        <Folder Include="typings\globals\redux-thunk" />
-        <Folder Include="typings\globals\underscore" />
-        <Folder Include="typings\globals\validator" />
-        <Folder Include="typings\globals\webpack-dev-server" />
-        <Folder Include="typings\globals\whatwg-fetch" />
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-    <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
-    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
-    <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
-    <ProjectExtensions>
-        <VisualStudio>
-          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
-            <WebProjectProperties>
-              <UseIIS>False</UseIIS>
-              <AutoAssignPort>True</AutoAssignPort>
-              <DevelopmentServerPort>0</DevelopmentServerPort>
-              <DevelopmentServerVPath>/</DevelopmentServerVPath>
-              <IISUrl>http://localhost:48022/</IISUrl>
-              <NTLMAuthentication>False</NTLMAuthentication>
-              <UseCustomServer>True</UseCustomServer>
-              <CustomServerUrl>http://localhost:1337</CustomServerUrl>
-              <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-            </WebProjectProperties>
-          </FlavorProperties>
-          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
-            <WebProjectProperties>
-              <StartPageUrl>
-              </StartPageUrl>
-              <StartAction>CurrentPage</StartAction>
-              <AspNetDebugging>True</AspNetDebugging>
-              <SilverlightDebugging>False</SilverlightDebugging>
-              <NativeDebugging>False</NativeDebugging>
-              <SQLDebugging>False</SQLDebugging>
-              <ExternalProgram>
-              </ExternalProgram>
-              <StartExternalURL>
-              </StartExternalURL>
-              <StartCmdLineArguments>
-              </StartCmdLineArguments>
-              <StartWorkingDirectory>
-              </StartWorkingDirectory>
-              <EnableENC>False</EnableENC>
-              <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
-            </WebProjectProperties>
-          </FlavorProperties>
-        </VisualStudio>
-    </ProjectExtensions>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{a88193fd-6339-4697-9c5d-6644097f47fd}</ProjectGuid>
+    <ProjectHome />
+    <ProjectView>ShowAllFiles</ProjectView>
+    <StartupFile>server.js</StartupFile>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <ItemGroup>
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Compile Include="server.js" />
+    <Compile Include="config\env.js" />
+    <Compile Include="config\paths.js" />
+    <Compile Include="config\polyfills.js" />
+    <Compile Include="config\webpack.config.dev.js" />
+    <Compile Include="config\webpack.config.prod.js" />
+    <Content Include="public\index.html" />
+    <Content Include="public\favicon.ico" />
+    <Compile Include="scripts\build.js" />
+    <Compile Include="scripts\start.js" />
+    <Compile Include="scripts\test.js" />
+    <Compile Include="src\index.js" />
+    <Compile Include="src\utils.js" />
+    <Compile Include="src\widgetSettings.js" />
+    <Compile Include="config\jest\cssTransform.js" />
+    <Compile Include="config\jest\fileTransform.js" />
+    <Content Include="public\img\facebook-icon.png" />
+    <Content Include="public\img\google-icon.png" />
+    <Content Include="public\img\placeholder_person.png" />
+    <Content Include="public\img\service_placeholder.jpg" />
+    <Content Include="public\img\yocale-loader-small.gif" />
+    <Compile Include="src\actions\booking.js" />
+    <Compile Include="src\actions\business.js" />
+    <Compile Include="src\actions\index.js" />
+    <Compile Include="src\actions\ui.js" />
+    <Compile Include="src\actions\users.js" />
+    <Compile Include="src\components\YocaleWidget.js" />
+    <Compile Include="src\i18n\i18n.js" />
+    <Compile Include="src\i18n\translations.js" />
+    <Compile Include="src\reducers\index.js" />
+    <Compile Include="src\reducers\reducer_booking.js" />
+    <Compile Include="src\reducers\reducer_business.js" />
+    <Compile Include="src\reducers\reducer_ui.js" />
+    <Compile Include="src\reducers\reducer_user.js" />
+    <Compile Include="src\components\booking_form\BookingForm.js" />
+    <Compile Include="src\components\thank_page\ThankPage.js" />
+    <Compile Include="src\components\booking_form\location_service\LocationServiceContent.js" />
+    <Compile Include="src\components\booking_form\partials\HeaderWidget.js" />
+    <Compile Include="src\components\booking_form\personal_info\PersonalInfoContent.js" />
+    <Compile Include="src\components\booking_form\provider_time\ProviderTimeContent.js" />
+    <Compile Include="src\components\booking_form\location_service\list_category\ListCategory.js" />
+    <Compile Include="src\components\booking_form\location_service\list_service\ListService.js" />
+    <Compile Include="src\components\booking_form\location_service\menu_services\MenuServices.js" />
+    <Compile Include="src\components\booking_form\location_service\service_details\ServiceDetails.js" />
+    <Compile Include="src\components\booking_form\personal_info\appointment_reminder\AppointmentReminder.js" />
+    <Compile Include="src\components\booking_form\personal_info\credentials\Credentials.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\InfoStepper.js" />
+    <Compile Include="src\components\booking_form\personal_info\credentials\forgot_password\ForgotPassword.js" />
+    <Compile Include="src\components\booking_form\personal_info\credentials\google_login\GoogleLogin.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\booking_note\BookingNote.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\intake_form\IntakeForm.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\intake_form\SingleForm.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\intake_form\TakenForms.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\login_info\LoginInfo.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\onsite_location\OnSiteLocation.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\payment_cc\PaymentCC.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\payment_cc\SavedCards.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\providers_in_slot\ProvidersInSlot.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\login_info\dependants\Dependants.js" />
+    <Compile Include="src\components\booking_form\personal_info\info_stepper\payment_cc\stripe\StripeForm.js" />
+    <Compile Include="src\components\booking_form\provider_time\calendar\Calendar.js" />
+    <Compile Include="src\components\booking_form\provider_time\timeslots\TimeSlots.js" />
+    <Compile Include="src\components\common\error_message\ErrorMessage.js" />
+    <Compile Include="src\components\common\fade_in_out\FadeInOut.js" />
+    <Compile Include="src\components\common\stepper\Step.js" />
+    <Compile Include="src\components\common\stepper\Stepper.js" />
+    <Compile Include="src\components\common\tabs_progress\TabHeader.js" />
+    <Compile Include="src\components\common\tabs_progress\TabsProgress.js" />
+    <Compile Include="src\components\common\yocale_loader\YocaleLoader.js" />
+    <Compile Include="src\components\common\yocale_tooltip\YocaleTooltip.js" />
+    <Compile Include="src\components\thank_page\booking_summary\BookingSummary.js" />
+    <Compile Include="src\components\thank_page\update_password\UpdatePassword.js" />
+    <Compile Include="src\reducers\mocks\availabilities.js" />
+    <Compile Include="src\reducers\mocks\business.js" />
+    <Compile Include="src\reducers\mocks\providers.js" />
+    <Compile Include="src\reducers\mocks\services.js" />
+    <Compile Include="src\reducers\mocks\timezones.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="config" />
+    <Folder Include="config\jest" />
+    <Folder Include="public" />
+    <Folder Include="public\img" />
+    <Folder Include="scripts" />
+    <Folder Include="src" />
+    <Folder Include="src\actions" />
+    <Folder Include="src\components" />
+    <Folder Include="src\components\booking_form" />
+    <Folder Include="src\components\booking_form\location_service" />
+    <Folder Include="src\components\booking_form\location_service\list_category" />
+    <Folder Include="src\components\booking_form\location_service\list_service" />
+    <Folder Include="src\components\booking_form\location_service\menu_services" />
+    <Folder Include="src\components\booking_form\location_service\service_details" />
+    <Folder Include="src\components\booking_form\partials" />
+    <Folder Include="src\components\booking_form\personal_info" />
+    <Folder Include="src\components\booking_form\personal_info\appointment_reminder" />
+    <Folder Include="src\components\booking_form\personal_info\credentials" />
+    <Folder Include="src\components\booking_form\personal_info\credentials\forgot_password" />
+    <Folder Include="src\components\booking_form\personal_info\credentials\google_login" />
+    <Folder Include="src\components\booking_form\personal_info\info_stepper" />
+    <Folder Include="src\components\booking_form\personal_info\info_stepper\booking_note" />
+    <Folder Include="src\components\booking_form\personal_info\info_stepper\intake_form" />
+    <Folder Include="src\components\booking_form\personal_info\info_stepper\login_info" />
+    <Folder Include="src\components\booking_form\personal_info\info_stepper\login_info\dependants" />
+    <Folder Include="src\components\booking_form\personal_info\info_stepper\onsite_location" />
+    <Folder Include="src\components\booking_form\personal_info\info_stepper\payment_cc" />
+    <Folder Include="src\components\booking_form\personal_info\info_stepper\payment_cc\stripe" />
+    <Folder Include="src\components\booking_form\personal_info\info_stepper\providers_in_slot" />
+    <Folder Include="src\components\booking_form\provider_time" />
+    <Folder Include="src\components\booking_form\provider_time\calendar" />
+    <Folder Include="src\components\booking_form\provider_time\timeslots" />
+    <Folder Include="src\components\common" />
+    <Folder Include="src\components\common\error_message" />
+    <Folder Include="src\components\common\fade_in_out" />
+    <Folder Include="src\components\common\stepper" />
+    <Folder Include="src\components\common\tabs_progress" />
+    <Folder Include="src\components\common\yocale_loader" />
+    <Folder Include="src\components\common\yocale_tooltip" />
+    <Folder Include="src\components\thank_page" />
+    <Folder Include="src\components\thank_page\booking_summary" />
+    <Folder Include="src\components\thank_page\update_password" />
+    <Folder Include="src\i18n" />
+    <Folder Include="src\reducers" />
+    <Folder Include="src\reducers\mocks" />
+    <Folder Include="src\styles" />
+    <Folder Include="typings\" />
+    <Folder Include="typings\globals\" />
+    <Folder Include="typings\globals\axios\" />
+    <Folder Include="typings\globals\classnames\" />
+    <Folder Include="typings\globals\i18next-browser-languagedetector\" />
+    <Folder Include="typings\globals\i18next-xhr-backend\" />
+    <Folder Include="typings\globals\immutable\" />
+    <Folder Include="typings\globals\jest\" />
+    <Folder Include="typings\globals\moment-timezone\" />
+    <Folder Include="typings\globals\moment\" />
+    <Folder Include="typings\globals\node\" />
+    <Folder Include="typings\globals\object-assign\" />
+    <Folder Include="typings\globals\react-router\" />
+    <Folder Include="typings\globals\redux-thunk\" />
+    <Folder Include="typings\globals\redux\" />
+    <Folder Include="typings\globals\underscore\" />
+    <Folder Include="typings\globals\validator\" />
+    <Folder Include="typings\globals\webpack-dev-server\" />
+    <Folder Include="typings\globals\whatwg-fetch\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="typings\globals\axios\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\classnames\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\i18next-browser-languagedetector\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\i18next-xhr-backend\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\immutable\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jest\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\moment-timezone\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\moment\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\object-assign\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\react-router\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\redux-thunk\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\redux\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\underscore\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\validator\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\webpack-dev-server\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\whatwg-fetch\index.d.ts" />
+    <TypeScriptCompile Include="typings\index.d.ts" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
