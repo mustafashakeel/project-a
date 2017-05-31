@@ -62,10 +62,6 @@ class LocationServiceContent extends React.Component {
 
   render() {
     const { t } = this.props;
-    if (typeof(this.props.business.locations) !== 'undefined'){
-      console.log(this.props.business.locations[0].name)
-    }
-    // console.log('-------------', this.props.business.locations[0]['name']);
     return (
       <div className="LocationContainer">
         <Stepper>
@@ -80,9 +76,9 @@ class LocationServiceContent extends React.Component {
               placeholder={t('application.location_service.select_location')}
               position={SelectField.Positions.BELOW}
               menuItems={this.props.business.locations}
-              itemLabel="name"
-              itemValue="name"
-              value={this.props.booking.location.name}
+              itemLabel="address"
+              itemValue="address"
+              value={this.props.booking.location.address}
               onChange={this.onChangeLocation.bind(this)}
               className="dropdownSelect"
               iconChildren="keyboard_arrow_down"
