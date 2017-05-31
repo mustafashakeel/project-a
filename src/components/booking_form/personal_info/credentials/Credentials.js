@@ -10,17 +10,17 @@ import { loginAsGuest, signupUser, userExists, loginUser, loginWithSocial } from
 import validator from 'validator';
 import { checkFields } from '../../../../utils';
 import FacebookLogin from 'react-facebook-login';
-import GoogleLogin from './google_login/GoogleLogin';
+import GoogleLogin from 'react-google-login';
 import ForgotPassword from './forgot_password/ForgotPassword';
 
 import TextField from 'react-md/lib/TextFields';
 import Checkbox from 'react-md/lib/SelectionControls/Checkbox';
 import FadeInOut from '../../../common/fade_in_out/FadeInOut';
 
-import './Credentials.scss'; 
+import './Credentials.scss';
 
 // const facebookAppId = '530831383784789';
-const facebookAppId = '1270547073052193';
+const facebookAppId = '682874588564067';
 // const googleClientId = '449316408280-d964jotbr0qhvuud8n7nm4e0n9so4v5i.apps.googleusercontent.com';
 const googleClientId = '789100150140-angpfauj39a9a6v7u088s3l0isof3ve8.apps.googleusercontent.com';
 let timer = null;
@@ -104,10 +104,10 @@ class Credentials extends React.Component {
       isValidEmail: isValidEmail
     });
     let fields = this.state.fields;
-    if (isValidEmail) {     
+    if (isValidEmail) {
       fields = this.state.fields;
       fields.email.error = false;
-      this.setState({ fields: fields }) 
+      this.setState({ fields: fields })
       this.props.userExists(email);
     }else{
       fields = this.state.fields;
@@ -164,12 +164,14 @@ class Credentials extends React.Component {
   }
 
   validFields(fieldsCopy){
-    const fieldsState = checkFields(fieldsCopy)      
+    const fieldsState = checkFields(fieldsCopy)
     this.setState({ fields: fieldsState.fields });
     return fieldsState;
   }
 
   responseFacebook(facebookUser){
+    console.log(facebookUser);
+    console.log(facebookUser.status);
     if(facebookUser.status){
       return;
     }
@@ -178,7 +180,8 @@ class Credentials extends React.Component {
       lastName: facebookUser.last_name,
       imageUrl: facebookUser.picture.data.url,
       userID: facebookUser.userID,
-      provider: "Facebook"
+      provider: "Facebook",
+      email: this.state.fields.email.value
     }
     console.log(userData);
     this.props.loginWithSocial(userData);
@@ -196,7 +199,8 @@ class Credentials extends React.Component {
       lastName: googleProfile.getFamilyName(),
       imageUrl: googleProfile.getImageUrl(),
       userID: googleProfile.getId(),
-      provider: "Google"
+      provider: "Google",
+      email: this.state.fields.email.value
     }
     console.log(userData);
     this.props.loginWithSocial(userData);
@@ -214,7 +218,7 @@ class Credentials extends React.Component {
       <div className="credentials">
         <h2>{t('application.user_info.complete_info')}</h2>
         <div className="innerCredentials">
-          <TextField 
+          <TextField
             id="credentialsEmail"
             className="credentialsEmail"
             placeholder="Email *"
@@ -228,47 +232,47 @@ class Credentials extends React.Component {
                   {!this.props.user.isUser &&
                     <div>
                       <p className="createAccountMsg">This appears to be your first booking with this email address on Yocale, provide us with the following</p>
-                      <TextField 
-                        placeholder={t('application.user_info.login_fields.firstName.placeholder')} 
-                        onChange={this.onChangeFields.bind(this, 'firstName')} 
+                      <TextField
+                        placeholder={t('application.user_info.login_fields.firstName.placeholder')}
+                        onChange={this.onChangeFields.bind(this, 'firstName')}
                         { ...this.state.fields.firstName}
-                        />  
+                        />
 
-                      <TextField 
-                        placeholder={t('application.user_info.login_fields.lastName.placeholder')}                          
-                        onChange={this.onChangeFields.bind(this, 'lastName')} 
+                      <TextField
+                        placeholder={t('application.user_info.login_fields.lastName.placeholder')}
+                        onChange={this.onChangeFields.bind(this, 'lastName')}
                         { ...this.state.fields.lastName}
-                        />  
+                        />
 
-                      <TextField 
-                        placeholder={t('application.user_info.login_fields.phoneNumber.placeholder')}                       
-                        onChange={this.onChangeFields.bind(this, 'phoneNumber')} 
+                      <TextField
+                        placeholder={t('application.user_info.login_fields.phoneNumber.placeholder')}
+                        onChange={this.onChangeFields.bind(this, 'phoneNumber')}
                         type="tel"
-                        { ...this.state.fields.phoneNumber}/>  
+                        { ...this.state.fields.phoneNumber}/>
                       <Checkbox
                         id="credentialsPassword"
                         name="credentialsPassword"
                         label={t('application.user_info.login_fields.enableSms.placeholder')}
-                        onChange={this.onChangeFields.bind(this, 'sendSms')}  
+                        onChange={this.onChangeFields.bind(this, 'sendSms')}
                         checked={this.state.fields.sendSms.value}
-                      />                      
+                      />
                     </div>
                   }
 
-                  {this.props.user.isUser && this.props.user.accountType === "Yocale" && 
+                  {this.props.user.isUser && this.props.user.accountType === "Yocale" &&
                     <div>
-                      <TextField 
-                            type="password" 
-                            onChange={this.onChangeFields.bind(this, 'password')} 
+                      <TextField
+                            type="password"
+                            onChange={this.onChangeFields.bind(this, 'password')}
                             placeholder={(this.props.user.isUser)? t('application.user_info.login_fields.password.placeholder') : t('application.user_info.login_fields.newPassword.placeholder')}
                             { ...this.state.fields.password} />
-                      <ForgotPassword />                          
+                      <ForgotPassword />
                     </div>
 
                   }
 
                   {!this.props.user.isUser ? (
-                      <button 
+                      <button
                         className="yocaleButton"
                         onClick={this.loginAsGuestEvent.bind(this)}
                       >{t('application.user_info.continue_as_guest')}</button>
@@ -276,27 +280,35 @@ class Credentials extends React.Component {
                       ) : (
                       <div>
                       {this.props.user.accountType === "Yocale" &&
-                         <button 
+                         <button
                           className="yocaleButton"
                           onClick={this.loginAsUserEvent.bind(this)}
                         >{t('application.user_info.continue')}</button>
                       }
                       {this.props.user.accountType === "Facebook" &&
-                         <button 
+
+                        <FacebookLogin
+                          appId={facebookAppId}
+                          autoLoad={false}
+                          fields="first_name,last_name,gender,email,picture"
+                          callback={this.responseFacebook.bind(this)}
+                          cssClass="yocaleButton facebookButton"
                           className="yocaleButton facebookButton"
-                          onClick={this.loginSocial.bind(this)}
-                        >Continue with Facebook</button>
+                        />
                       }
                       {this.props.user.accountType === "Google" &&
-                         <button 
+                        <GoogleLogin
+                          clientId={googleClientId}
                           className="yocaleButton googleButton"
-                          onClick={this.loginSocial.bind(this)}
-                        >Continue with Google</button>
-                      }
+                          buttonText="Login with Google"
+                          onSuccess={this.responseGoogle.bind(this)}
+                          onFailure={this.responseGoogle.bind(this)}
+                          />
+                        }
                       </div>
-                        
+
                   )}
-                  
+
                 </div>
             </FadeInOut>
             {/*!this.props.user.isUser &&

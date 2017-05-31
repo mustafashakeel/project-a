@@ -22,7 +22,7 @@ export const ADD_DEPENDANT = 'ADD_DEPENDANT';
 
 const PROD_URL = "http://ydevapi.azurewebsites.net/api/v1.0";
 
-export function fetchUser(email){  
+export function fetchUser(email){
 
   return {
     type: FETCH_USER,
@@ -65,7 +65,7 @@ export function userExists(email){
           }
       });
       dispatch(hideLoading());
-    });  
+    });
 
   };
 }
@@ -75,7 +75,7 @@ export function isLoggedIn(flag){
   if (!flag){
     cookie.remove('access_token');
   }
-  
+
   return {
     type: IS_LOGGED_IN,
     payload: {
@@ -114,7 +114,7 @@ export function signupUser(user){
   };
 }
 
-export function loginUser(fields){  
+export function loginUser(fields){
 
   return (dispatch, getState) => {
     const { booking } = getState();
@@ -125,7 +125,7 @@ export function loginUser(fields){
       username: fields.email.value,
       password: fields.password.value
     }
-    
+
 
     const request = najax({
         url: "https://ydevauth.azurewebsites.net/oauth/token",
@@ -139,11 +139,11 @@ export function loginUser(fields){
     request.success((response) =>{
       if (response.access_token){
         cookie.save('access_token', response.access_token);
-        
+
         if (booking.allowConfirmedBooking){
           dispatch(leaseBooking());
         }else{
-          dispatch({ 
+          dispatch({
             type: LOGIN_AS_USER
           });
           dispatch(isLoggedIn(true));
@@ -152,7 +152,7 @@ export function loginUser(fields){
       }else {
         dispatch(addErrorMsg("Invalid user or password", "Retry"));
       }
-      
+
     }).
     error((error) => {
       dispatch(hideLoading());
@@ -170,7 +170,7 @@ export function loginAsGuest(fields){
       lastName: fields.lastName.value,
       phone: fields.phoneNumber.value
     };
-    
+
     const request = najax({
         url: `${PROD_URL}/account/registerGuest`,
         contentType: "application/x-www-form-urlencoded",
@@ -185,7 +185,7 @@ export function loginAsGuest(fields){
         const loginData = {
           email: fields.email,
           password: {
-            value: response.password          
+            value: response.password
           }
         };
 
@@ -199,7 +199,7 @@ export function loginAsGuest(fields){
       dispatch(addErrorMsg(error.message, "Retry"));
     })
 
-    
+
   };
 }
 
@@ -212,7 +212,7 @@ export function loginWithSocial(data){
     });
     dispatch(showLoading());
     request.then((response) => {
-      if (response.accountType === data.provider){
+      if (response.data.accountType === data.provider){
         const loginData = {
           email: {
             value: data.email
@@ -228,9 +228,9 @@ export function loginWithSocial(data){
     .catch((error) => {
       console.log(`Create user with ${data.provider}`, data);
       dispatch(hideLoading());
-    });  
+    });
 
-  };  
+  };
 }
 
 export function recoverPasswordSent(sent){
@@ -239,7 +239,7 @@ export function recoverPasswordSent(sent){
     payload: {
       sent:sent
     }
-  } 
+  }
 }
 
 export function getUserLocations(){
@@ -389,4 +389,3 @@ export function addDependant(fields){
     });
   };
 }
-
