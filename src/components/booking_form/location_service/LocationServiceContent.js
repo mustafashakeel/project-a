@@ -57,18 +57,22 @@ class LocationServiceContent extends React.Component {
     if (this.props.booking.location.id !== nextProps.booking.location.id){
       const locationId = nextProps.booking.location.id;
       this.props.fetchLocationServices(widgetSettings.getValue().businessID, locationId);
-    }  
+    }
   }
 
   render() {
     const { t } = this.props;
+    if (typeof(this.props.business.locations) !== 'undefined'){
+      console.log(this.props.business.locations[0].name)
+    }
+    // console.log('-------------', this.props.business.locations[0]['name']);
     return (
       <div className="LocationContainer">
         <Stepper>
-          <Step 
+          <Step
             style={{height: "55px"}}
-            stepLine 
-            completed={this.props.booking.location.address !== undefined} 
+            stepLine
+            completed={this.props.booking.location.address !== undefined}
             active={this.state.currentStep === 0}>
 
             <SelectField
@@ -76,22 +80,22 @@ class LocationServiceContent extends React.Component {
               placeholder={t('application.location_service.select_location')}
               position={SelectField.Positions.BELOW}
               menuItems={this.props.business.locations}
-              itemLabel="address"
-              itemValue="address"
-              value={this.props.booking.location.address}
+              itemLabel="name"
+              itemValue="name"
+              value={this.props.booking.location.name}
               onChange={this.onChangeLocation.bind(this)}
               className="dropdownSelect"
               iconChildren="keyboard_arrow_down"
             />
-          </Step>          
+          </Step>
           <Step
-            completed={this.state.currentStep > 1} 
+            completed={this.state.currentStep > 1}
             active={this.state.currentStep === 1}
             >
             <h4>{t('application.location_service.choose_service')} <span>({t('application.location_service.categories_count', {count: this.props.services.length})})</span></h4>
             <MenuServices
-                className="ServiceMenu" 
-                parentComponent={ListCategory} 
+                className="ServiceMenu"
+                parentComponent={ListCategory}
                 childComponent={ListService}
                 list={this.props.services}
             />
