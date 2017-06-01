@@ -20,7 +20,7 @@ export function fetchBiz(businessId){
   }
   return dispatch => {
     const request = axios.request({
-      url:`${PROD_URL}/business/`, 
+      url:`${PROD_URL}/business/`,
       method: 'get',
       params: params
     });
@@ -30,7 +30,7 @@ export function fetchBiz(businessId){
     .then((result) => {
       if (result.data.locations.length == 1){
         dispatch(setBookingLocation(result.data.locations[0]));
-      }      
+      }
       dispatch(hideLoading());
     });
 
@@ -49,7 +49,7 @@ export function fetchLocationServices(businessId, locationId){
     };
 
     const request = axios.request({
-      url:`${PROD_URL}/business/offerings/`, 
+      url:`${PROD_URL}/business/offerings/`,
       method: 'get',
       params: params
     });
@@ -78,7 +78,7 @@ export function fetchProviders(businessId, locationId, offeringId){
       method: 'get',
       params: params
     });
-    
+
     dispatch(showLoading());
     return dispatch({
       type: GET_BIZ_PROVIDERS,
@@ -104,11 +104,11 @@ export function fetchAvailabilities(){
           providerId: booking.provider.providerId,
           offeringId: booking.service.offeringId,
           numberOfDays: 31,
-          startDate: ui.calendarMonth.format('YYYY-MM-DD')
+          startDate: booking.provider.nextAvailableTime
         }
-    
+
     const request = axios.request({
-      url:`${PROD_URL}/business/availabilities/`, 
+      url:`${PROD_URL}/business/availabilities/`,
       method: 'get',
       params: params
     });
@@ -126,5 +126,3 @@ export function fetchAvailabilities(){
     });
   };
 }
-
-

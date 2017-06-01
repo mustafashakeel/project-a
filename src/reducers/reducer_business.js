@@ -34,7 +34,7 @@ export default function (state = INITIAL_STATE , action){
       providers.map((provider)=>{
 
          if (!(provider.nextAvailableTime === "N/A")) {
-            provider.nextAvailableTime = moment(provider.nextAvailableTime, "YYYY-MM-DD HH:mm PM").format('MMM Do');
+            provider.nextAvailableTime = moment(provider.nextAvailableTime, "YYYY-MM-DD HH:mm PM").format('YYYY-MM-DD');
           }
 
          provider.selectLabel = provider.fullName + " - Available: " + provider.nextAvailableTime;
