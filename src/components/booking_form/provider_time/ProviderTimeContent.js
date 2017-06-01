@@ -24,6 +24,7 @@ function mapStateToProps(state) {
 export class ProviderTimeContent extends React.Component {
 
   onChangeProvider(newValue, newValueIndex){
+    console.log('provider is changing ... ', newValueIndex);
     this.props.setBookingProvider(this.props.business.providers[newValueIndex]);
   }
 
@@ -53,7 +54,7 @@ export class ProviderTimeContent extends React.Component {
         this.props.setBookingTime(null);
         this.child.resetSelectedDate();
         this.props.fetchAvailabilities();
-        
+
       }
       if (booking.service.offeringId && booking.service.offeringId !== this.props.booking.service.offeringId){
         if (booking.provider.providerId !== null){
@@ -86,7 +87,7 @@ export class ProviderTimeContent extends React.Component {
         <FadeInOut show={!business.info.allowLocalizedTime || booking.userTimezone !== ""} scroll={false}>
           <div className="ProviderSelector">
             <FadeInOut className="ProviderSelectedPicture" show={booking.provider.picture} scroll={false}>
-              <Avatar src={booking.provider.picture} alt={booking.provider.fullName} /> 
+              <Avatar src={booking.provider.picture} alt={booking.provider.fullName} />
             </FadeInOut>
             <SelectField
               id="selectProvider"
@@ -102,7 +103,10 @@ export class ProviderTimeContent extends React.Component {
             />
           </div>
         </FadeInOut>
-        <Calendar onRef={ref => (this.child = ref)} onSlotSelected={this.props.onFinish}/>
+        <Calendar
+          onRef={ref => (this.child = ref)}
+          onSlotSelected={this.props.onFinish}
+        />
       </div>
 
     );

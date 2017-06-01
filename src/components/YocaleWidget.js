@@ -23,13 +23,9 @@ export class YocaleWidget extends React.Component {
 
   render() {
     return (
-      <div>  
+      <div>
         <YocaleLoader/>
-        {!this.props.isBooked ?
-          <BookingForm/>
-          :
-          <ThankPage />
-        }
+        {!this.props.isBooked ? <BookingForm/>:<ThankPage />}
         <ErrorMessage />
       </div>
     );

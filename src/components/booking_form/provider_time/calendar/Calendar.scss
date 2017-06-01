@@ -1,7 +1,16 @@
 @import '../../../../styles/vars';
 
-
-
+// custom - @ehsan
+.rdtPicker .rdtDay .circleAvailability.orange,.rdtPicker .rdtDay .circleAvailability.green{
+  width: 6px;
+  height: 6px;
+}
+.rdtPicker .rdtDay .circleAvailability{
+  bottom: -1px;
+}
+.rdtPicker table td{
+  padding: 7px
+}
 
 // react-datetime style
 .rdtPicker {
@@ -34,8 +43,10 @@
         background: #3be23b;
       }
 
-      &.yellow{
-        background: #fff000;
+      &.orange{
+        // background: #ff8c1a;
+        background: orange
+        ;
       }
     }
   }

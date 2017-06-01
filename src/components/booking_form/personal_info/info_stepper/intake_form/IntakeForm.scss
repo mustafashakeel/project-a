@@ -132,3 +132,27 @@
 
   }
 }
+
+
+.md-dialog--centered .md-list, .dropdownSelect .md-list--menu-below .md-list-item .md-text{
+  padding-bottom: 0!important;
+}
+
+.md-dialog--centered .md-list-tile{
+  padding: 0 24px!important;
+}
+
+#intakeForm .SingleForm label{
+  margin-bottom: 5px!important;
+}
+
+#intakeForm .SingleForm select, #intakeForm .SingleForm input:not([type="checkbox"]), #intakeForm .SingleForm textarea{
+  margin-bottom: 5px!important;
+}
+
+#intakeForm input[type=radio]:checked::before{
+  margin-left: 1px!important;
+  margin-top: 0!important;
+  width: 1.4em!important;
+  height: 1.4em!important;
+}
