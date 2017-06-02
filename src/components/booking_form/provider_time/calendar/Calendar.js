@@ -24,6 +24,10 @@ function mapStateToProps(state) {
 
 export class Calendar extends React.Component {
 
+  // constructor(props){
+  //   super(props);
+  //   console.log('FROM CONSTRUCTOR:', this.props.booking.provider.nextAvailableTime);
+  // }
   state = {
     selectedDateObject: null,
     filteredDates: [],
@@ -34,7 +38,8 @@ export class Calendar extends React.Component {
     dayView: true,
     monthView : false,
     yearView : false,
-    decadeView : false
+    decadeView : false,
+    defaultMonthX: ''
   }
 
   isValidDate(current) {
@@ -104,6 +109,8 @@ export class Calendar extends React.Component {
 
   onChangeDate(selectedDate) {
     console.log('changed date>>>:', selectedDate._d);
+    //console.log('@@@@@@@ ', moment(this.props.booking.provider.nextAvailableTime).format('YYYY-MM-DD'));
+    console.log('####### ', this);
 
     const selectedDateObject = this.props.availabilities.find((availabilityDate) => {
 
@@ -114,13 +121,16 @@ export class Calendar extends React.Component {
   }
 
   componentWillReceiveProps(np) {
-    console.log('component will recieve props ',  np);
+    this.setState({
+      defaultMonthX:moment(this.props.booking.provider.nextAvailableTime).format('YYYY-MM-DD')
+    })
   }
 
   componentDidMount() {
-    console.log('DOING SOMETHING.. ')
+    //console.log('Did Mount ', moment(this.props.booking.provider.nextAvailableTime).format('YYYY-MM-DD'));
     this.props.onRef(this)
   }
+
   componentWillUnmount() {
     this.props.onRef(undefined)
   }
@@ -180,10 +190,6 @@ export class Calendar extends React.Component {
       }
       console.log('previous')
     }
-
-
-
-
 
     const elmSwitch = self.target.className;
 
@@ -327,6 +333,7 @@ export class Calendar extends React.Component {
 
 
   render() {
+    const dd = this.state.defaultMonthX.toString();
     return (
       <div >
         <FadeInOut className="fades" show={this.props.booking.provider.fullName}>
@@ -337,6 +344,7 @@ export class Calendar extends React.Component {
               onChange={this.onChangeDate.bind(this)}
               renderDay={this.renderDay.bind(this)}
               isValidDate={this.isValidDate.bind(this)}
+              value={moment(this.props.booking.provider.nextAvailableTime)}
             />
           </div>
         </FadeInOut>

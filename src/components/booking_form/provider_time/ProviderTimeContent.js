@@ -24,12 +24,10 @@ function mapStateToProps(state) {
 export class ProviderTimeContent extends React.Component {
 
   onChangeProvider(newValue, newValueIndex){
-    console.log('provider is changing ... ', newValueIndex);
     this.props.setBookingProvider(this.props.business.providers[newValueIndex]);
   }
 
   providerList(){
-    // console.log(this.props.business.providers);
     return this.props.business.providers.map((provider, index) => {
       return {
         ...provider,
