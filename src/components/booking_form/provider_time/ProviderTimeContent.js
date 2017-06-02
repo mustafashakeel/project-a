@@ -48,6 +48,11 @@ export class ProviderTimeContent extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { business, booking } = nextProps;
+
+      //console.log('what is business? :', business.providers);
+
+
+
       if ( this.props.currentTab === 1 && booking.provider.providerId !== this.props.booking.provider.providerId){
         this.props.setBookingTime(null);
         this.child.resetSelectedDate();
@@ -104,6 +109,7 @@ export class ProviderTimeContent extends React.Component {
         <Calendar
           onRef={ref => (this.child = ref)}
           onSlotSelected={this.props.onFinish}
+          bizP={business.providers}
         />
       </div>
 

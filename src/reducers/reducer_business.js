@@ -29,17 +29,31 @@ export default function (state = INITIAL_STATE , action){
       const anyProvider = {
         providerId: '',
         selectLabel: 'Any Provider',
-        fullName: 'Any Provider'
+        fullName: 'Any Provider',
+        nextAvailableTime: ''
       }
+
+
+      var anyPNAT;
+
       providers.map((provider)=>{
 
          if (!(provider.nextAvailableTime === "N/A")) {
             provider.nextAvailableTime = moment(provider.nextAvailableTime, "YYYY-MM-DD HH:mm PM").format('YYYY-MM-DD');
           }
+          if (!anyPNAT) {
+            //console.log('first one ', )
+            anyPNAT = providers[0].nextAvailableTime;
+          }
 
-         provider.selectLabel = provider.fullName + " - Available: " + provider.nextAvailableTime;
+          if (provider.nextAvailableTime < anyPNAT) {
+            anyPNAT = provider.nextAvailableTime;
+          }
 
+          provider.selectLabel = provider.fullName + " - Available: " + provider.nextAvailableTime;
       })
+      console.log('anyPNAT ', anyPNAT);
+      anyProvider.nextAvailableTime = anyPNAT
       providers.push(anyProvider);
       return { ...state , providers }
     case GET_AVAILABILITIES:

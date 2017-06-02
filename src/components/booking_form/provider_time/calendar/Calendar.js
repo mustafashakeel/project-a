@@ -334,6 +334,7 @@ export class Calendar extends React.Component {
 
   render() {
     const dd = this.state.defaultMonthX.toString();
+    console.log('wwwwwwww ', this.props.bizP);
     return (
       <div >
         <FadeInOut className="fades" show={this.props.booking.provider.fullName}>

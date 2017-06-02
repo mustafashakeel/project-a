@@ -121,6 +121,10 @@ export function parseAvailabilities(availabilities, timezone){
 
 }
 
+
+
+
+
 export const isMobile = {
     Android: function() {
         return navigator.userAgent.match(/Android/i);

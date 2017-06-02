@@ -97,6 +97,20 @@ export function fetchAvailabilities(){
     if(typeof booking.provider.providerId =="undefined" || booking.provider.providerId === null ){
       return;
     }
+    // console.log('providerXX: ', booking.provider);
+    // console.log('providerSS: ', moment().startOf('month').format('YYYY-MM-DD'));
+    // console.log(' bizi ', business.providers);//nextAvailableTime
+
+    if (business.providers) {
+      const bizProviders = business.providers;
+      if (bizProviders.length > 1) {
+        var xstartDate = bizProviders[0].nextAvailableTime;
+        for (let i = 1; i < bizProviders.length -1; i++) {
+          if (bizProviders[i].nextAvailableTime < xstartDate)
+          xstartDate = bizProviders[i].nextAvailableTime;
+        }
+      }
+    }
 
     const params = {
           businessId: business.info.id,
@@ -104,7 +118,7 @@ export function fetchAvailabilities(){
           providerId: booking.provider.providerId,
           offeringId: booking.service.offeringId,
           numberOfDays: 31,
-          startDate: booking.provider.nextAvailableTime
+          startDate: booking.provider.providerId ? booking.provider.nextAvailableTime : xstartDate
         }
 
     const request = axios.request({
